@@ -33,15 +33,7 @@ const queryClient = new QueryClient({
 })
 
 function AppRoutes() {
-  const { role, loading } = useAuth()
-
-  if (loading) {
-    return (
-      <div className="min-h-[844px] flex items-center justify-center bg-[#FAF8F5]">
-        <div className="w-14 h-14 rounded-3xl bg-[#8B1A1A] animate-pulse" />
-      </div>
-    )
-  }
+  const { role } = useAuth()
 
   return (
     <Routes>
