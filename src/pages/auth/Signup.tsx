@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Mail, Lock, User, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { cn } from '../../lib/utils'
 
 export function Signup() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { signup } = useAuth()
   const { isDark } = useTheme()
 
   const [name, setName] = useState('')
@@ -17,23 +17,47 @@ export function Signup() {
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!email.endsWith('@guc.edu.eg')) {
-      setError('Please use your GUC email (@guc.edu.eg)')
-      return
-    }
-    if (password.length < 8) {
-      setError('Password must be at least 8 characters')
-      return
-    }
+    if (!name.trim()) { setError('Please enter your full name'); return }
+    if (!email.endsWith('@guc.edu.eg')) { setError('Please use your GUC email (@guc.edu.eg)'); return }
+    if (password.length < 8) { setError('Password must be at least 8 characters'); return }
+
     setLoading(true)
-    await new Promise((r) => setTimeout(r, 900))
-    await login(email, password)
+    const { error: err } = await signup(email, password, name.trim())
     setLoading(false)
-    navigate('/onboarding')
+
+    if (err) {
+      setError(err)
+      return
+    }
+
+    // If email confirmation is disabled in Supabase, navigate directly.
+    // If enabled, show success message and ask them to confirm email.
+    setSuccess(true)
+    setTimeout(() => navigate('/onboarding'), 1500)
+  }
+
+  if (success) {
+    return (
+      <div
+        className="min-h-[844px] flex flex-col items-center justify-center px-6 text-center"
+        style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}
+      >
+        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }}>
+          <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
+            <CheckCircle size={40} className="text-green-500" />
+          </div>
+        </motion.div>
+        <h2 className={cn('text-2xl font-black mb-2', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Account Created!</h2>
+        <p className={cn('text-sm', isDark ? 'text-gray-400' : 'text-gray-500')}>
+          Welcome to Clubify. Setting up your profile…
+        </p>
+      </div>
+    )
   }
 
   return (

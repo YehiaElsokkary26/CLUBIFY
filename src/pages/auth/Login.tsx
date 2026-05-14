@@ -28,16 +28,14 @@ export function Login() {
     setLoading(true)
     try {
       if (mode === 'admin') {
-        await loginAsAdmin(email, password)
+        const { error: err } = await loginAsAdmin(email, password)
+        if (err) { setError(err); return }
         navigate('/admin/feed')
       } else {
-        const ok = await login(email, password)
-        if (ok) {
-          const onboarded = localStorage.getItem('clubify_onboarded')
-          navigate(onboarded ? '/student/home' : '/onboarding')
-        } else {
-          setError('Invalid credentials. Try youssef.mahmoud@guc.edu.eg')
-        }
+        const { error: err } = await login(email, password)
+        if (err) { setError('Invalid credentials. Try the demo account below.'); return }
+        const onboarded = localStorage.getItem('clubify_onboarded')
+        navigate(onboarded ? '/student/home' : '/onboarding')
       }
     } finally {
       setLoading(false)
@@ -67,12 +65,12 @@ export function Login() {
       </div>
 
       {/* Mode toggle */}
-      <div className="px-6 mb-6">
+      <div className="px-6 mb-4">
         <div className={cn('flex p-1 rounded-2xl', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
           {(['student', 'admin'] as const).map((m) => (
             <button
               key={m}
-              onClick={() => setMode(m)}
+              onClick={() => { setMode(m); setError('') }}
               className={cn(
                 'flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 capitalize',
                 mode === m ? 'bg-[#8B1A1A] text-white shadow-sm' : isDark ? 'text-gray-400' : 'text-gray-500'
@@ -139,7 +137,6 @@ export function Login() {
         className="flex-1 px-6 space-y-4"
       >
         <form onSubmit={handleLogin} className="space-y-4">
-          {/* Email */}
           <div>
             <label className={cn('text-xs font-semibold mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-600')}>
               GUC Email
@@ -157,7 +154,6 @@ export function Login() {
             </div>
           </div>
 
-          {/* Password */}
           <div>
             <label className={cn('text-xs font-semibold mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-600')}>
               Password
@@ -203,7 +199,7 @@ export function Login() {
 
         <motion.button
           whileTap={{ scale: 0.97 }}
-          onClick={() => { loginAsGuest(); navigate('/student/home') }}
+          onClick={async () => { await loginAsGuest(); navigate('/student/home') }}
           className={cn('w-full py-4 rounded-2xl font-bold text-base border-2', isDark ? 'border-[#3A3A3C] text-gray-300' : 'border-gray-200 text-gray-600')}
         >
           Continue as Guest

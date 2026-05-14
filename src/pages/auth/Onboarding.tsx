@@ -53,8 +53,22 @@ export function Onboarding() {
     else setShowResults(true)
   }
 
-  const handleFinish = () => {
+  const handleFinish = async () => {
     localStorage.setItem('clubify_onboarded', 'true')
+    // Persist preferences to Supabase (best-effort, no block on navigation)
+    try {
+      const { supabase } = await import('../../lib/supabase')
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user && !user.is_anonymous) {
+        await supabase.from('user_preferences').upsert({
+          user_id: user.id,
+          interests: selectedInterests,
+          activity_level: selectedActivity,
+          goals: selectedGoals,
+          completed_at: new Date().toISOString(),
+        }, { onConflict: 'user_id' })
+      }
+    } catch (_) { /* non-critical */ }
     navigate('/student/home')
   }
 
