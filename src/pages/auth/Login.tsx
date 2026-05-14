@@ -78,7 +78,7 @@ export function Login() {
                 mode === m ? 'bg-[#8B1A1A] text-white shadow-sm' : isDark ? 'text-gray-400' : 'text-gray-500'
               )}
             >
-              {m === 'student' ? 'Student' : 'Club Officer'}
+              {m === 'student' ? 'Student' : 'Admin'}
             </button>
           ))}
         </div>

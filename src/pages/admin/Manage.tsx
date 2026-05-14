@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Star, Calendar, Globe, Plus, Edit2, Save, ChevronDown, ChevronUp } from 'lucide-react'
-import { InstagramIcon, FacebookIcon, LinkedinIcon } from '../../components/shared/SocialIcons'
+import { Star, Calendar, Globe, Plus, Edit2, Save, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { InstagramIcon, FacebookIcon, LinkedinIcon, TikTokIcon } from '../../components/shared/SocialIcons'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
@@ -189,8 +189,7 @@ export function AdminManage() {
               onClick={() => setShowEventForm(!showEventForm)}
               className={cn('w-full py-3 rounded-xl border-2 border-dashed text-sm font-semibold flex items-center justify-center gap-2', isDark ? 'border-[#3A3A3C] text-gray-400' : 'border-gray-300 text-gray-500')}
             >
-              <Plus size={16} />
-              {showEventForm ? 'Cancel' : 'Add Event'}
+              {showEventForm ? <><X size={16} /> Cancel</> : <><Plus size={16} /> Add Event</>}
             </button>
           </div>
         </Section>
@@ -202,6 +201,7 @@ export function AdminManage() {
               { key: 'instagram', icon: <InstagramIcon size={16} />, label: 'Instagram URL' },
               { key: 'facebook', icon: <FacebookIcon size={16} />, label: 'Facebook URL' },
               { key: 'linkedin', icon: <LinkedinIcon size={16} />, label: 'LinkedIn URL' },
+              { key: 'tiktok', icon: <TikTokIcon size={16} />, label: 'TikTok URL' },
               { key: 'website', icon: <Globe size={16} />, label: 'Website URL' },
             ] as const).map(({ key, icon, label }) => (
               <div key={key} className="flex items-center gap-2">

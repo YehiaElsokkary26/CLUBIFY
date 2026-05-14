@@ -151,7 +151,7 @@ export function Home() {
               <RefreshCw size={14} className={cn(isDark ? 'text-gray-400' : 'text-gray-500', refreshing && 'animate-spin')} />
             </motion.button>
           </div>
-          <div className="flex gap-3 overflow-x-auto pb-2" style={{ scrollbarWidth: 'none' }}>
+          <div className="events-hscroll flex gap-3 overflow-x-auto pb-3">
             {upcomingEvents.map((event) => (
               <EventCard key={event.id} event={event} compact />
             ))}
@@ -212,7 +212,9 @@ export function Home() {
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.08 }}
-                    className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => club && navigate(`/student/clubs/${club.slug}`)}
+                    className={cn('rounded-2xl p-4 shadow-sm cursor-pointer transition-shadow hover:shadow-md', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
                   >
                     <div className="flex items-center gap-3 mb-3">
                       <img src={club?.logo} alt={club?.name} className="w-9 h-9 rounded-xl object-cover" />

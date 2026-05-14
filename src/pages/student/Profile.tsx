@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { Edit3, Check, X, AlertTriangle, Calendar, BookOpen, Settings } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2 } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
-import { StatusBadge } from '../../components/shared/StatusBadge'
 import { cn } from '../../lib/utils'
 import { clubs } from '../../data/clubs'
 import { getUpcomingEvents } from '../../data/events'
@@ -17,6 +16,11 @@ export function Profile() {
   const navigate = useNavigate()
   const [editingBio, setEditingBio] = useState(false)
   const [bioText, setBioText] = useState(user?.bio || '')
+  const [showNicknameModal, setShowNicknameModal] = useState(false)
+  const [nicknameText, setNicknameText] = useState(user?.nickname || '')
+  const [showPhotoMenu, setShowPhotoMenu] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const cameraInputRef = useRef<HTMLInputElement>(null)
 
   if (!user) return null
 
@@ -27,6 +31,34 @@ export function Profile() {
     updateUser({ bio: bioText })
     setEditingBio(false)
     toast('Bio updated!', 'success')
+  }
+
+  const saveNickname = () => {
+    updateUser({ nickname: nicknameText.trim() || undefined })
+    setShowNicknameModal(false)
+    toast('Nickname updated!', 'success')
+  }
+
+  const openNicknameModal = () => {
+    setNicknameText(user?.nickname || '')
+    setShowNicknameModal(true)
+  }
+
+  const handlePhotoFile = (file: File | null | undefined) => {
+    if (!file) return
+    const reader = new FileReader()
+    reader.onload = () => {
+      updateUser({ avatar: reader.result as string })
+      toast('Photo updated!', 'success')
+    }
+    reader.readAsDataURL(file)
+    setShowPhotoMenu(false)
+  }
+
+  const removePhoto = () => {
+    updateUser({ avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.id || 'user'}` })
+    setShowPhotoMenu(false)
+    toast('Photo removed', 'info')
   }
 
   const attendancePercent = user.totalSessions > 0
@@ -51,14 +83,34 @@ export function Profile() {
           className={cn('rounded-2xl p-5', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
         >
           <div className="flex items-start gap-4">
-            <div className="relative">
+            <button onClick={() => setShowPhotoMenu(true)} className="relative group" aria-label="Change photo">
               <img src={user.avatar} alt={user.name} className="w-20 h-20 rounded-2xl object-cover" />
+              <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/40 transition-colors flex items-center justify-center">
+                <Camera size={20} className="text-white opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
               <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#8B1A1A] flex items-center justify-center">
                 <span className="text-white text-[10px] font-bold">{user.year}</span>
               </div>
-            </div>
+              <div className="absolute -top-1 -left-1 w-6 h-6 rounded-full bg-white shadow-md flex items-center justify-center border border-gray-200">
+                <Camera size={11} className="text-[#8B1A1A]" />
+              </div>
+            </button>
             <div className="flex-1">
               <h2 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{user.name}</h2>
+              <button
+                onClick={openNicknameModal}
+                className={cn(
+                  'mt-0.5 flex items-center gap-1.5 text-xs rounded-md px-1.5 py-0.5 -mx-1.5 transition-colors',
+                  isDark ? 'hover:bg-[#3A3A3C]' : 'hover:bg-gray-100'
+                )}
+              >
+                {user.nickname ? (
+                  <span className={cn('italic', isDark ? 'text-gray-300' : 'text-gray-600')}>"{user.nickname}"</span>
+                ) : (
+                  <span className={cn('font-semibold', isDark ? 'text-[#A52020]' : 'text-[#8B1A1A]')}>+ Add nickname</span>
+                )}
+                <Edit3 size={10} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+              </button>
               <p className={cn('text-xs font-mono mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.gucId}</p>
               <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.faculty}</p>
               <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>Year {user.year}</p>
@@ -169,6 +221,23 @@ export function Profile() {
           </div>
         )}
 
+        {/* Hidden file inputs */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={(e) => handlePhotoFile(e.target.files?.[0])}
+        />
+        <input
+          ref={cameraInputRef}
+          type="file"
+          accept="image/*"
+          capture="user"
+          className="hidden"
+          onChange={(e) => handlePhotoFile(e.target.files?.[0])}
+        />
+
         {/* Upcoming activities */}
         {upcomingForMe.length > 0 && (
           <div>
@@ -189,6 +258,157 @@ export function Profile() {
           </div>
         )}
       </div>
+
+      {/* Nickname popup */}
+      <AnimatePresence>
+        {showNicknameModal && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowNicknameModal(false)}
+              className="fixed inset-0 bg-black z-40"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+              className={cn(
+                'fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] max-w-sm rounded-3xl p-6 z-50 shadow-2xl',
+                isDark ? 'bg-[#2C2C2E]' : 'bg-white'
+              )}
+            >
+              <div className="flex items-start justify-between mb-1">
+                <div className="flex-1">
+                  <h3 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+                    Choose your nickname
+                  </h3>
+                  <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                    A catchy short name your friends can recognize — shown on your profile.
+                  </p>
+                </div>
+                <button
+                  onClick={() => setShowNicknameModal(false)}
+                  className={cn('w-8 h-8 rounded-full flex items-center justify-center -mt-1 -mr-1', isDark ? 'hover:bg-[#3A3A3C] text-gray-400' : 'hover:bg-gray-100 text-gray-500')}
+                >
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="mt-5">
+                <input
+                  value={nicknameText}
+                  onChange={(e) => setNicknameText(e.target.value)}
+                  onKeyDown={(e) => { if (e.key === 'Enter') saveNickname() }}
+                  placeholder="Add nickname"
+                  maxLength={24}
+                  autoFocus
+                  className={cn(
+                    'w-full px-4 py-3.5 rounded-2xl text-sm outline-none border-2 transition-colors',
+                    isDark
+                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]'
+                      : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]'
+                  )}
+                />
+                <p className={cn('text-[10px] mt-1.5 text-right', isDark ? 'text-gray-500' : 'text-gray-400')}>
+                  {nicknameText.length}/24
+                </p>
+              </div>
+
+              <div className="flex gap-2 mt-4">
+                <button
+                  onClick={() => setShowNicknameModal(false)}
+                  className={cn(
+                    'flex-1 py-3 rounded-2xl text-sm font-bold',
+                    isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-700'
+                  )}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveNickname}
+                  className="flex-1 py-3 rounded-2xl bg-[#8B1A1A] text-white text-sm font-bold"
+                >
+                  Save
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Photo menu */}
+      <AnimatePresence>
+        {showPhotoMenu && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.5 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowPhotoMenu(false)}
+              className="fixed inset-0 bg-black z-40"
+            />
+            <motion.div
+              initial={{ y: '100%' }}
+              animate={{ y: 0 }}
+              exit={{ y: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className={cn(
+                'fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] rounded-t-3xl z-50 px-5 pb-10 pt-5',
+                isDark ? 'bg-[#2C2C2E]' : 'bg-white'
+              )}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className={cn('text-base font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Profile photo</h3>
+                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
+                  <X size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+                </button>
+              </div>
+
+              <button
+                onClick={() => cameraInputRef.current?.click()}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+              >
+                <div className="w-9 h-9 rounded-xl bg-[#8B1A1A]/10 flex items-center justify-center">
+                  <Camera size={16} className="text-[#8B1A1A]" />
+                </div>
+                <div className="text-left">
+                  <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Take photo</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Use your camera</p>
+                </div>
+              </button>
+
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+              >
+                <div className="w-9 h-9 rounded-xl bg-[#8B1A1A]/10 flex items-center justify-center">
+                  <Upload size={16} className="text-[#8B1A1A]" />
+                </div>
+                <div className="text-left">
+                  <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Upload from device</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Choose an image from your files</p>
+                </div>
+              </button>
+
+              <button
+                onClick={removePhoto}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+              >
+                <div className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center">
+                  <Trash2 size={16} className="text-red-500" />
+                </div>
+                <div className="text-left">
+                  <p className="text-sm font-semibold text-red-500">Reset to default</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Use a generated avatar</p>
+                </div>
+              </button>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </div>
   )
 }

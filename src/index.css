@@ -50,6 +50,32 @@ body {
   display: none;
 }
 
+/* Visible horizontal scrollbar for upcoming events row */
+.events-hscroll {
+  scrollbar-width: thin;
+  scrollbar-color: #8B1A1A transparent;
+}
+
+.events-hscroll::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+  display: block;
+}
+
+.events-hscroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.events-hscroll::-webkit-scrollbar-thumb {
+  background: #8B1A1A;
+  border-radius: 10px;
+}
+
+.events-hscroll::-webkit-scrollbar-thumb:hover {
+  background: #6B1414;
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }

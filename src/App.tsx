@@ -27,6 +27,7 @@ import { AdminFeed } from './pages/admin/Feed'
 import { AdminManage } from './pages/admin/Manage'
 import { AdminClub } from './pages/admin/ClubPreview'
 import { AdminStats } from './pages/admin/Stats'
+import { AdminProfile } from './pages/admin/Profile'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5, retry: false } },
@@ -60,6 +61,7 @@ function AppRoutes() {
         <Route path="manage" element={<AdminManage />} />
         <Route path="club" element={<AdminClub />} />
         <Route path="stats" element={<AdminStats />} />
+        <Route path="profile" element={<AdminProfile />} />
       </Route>
 
       {/* Default redirect */}

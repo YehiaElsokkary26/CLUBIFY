@@ -60,7 +60,7 @@ export function Settings() {
 
   const Toggle = ({ value, onChange }: { value: boolean; onChange: () => void }) => (
     <button
-      onClick={onChange}
+      onClick={(e) => { e.stopPropagation(); onChange() }}
       className={cn('w-12 h-6 rounded-full transition-all duration-300 relative', value ? 'bg-[#8B1A1A]' : isDark ? 'bg-[#3A3A3C]' : 'bg-gray-200')}
     >
       <motion.div
