@@ -8,7 +8,7 @@ export function StudentShell() {
   return (
     <div
       className="relative flex flex-col h-full min-h-[844px]"
-      style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}
+      style={{ background: isDark ? '#18181B' : '#F4F4F5' }}
     >
       <div className="flex-1 overflow-hidden">
         <Outlet />

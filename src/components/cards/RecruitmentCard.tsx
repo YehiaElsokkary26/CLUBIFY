@@ -27,8 +27,11 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
       whileTap={{ scale: 0.98 }}
       onClick={() => navigate(`/student/apply/${recruitment.clubId}`)}
       className={cn(
-        'rounded-2xl p-4 cursor-pointer shadow-md',
-        isDark ? 'bg-[#2C2C2E]' : 'bg-white'
+        'rounded-2xl p-4 cursor-pointer border',
+        isDark
+          ? 'bg-[#27272A] border-[#3F3F46]'
+          : 'bg-white border-[#D4D4D8]',
+        'shadow-[0_1px_3px_rgba(39,39,42,0.08)] hover:shadow-[0_4px_12px_rgba(39,39,42,0.10)] transition-shadow'
       )}
     >
       <div className="flex items-start gap-3">
@@ -36,45 +39,45 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{recruitment.clubName}</h3>
+              <h3 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>{recruitment.clubName}</h3>
               <StatusBadge label={recruitment.category} variant="category" category={recruitment.category} className="mt-1" />
             </div>
-            <ChevronRight size={16} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+            <ChevronRight size={16} className={isDark ? 'text-zinc-500' : 'text-zinc-400'} />
           </div>
 
           {/* Urgency label */}
           {recruitment.urgencyLabel && (
-            <div className="flex items-center gap-1 mt-2">
-              <AlertTriangle size={12} className="text-orange-500" />
-              <span className="text-xs font-semibold text-orange-500">{recruitment.urgencyLabel}</span>
+            <div className="flex items-center gap-1 mt-2 px-2 py-1 rounded-md bg-[#D97706]/10 w-fit">
+              <AlertTriangle size={12} className="text-[#D97706]" />
+              <span className="text-xs font-bold font-body text-[#D97706]">{recruitment.urgencyLabel}</span>
             </div>
           )}
 
           {/* Progress bar */}
           <div className="mt-3">
             <div className="flex justify-between text-xs mb-1">
-              <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>
-                <span className="font-semibold text-[#8B1A1A]">{recruitment.spotsLeft}</span> spots left
+              <span className={isDark ? 'text-zinc-400' : 'text-zinc-500'}>
+                <span className="font-semibold text-[#0891B2]">{recruitment.spotsLeft}</span> spots left
               </span>
-              <span className={isDark ? 'text-gray-500' : 'text-gray-400'}>{fillPercent}% filled</span>
+              <span className={isDark ? 'text-zinc-500' : 'text-zinc-400'}>{fillPercent}% filled</span>
             </div>
-            <div className={cn('h-1.5 rounded-full overflow-hidden', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
+            <div className={cn('h-1 rounded-full overflow-hidden', isDark ? 'bg-[#3F3F46]' : 'bg-[#D4D4D8]')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${fillPercent}%` }}
                 transition={{ delay: index * 0.08 + 0.3, duration: 0.6 }}
                 className="h-full rounded-full"
-                style={{ background: fillPercent > 80 ? '#E07B39' : '#8B1A1A' }}
+                style={{ background: fillPercent > 80 ? '#D97706' : '#0891B2' }}
               />
             </div>
           </div>
 
-          <div className={cn('flex items-center gap-3 mt-2 text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>
+          <div className={cn('flex items-center gap-3 mt-2 text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
             <span className="flex items-center gap-1">
               <Calendar size={11} />
               Deadline: {formatDateShort(recruitment.deadline)}
             </span>
-            <span className={cn('font-semibold', days <= 7 ? 'text-red-500' : days <= 14 ? 'text-orange-500' : 'text-green-600')}>
+            <span className={cn('font-semibold', days <= 7 ? 'text-[#DC2626]' : days <= 14 ? 'text-[#D97706]' : 'text-[#059669]')}>
               {days <= 0 ? 'Closed' : `${days}d left`}
             </span>
           </div>
