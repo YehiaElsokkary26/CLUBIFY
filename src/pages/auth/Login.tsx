@@ -51,7 +51,7 @@ export function Login() {
       className="min-h-[844px] flex flex-col"
       style={{ background: isDark ? '#18181B' : '#F4F4F5' }}
     >
-      {/* Teal accent line at top (mobile feel) */}
+      {/* Teal accent line */}
       <div className="h-1 w-full bg-gradient-to-r from-[#0891B2] to-[#0C4A6E]" />
 
       {/* Hero */}
@@ -61,26 +61,9 @@ export function Login() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center text-center"
         >
-          {/* Clubify Logo */}
-          <div className="mb-5">
-            <div className="w-20 h-20 rounded-3xl bg-[#8B1A1A] flex items-center justify-center shadow-xl shadow-[#8B1A1A]/30 mx-auto">
-              <svg width="44" height="44" viewBox="0 0 44 44" fill="none">
-                <circle cx="14" cy="22" r="8" fill="white" fillOpacity="0.25" />
-                <circle cx="30" cy="22" r="8" fill="white" fillOpacity="0.25" />
-                <circle cx="22" cy="22" r="10" fill="white" />
-                <path d="M18 19.5 C18 17.5 19.5 16 21.5 16 C23 16 24.2 16.9 24.7 18.2" stroke="#8B1A1A" strokeWidth="1.8" strokeLinecap="round" fill="none"/>
-                <circle cx="22" cy="22" r="2.5" fill="#8B1A1A"/>
-                <path d="M22 24.5 L22 27.5" stroke="#8B1A1A" strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M19.5 27.5 L24.5 27.5" stroke="#8B1A1A" strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
-            </div>
           <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#0891B2] to-[#0C4A6E] flex items-center justify-center shadow-[0_4px_20px_rgba(8,145,178,0.4)] mb-5">
             <span className="text-white text-3xl font-black font-display tracking-widest">C</span>
           </div>
-          <h1 className={cn('text-3xl font-black tracking-tight', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
-            Clubi<span className="text-[#8B1A1A]">fy</span>
-          </h1>
-          <p className={cn('text-sm mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
           <h1 className={cn('text-3xl font-black font-display tracking-widest', isDark ? 'text-white' : 'text-[#27272A]')}>
             CLUBIFY
           </h1>

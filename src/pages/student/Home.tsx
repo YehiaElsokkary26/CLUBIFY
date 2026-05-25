@@ -49,12 +49,9 @@ export function Home() {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>Good {getTimeOfDay()},</p>
-              <p className={cn('text-base font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
-                {user?.nickname || user?.name.split(' ')[0] || 'Guest'} 👋
               <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Good {getTimeOfDay()},</p>
               <p className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>
-                {user?.name.split(' ')[0] || 'Guest'} 👋
+                {user?.nickname || user?.name?.split(' ')[0] || 'Guest'} 👋
               </p>
             </div>
           </div>
@@ -81,11 +78,7 @@ export function Home() {
             className={cn('rounded-2xl p-4', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className={cn('text-xs font-semibold', isDark ? 'text-gray-300' : 'text-gray-600')}>Complete your profile</span>
-              <span className="text-xs font-bold text-[#8B1A1A]">{user.profileCompletion}%</span>
-              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>
-                Complete your profile
-              </span>
+              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>Complete your profile</span>
               <span className="text-xs font-bold font-body text-[#0891B2]">{user.profileCompletion}%</span>
             </div>
             <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
@@ -127,49 +120,32 @@ export function Home() {
           <img src={cotw.coverImage} alt={cotw.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
           <div className="absolute top-3 left-3 flex items-center gap-2">
-            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#E07B39] text-white text-xs font-bold">
+            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D97706] text-white text-xs font-bold font-body">
               <Star size={10} fill="white" />
               Club of the Week
             </span>
-            <span className={cn('px-2 py-1 rounded-full text-[10px] font-bold', 'bg-white/20 text-white')}>
+            <span className="px-2 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold font-body">
               Auto-selected
             </span>
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end gap-3">
-            <img src={cotw.logo} alt={cotw.name} className="w-12 h-12 rounded-xl object-cover border-2 border-white/30 flex-shrink-0" />
+            <img
+              src={cotw.logo}
+              alt={cotw.name}
+              className="w-12 h-12 rounded-xl object-cover border-2 border-white/30 flex-shrink-0"
+              onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${cotw.slug}` }}
+            />
             <div className="flex-1 min-w-0">
-              <h3 className="text-white text-base font-black leading-tight">{cotw.name}</h3>
-              <p className="text-white/75 text-xs mt-0.5 line-clamp-2">{cotw.description.split(' — ')[1] || cotw.description}</p>
+              <h3 className="text-white text-base font-black font-display tracking-wide leading-tight">{cotw.name}</h3>
+              <p className="text-white/75 text-xs mt-0.5 line-clamp-2 font-body">{cotw.description.split(' — ')[1] || cotw.description}</p>
               <div className="flex items-center gap-3 mt-1.5">
-                <span className="text-white/60 text-[10px]">{cotw.memberCount} members</span>
-                <span className="text-white/60 text-[10px]">{cotw.events.length} events</span>
-                {cotw.isRecruiting && <span className="text-green-400 text-[10px] font-bold">● Recruiting</span>}
+                <span className="text-white/60 text-[10px] font-body">{cotw.memberCount} members</span>
+                <span className="text-white/60 text-[10px] font-body">{cotw.events.length} events</span>
+                {cotw.isRecruiting && <span className="text-green-400 text-[10px] font-bold font-body">● Recruiting</span>}
               </div>
-        {/* Club Spotlight */}
-        {spotlight && spotlight.spotlightContent.clubOfWeek && (
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="relative rounded-2xl overflow-hidden h-44 cursor-pointer"
-            onClick={() => navigate(`/student/clubs/${spotlight.slug}`)}
-          >
-            <img src={spotlight.spotlightContent.clubOfWeek.image} alt="spotlight" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-            <div className="absolute top-3 left-3">
-              <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D97706] text-white text-xs font-bold font-body">
-                <Star size={10} fill="white" />
-                Club of the Week
-              </span>
             </div>
           </div>
         </motion.div>
-            <div className="absolute bottom-4 left-4 right-4">
-              <h3 className="text-white text-xl font-black font-display tracking-wide">{spotlight.spotlightContent.clubOfWeek.subtitle}</h3>
-              <p className="text-white/80 text-xs mt-0.5 font-body">{spotlight.spotlightContent.clubOfWeek.description}</p>
-            </div>
-          </motion.div>
-        )}
 
         {/* Upcoming Events */}
         <div>
@@ -192,84 +168,73 @@ export function Home() {
 
         {/* Highlights — clubs with upcoming events */}
         <div>
-          <h2 className={cn('text-base font-black mb-3', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Highlights</h2>
+          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Highlights</h2>
           <div className="grid grid-cols-2 gap-2">
             {highlights.map(({ club, event }) => (
               <motion.div
                 key={club.id}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                className={cn('rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
+                className={cn('rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <img src={club.logo} alt={club.name} className="w-8 h-8 rounded-lg object-cover" />
-                  <p className={cn('text-xs font-bold leading-tight line-clamp-2 flex-1', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+                  <img
+                    src={club.logo}
+                    alt={club.name}
+                    className="w-8 h-8 rounded-lg object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
+                  />
+                  <p className={cn('text-xs font-bold leading-tight line-clamp-2 flex-1 font-body', isDark ? 'text-white' : 'text-[#27272A]')}>
                     {club.name.replace('GUC ', '')}
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Calendar size={10} className="text-[#8B1A1A] flex-shrink-0" />
-                  <p className={cn('text-[10px] line-clamp-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                  <Calendar size={10} className="text-[#0891B2] flex-shrink-0" />
+                  <p className={cn('text-[10px] line-clamp-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                     {event.title}
                   </p>
                 </div>
-                <p className="text-[10px] text-[#8B1A1A] font-semibold mt-1">{formatDateShort(event.date)}</p>
+                <p className="text-[10px] text-[#0891B2] font-semibold font-body mt-1">{formatDateShort(event.date)}</p>
               </motion.div>
             ))}
           </div>
         </div>
 
-        {/* Member of the Month — carousel across all clubs */}
+        {/* Members of the Month — carousel */}
         <div>
-          <h2 className={cn('text-base font-black mb-3', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Members of the Month</h2>
+          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Members of the Month</h2>
           <div className="flex gap-3 overflow-x-auto pb-2 events-hscroll">
             {membersOfMonth.map(({ club, member }) => (
               <motion.div
                 key={club.id}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                className={cn('flex-shrink-0 w-44 rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
+                className={cn('flex-shrink-0 w-44 rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <div className="relative">
                     <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-xl object-cover" />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#E07B39] flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#D97706] flex items-center justify-center">
                       <Star size={9} fill="white" className="text-white" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={cn('text-xs font-bold leading-tight', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{member.name}</p>
-                    <p className={cn('text-[10px] leading-tight mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{member.role}</p>
+                    <p className={cn('text-xs font-bold leading-tight font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{member.name}</p>
+                    <p className={cn('text-[10px] leading-tight mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{member.role}</p>
                   </div>
                 </div>
-                <p className={cn('text-[10px] italic line-clamp-2 mb-1.5', isDark ? 'text-gray-400' : 'text-gray-500')}>"{member.quote}"</p>
+                <p className={cn('text-[10px] italic line-clamp-2 mb-1.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>"{member.quote}"</p>
                 <div className="flex items-center gap-1.5">
-                  <img src={club.logo} alt={club.name} className="w-4 h-4 rounded-md object-cover" />
-                  <p className="text-[10px] font-semibold text-[#8B1A1A] line-clamp-1">{club.name.replace('GUC ', '')}</p>
+                  <img
+                    src={club.logo}
+                    alt={club.name}
+                    className="w-4 h-4 rounded-md object-cover"
+                    onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
+                  />
+                  <p className="text-[10px] font-semibold text-[#0891B2] font-body line-clamp-1">{club.name.replace('GUC ', '')}</p>
                 </div>
               </motion.div>
             ))}
-        {/* Member of the Month */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
-          className="rounded-2xl overflow-hidden"
-          style={{ background: isDark ? '#27272A' : '#0891B2' }}
-        >
-          <div className="p-4 flex items-center gap-4">
-            <div className="relative">
-              <img src={memberOfMonth.avatar} alt={memberOfMonth.name} className="w-16 h-16 rounded-2xl object-cover border-2 border-white/30" />
-              <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-[#D97706] flex items-center justify-center">
-                <Star size={12} fill="white" className="text-white" />
-              </div>
-            </div>
-            <div className="flex-1">
-              <span className="text-white/60 text-[10px] font-bold uppercase tracking-wider font-body">Member of the Month</span>
-              <h3 className="text-white text-base font-black font-display tracking-wide mt-0.5">{memberOfMonth.name}</h3>
-              <p className="text-white/70 text-xs font-body">{memberOfMonth.role}</p>
-              <p className="text-white/80 text-xs mt-1.5 italic font-body">"{memberOfMonth.quote}"</p>
-            </div>
           </div>
         </div>
 
@@ -304,36 +269,25 @@ export function Home() {
                     transition={{ delay: i * 0.08 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => club && navigate(`/student/clubs/${club.slug}`)}
-                    className={cn('rounded-2xl shadow-sm cursor-pointer transition-shadow hover:shadow-md overflow-hidden', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
                     className={cn('rounded-2xl p-4 shadow-sm cursor-pointer transition-shadow hover:shadow-md', isDark ? 'bg-[#27272A]' : 'bg-white')}
                   >
-                    {/* Club header banner */}
-                    <div className={cn('flex items-center gap-3 px-4 py-3 border-b', isDark ? 'border-[#3A3A3C] bg-[#252527]' : 'border-gray-100 bg-gray-50')}>
-                      <img src={club?.logo} alt={club?.name} className="w-10 h-10 rounded-xl object-cover flex-shrink-0" />
-                      <div className="flex-1 min-w-0">
-                        <p className={cn('text-sm font-bold truncate', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club?.name}</p>
-                        <p className={cn('text-[10px]', isDark ? 'text-gray-500' : 'text-gray-400')}>
-                          {club?.category} · {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                     <div className="flex items-center gap-3 mb-3">
-                      <img src={club?.logo} alt={club?.name} className="w-9 h-9 rounded-xl object-cover" />
-                      <div>
-                        <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{club?.name}</p>
+                      <img
+                        src={club?.logo}
+                        alt={club?.name}
+                        className="w-9 h-9 rounded-xl object-cover"
+                        onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club?.slug}` }}
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className={cn('text-xs font-bold font-body truncate', isDark ? 'text-white' : 'text-[#27272A]')}>{club?.name}</p>
                         <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
-                          {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          {club?.category} · {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </p>
                       </div>
-                      <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#8B1A1A]/10 text-[#8B1A1A] text-[10px] font-bold flex-shrink-0">
-                      <span className="ml-auto flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0891B2]/10 text-[#0891B2] text-[10px] font-bold font-body">
+                      <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0891B2]/10 text-[#0891B2] text-[10px] font-bold font-body flex-shrink-0">
                         <Zap size={10} />
                         {item.targetAudience}
                       </span>
-                    </div>
-                    <div className="px-4 py-3">
-                      <h4 className={cn('text-sm font-bold mb-1', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{item.title}</h4>
-                      <p className={cn('text-xs leading-relaxed', isDark ? 'text-gray-400' : 'text-gray-500')}>{item.body}</p>
-                      {item.imageUrl && (
-                        <img src={item.imageUrl} alt="post" className="w-full h-36 object-cover rounded-xl mt-3" loading="lazy" />
-                      )}
                     </div>
                     <h4 className={cn('text-sm font-bold font-body mb-1', isDark ? 'text-white' : 'text-[#27272A]')}>{item.title}</h4>
                     <p className={cn('text-xs leading-relaxed font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{item.body}</p>
