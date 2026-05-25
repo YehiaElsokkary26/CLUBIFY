@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Moon, Sun, Bell, Globe, Info, LogOut, ChevronRight, X } from 'lucide-react'
+import { Moon, Sun, Bell, Globe, Info, LogOut, ChevronRight, X, FileText } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { cn } from '../../lib/utils'
 
 export function Settings() {
@@ -12,7 +13,7 @@ export function Settings() {
   const { logout } = useAuth()
   const { isDark, toggleDark } = useTheme()
   const { toast } = useToast()
-  const [notifs, setNotifs] = useState(true)
+  const [notifs, setNotifs] = useLocalStorage('clubify_notifs_enabled', true)
   const [showLanguage, setShowLanguage] = useState(false)
   const [language, setLanguage] = useState<'English' | 'Arabic'>('English')
 
@@ -92,8 +93,8 @@ export function Settings() {
           <Row
             icon={<Bell size={16} />}
             label="Notifications"
-            onClick={() => { setNotifs(!notifs); toast(notifs ? 'Notifications off' : 'Notifications on', 'info') }}
-            right={<Toggle value={notifs} onChange={() => setNotifs(!notifs)} />}
+            onClick={() => { setNotifs((v) => !v); toast(!notifs ? 'Notifications on' : 'Notifications off', 'info') }}
+            right={<Toggle value={notifs} onChange={() => { setNotifs((v) => !v); toast(!notifs ? 'Notifications on' : 'Notifications off', 'info') }} />}
           />
           <Row
             icon={<Globe size={16} />}
@@ -109,6 +110,12 @@ export function Settings() {
         </Section>
 
         <Section title="About">
+          <Row
+            icon={<FileText size={16} />}
+            label="Terms & Conditions"
+            onClick={() => navigate('/terms')}
+            right={<ChevronRight size={16} className={isDark ? 'text-gray-500' : 'text-gray-400'} />}
+          />
           <Row
             icon={<Info size={16} />}
             label="About Clubify"

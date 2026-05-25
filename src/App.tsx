@@ -11,6 +11,7 @@ import { AdminShell } from './components/layout/AdminShell'
 import { Login } from './pages/auth/Login'
 import { Signup } from './pages/auth/Signup'
 import { Onboarding } from './pages/auth/Onboarding'
+import { Terms } from './pages/auth/Terms'
 
 // Student pages
 import { Home } from './pages/student/Home'
@@ -42,6 +43,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/terms" element={<Terms />} />
 
       {/* Student */}
       <Route path="/student" element={<StudentShell />}>

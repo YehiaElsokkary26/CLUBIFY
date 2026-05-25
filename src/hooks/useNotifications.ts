@@ -5,7 +5,8 @@ import type { Notification } from '../data/types'
 export function useNotifications() {
   const [notifs, setNotifs] = useState<Notification[]>(initialNotifications)
 
-  const unreadCount = notifs.filter((n) => !n.isRead).length
+  const notifsEnabled = localStorage.getItem('clubify_notifs_enabled') !== 'false'
+  const unreadCount = notifsEnabled ? notifs.filter((n) => !n.isRead).length : 0
 
   const sorted = [...notifs].sort((a, b) => {
     if (!!a.isPinned !== !!b.isPinned) return a.isPinned ? -1 : 1
