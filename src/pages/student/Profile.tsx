@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2, FileText, CheckCircle } from 'lucide-react'
+import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2, FileText, CheckCircle, UserCog } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
@@ -19,6 +19,11 @@ export function Profile() {
   const [showNicknameModal, setShowNicknameModal] = useState(false)
   const [nicknameText, setNicknameText] = useState(user?.nickname || '')
   const [showPhotoMenu, setShowPhotoMenu] = useState(false)
+  const [showInfoEdit, setShowInfoEdit] = useState(false)
+  const [editName, setEditName] = useState(user?.nickname || user?.name || '')
+  const [editGucId, setEditGucId] = useState(user?.gucId || '')
+  const [editEmailPrefix, setEditEmailPrefix] = useState(user?.emailPrefix || '')
+  const [gucIdError, setGucIdError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
 
@@ -42,6 +47,28 @@ export function Profile() {
   const openNicknameModal = () => {
     setNicknameText(user?.nickname || '')
     setShowNicknameModal(true)
+  }
+
+  const openInfoEdit = () => {
+    setEditName(user?.nickname || user?.name || '')
+    setEditGucId(user?.gucId || '')
+    setEditEmailPrefix(user?.emailPrefix || '')
+    setGucIdError('')
+    setShowInfoEdit(true)
+  }
+
+  const saveInfo = () => {
+    if (editGucId && !/^\d{2}-\d{5}$/.test(editGucId)) {
+      setGucIdError('Format must be xx-xxxxx (e.g. 49-12345)')
+      return
+    }
+    updateUser({
+      nickname: editName.trim() || undefined,
+      gucId: editGucId || user?.gucId,
+      emailPrefix: editEmailPrefix.trim() || undefined,
+    })
+    setShowInfoEdit(false)
+    toast('Info updated!', 'success')
   }
 
   const handlePhotoFile = (file: File | null | undefined) => {
@@ -112,8 +139,17 @@ export function Profile() {
                 <Edit3 size={10} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
               </button>
               <p className={cn('text-xs font-mono mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.gucId}</p>
+              {user.emailPrefix && (
+                <p className={cn('text-xs mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.emailPrefix}@student.guc.edu.eg</p>
+              )}
               <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.faculty}</p>
               <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>Year {user.year}</p>
+              <button
+                onClick={openInfoEdit}
+                className={cn('mt-1.5 flex items-center gap-1 text-[10px] font-semibold', isDark ? 'text-[#A52020]' : 'text-[#8B1A1A]')}
+              >
+                <UserCog size={10} /> Edit info
+              </button>
             </div>
           </div>
 
@@ -347,6 +383,83 @@ export function Profile() {
                   onClick={saveNickname}
                   className="flex-1 py-3 rounded-2xl bg-[#8B1A1A] text-white text-sm font-bold"
                 >
+                  Save
+                </button>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Edit Info modal */}
+      <AnimatePresence>
+        {showInfoEdit && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} exit={{ opacity: 0 }}
+              onClick={() => setShowInfoEdit(false)}
+              className="fixed inset-0 bg-black z-40"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ type: 'spring', damping: 30, stiffness: 320 }}
+              className={cn('fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] max-w-sm rounded-3xl p-6 z-50 shadow-2xl', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Edit Info</h3>
+                <button onClick={() => setShowInfoEdit(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'hover:bg-[#3A3A3C] text-gray-400' : 'hover:bg-gray-100 text-gray-500')}>
+                  <X size={16} />
+                </button>
+              </div>
+
+              <div className="space-y-3">
+                {/* Preferred name */}
+                <div>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>Preferred Name</label>
+                  <input
+                    value={editName}
+                    onChange={(e) => setEditName(e.target.value)}
+                    placeholder="e.g. Youssef"
+                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]' : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]')}
+                  />
+                </div>
+
+                {/* GUC ID */}
+                <div>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>GUC ID</label>
+                  <input
+                    value={editGucId}
+                    onChange={(e) => { setEditGucId(e.target.value); setGucIdError('') }}
+                    placeholder="xx-xxxxx (e.g. 49-12345)"
+                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors font-mono', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]' : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]', gucIdError ? 'border-red-500' : '')}
+                  />
+                  {gucIdError && <p className="text-[10px] text-red-500 mt-1">{gucIdError}</p>}
+                </div>
+
+                {/* Email prefix */}
+                <div>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>GUC Email</label>
+                  <div className="flex items-center gap-0">
+                    <input
+                      value={editEmailPrefix}
+                      onChange={(e) => setEditEmailPrefix(e.target.value)}
+                      placeholder="ahmed.kabil"
+                      className={cn('flex-1 px-4 py-3 rounded-l-2xl text-sm outline-none border-2 border-r-0 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]' : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]')}
+                    />
+                    <span className={cn('px-3 py-3 rounded-r-2xl text-xs border-2 border-l-0', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-gray-400' : 'bg-gray-100 border-gray-200 text-gray-400')}>
+                      @student.guc.edu.eg
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex gap-2 mt-5">
+                <button onClick={() => setShowInfoEdit(false)} className={cn('flex-1 py-3 rounded-2xl text-sm font-bold', isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-700')}>
+                  Cancel
+                </button>
+                <button onClick={saveInfo} className="flex-1 py-3 rounded-2xl bg-[#8B1A1A] text-white text-sm font-bold">
                   Save
                 </button>
               </div>
