@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2 } from 'lucide-react'
+import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2, FileText, CheckCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
@@ -237,6 +237,22 @@ export function Profile() {
           className="hidden"
           onChange={(e) => handlePhotoFile(e.target.files?.[0])}
         />
+
+        {/* Terms & Conditions */}
+        <motion.button
+          whileTap={{ scale: 0.98 }}
+          onClick={() => navigate('/terms')}
+          className={cn('w-full flex items-center gap-3 rounded-2xl p-4', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
+        >
+          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
+            <FileText size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+          </div>
+          <span className={cn('flex-1 text-sm font-semibold text-left', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Terms & Conditions</span>
+          {localStorage.getItem('clubify_terms_accepted') === 'true'
+            ? <CheckCircle size={16} className="text-green-500" />
+            : <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#8B1A1A]/10 text-[#8B1A1A]">Review</span>
+          }
+        </motion.button>
 
         {/* Upcoming activities */}
         {upcomingForMe.length > 0 && (
