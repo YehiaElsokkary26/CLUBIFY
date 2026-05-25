@@ -1,0 +1,13 @@
+module.exports = {
+  PORT: process.env.PORT,
+  NODE_ENV: process.env.NODE_ENV,
+  CLIENT_URL: process.env.CLIENT_URL,
+  JWT_SECRET: process.env.JWT_SECRET,
+  JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
+  JWT_ACCESS_EXPIRY: process.env.JWT_ACCESS_EXPIRY,
+  JWT_REFRESH_EXPIRY: process.env.JWT_REFRESH_EXPIRY,
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  EMAIL_FROM: process.env.EMAIL_FROM,
+  UPLOAD_DIR: process.env.UPLOAD_DIR,
+}
