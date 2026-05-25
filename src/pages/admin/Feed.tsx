@@ -111,14 +111,14 @@ export function AdminFeed() {
   const sizeKb = (b: number) => (b / 1024).toFixed(0)
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
         <div className="flex items-center justify-between mb-1">
-          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Feed Manager</h1>
+          <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Feed Manager</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate('/admin/profile')}
-              className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#8B1A1A]/30 shadow-sm"
+              className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#0891B2]/30 shadow-sm"
               aria-label="My profile"
             >
               <img src={user?.avatar} alt={user?.name} className="w-full h-full object-cover" />
@@ -126,14 +126,14 @@ export function AdminFeed() {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setShowForm(true)}
-              className="w-10 h-10 rounded-full bg-[#8B1A1A] flex items-center justify-center shadow-lg"
+              className="w-10 h-10 rounded-full bg-[#0891B2] flex items-center justify-center shadow-lg"
               aria-label="New post"
             >
               <Plus size={20} className="text-white" />
             </motion.button>
           </div>
         </div>
-        <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>
+        <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
           {posts.length} post{posts.length !== 1 ? 's' : ''} published
         </p>
       </div>
@@ -144,21 +144,21 @@ export function AdminFeed() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={cn('mx-5 mb-4 rounded-2xl p-5 shadow-md', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
+            className={cn('mx-5 mb-4 rounded-2xl p-5 shadow-md', isDark ? 'bg-[#27272A]' : 'bg-white')}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className={cn('text-base font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+              <h3 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>
                 {editId ? 'Edit Post' : 'New Post'}
               </h3>
-              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-                <X size={14} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+                <X size={14} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
               </button>
             </div>
 
             <div className="space-y-4">
               {/* HEADING */}
               <div>
-                <label className={cn('text-xs font-bold uppercase tracking-wider mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                   Post heading
                 </label>
                 <input
@@ -167,17 +167,17 @@ export function AdminFeed() {
                   placeholder="Catchy title for your post"
                   maxLength={120}
                   className={cn(
-                    'w-full px-4 py-3 rounded-xl text-base font-bold outline-none border-2 transition-colors',
+                    'w-full px-4 py-3 rounded-xl text-base font-bold font-body outline-none border-2 transition-colors',
                     isDark
-                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]'
-                      : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]'
+                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
                   )}
                 />
               </div>
 
               {/* DESCRIPTION */}
               <div>
-                <label className={cn('text-xs font-bold uppercase tracking-wider mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                   Post description
                 </label>
                 <textarea
@@ -186,17 +186,17 @@ export function AdminFeed() {
                   placeholder="Describe what's happening — details, dates, context..."
                   rows={5}
                   className={cn(
-                    'w-full px-4 py-3 rounded-xl text-sm outline-none border-2 resize-none transition-colors',
+                    'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
                     isDark
-                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]'
-                      : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]'
+                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
                   )}
                 />
               </div>
 
               {/* COVER IMAGE URL (optional) */}
               <div>
-                <label className={cn('text-xs font-bold uppercase tracking-wider mb-1.5 block flex items-center gap-1.5', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                   <ImageIcon size={11} /> Cover image URL <span className="font-normal lowercase">(optional)</span>
                 </label>
                 <input
@@ -204,17 +204,17 @@ export function AdminFeed() {
                   onChange={(e) => setImageUrl(e.target.value)}
                   placeholder="https://..."
                   className={cn(
-                    'w-full px-4 py-3 rounded-xl text-sm outline-none border-2',
+                    'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2',
                     isDark
-                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#8B1A1A]'
-                      : 'bg-gray-50 border-gray-200 text-[#1C1C1E] placeholder:text-gray-400 focus:border-[#8B1A1A]'
+                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
                   )}
                 />
               </div>
 
               {/* ATTACHMENTS */}
               <div>
-                <label className={cn('text-xs font-bold uppercase tracking-wider mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                   Attachments <span className="font-normal lowercase">(pdf, png, jpg, jpeg · max {MAX_FILE_MB}MB each)</span>
                 </label>
                 <input
@@ -228,8 +228,8 @@ export function AdminFeed() {
                 <button
                   onClick={() => fileRef.current?.click()}
                   className={cn(
-                    'w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed text-sm font-semibold',
-                    isDark ? 'border-[#4A4A4C] text-gray-300' : 'border-gray-300 text-gray-600'
+                    'w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body',
+                    isDark ? 'border-[#52525B] text-zinc-300' : 'border-zinc-300 text-zinc-600'
                   )}
                 >
                   <Paperclip size={14} />
@@ -241,14 +241,14 @@ export function AdminFeed() {
                     {attachments.map((a) => (
                       <div
                         key={a.id}
-                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}
                       >
                         <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', a.type === 'pdf' ? 'bg-red-100' : 'bg-blue-100')}>
                           {a.type === 'pdf' ? <FileText size={16} className="text-red-600" /> : <FileImage size={16} className="text-blue-600" />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className={cn('text-xs font-semibold truncate', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{a.name}</p>
-                          <p className={cn('text-[10px]', isDark ? 'text-gray-500' : 'text-gray-400')}>{sizeKb(a.size)} KB · {a.type.toUpperCase()}</p>
+                          <p className={cn('text-xs font-semibold font-body truncate', isDark ? 'text-white' : 'text-[#27272A]')}>{a.name}</p>
+                          <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{sizeKb(a.size)} KB · {a.type.toUpperCase()}</p>
                         </div>
                         <button
                           onClick={() => removeAttachment(a.id)}
@@ -265,7 +265,7 @@ export function AdminFeed() {
 
               {/* AUDIENCE */}
               <div>
-                <label className={cn('text-xs font-bold uppercase tracking-wider mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                   Audience
                 </label>
                 <div className="flex gap-2">
@@ -274,8 +274,8 @@ export function AdminFeed() {
                       key={a}
                       onClick={() => setAudience(a)}
                       className={cn(
-                        'flex-1 py-2.5 rounded-xl text-xs font-bold',
-                        audience === a ? 'bg-[#8B1A1A] text-white' : isDark ? 'bg-[#3A3A3C] text-gray-400' : 'bg-gray-100 text-gray-600'
+                        'flex-1 py-2.5 rounded-xl text-xs font-bold font-body',
+                        audience === a ? 'bg-[#0891B2] text-white' : isDark ? 'bg-[#3F3F46] text-zinc-400' : 'bg-zinc-100 text-zinc-600'
                       )}
                     >
                       {a}
@@ -287,7 +287,7 @@ export function AdminFeed() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSubmit}
-                className="w-full py-3.5 rounded-2xl bg-[#8B1A1A] text-white font-bold text-sm flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-2xl bg-[#0891B2] text-white font-bold font-body text-sm flex items-center justify-center gap-2"
               >
                 <Check size={16} />
                 {editId ? 'Update Post' : 'Publish Post'}
@@ -305,10 +305,10 @@ export function AdminFeed() {
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
+            className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#27272A]' : 'bg-white')}
           >
             <div className="flex items-start justify-between gap-2 mb-2">
-              <h4 className={cn('text-sm font-bold flex-1', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{post.title}</h4>
+              <h4 className={cn('text-sm font-bold font-body flex-1', isDark ? 'text-white' : 'text-[#27272A]')}>{post.title}</h4>
               <div className="flex gap-2 flex-shrink-0">
                 <button onClick={() => handleEdit(post)} className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center" aria-label="Edit">
                   <Edit2 size={13} className="text-blue-600" />
@@ -318,7 +318,7 @@ export function AdminFeed() {
                 </button>
               </div>
             </div>
-            <p className={cn('text-xs leading-relaxed mb-2', isDark ? 'text-gray-400' : 'text-gray-500')}>{post.body}</p>
+            <p className={cn('text-xs leading-relaxed mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{post.body}</p>
             {post.imageUrl && <img src={post.imageUrl} alt="post" className="w-full h-32 object-cover rounded-xl mb-2" loading="lazy" />}
             {post.attachments && post.attachments.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-2">
@@ -327,7 +327,7 @@ export function AdminFeed() {
                     key={a.id}
                     href={a.dataUrl}
                     download={a.name}
-                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold', isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-600')}
+                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold font-body', isDark ? 'bg-[#3F3F46] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}
                   >
                     {a.type === 'pdf' ? <FileText size={11} /> : <FileImage size={11} />}
                     <span className="truncate max-w-[120px]">{a.name}</span>
@@ -336,10 +336,10 @@ export function AdminFeed() {
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold', post.targetAudience === 'All' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700')}>
+              <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold font-body', post.targetAudience === 'All' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700')}>
                 {post.targetAudience}
               </span>
-              <span className={cn('text-[10px]', isDark ? 'text-gray-600' : 'text-gray-400')}>
+              <span className={cn('text-[10px] font-body', isDark ? 'text-zinc-600' : 'text-zinc-400')}>
                 {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · {post.author}
               </span>
             </div>

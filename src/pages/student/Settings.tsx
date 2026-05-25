@@ -24,10 +24,10 @@ export function Settings() {
 
   const Section = ({ title, children }: { title: string; children: React.ReactNode }) => (
     <div>
-      <p className={cn('text-xs font-bold uppercase tracking-wider px-5 mb-2', isDark ? 'text-gray-500' : 'text-gray-400')}>
+      <p className={cn('text-xs font-bold uppercase tracking-wider px-5 mb-2 font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
         {title}
       </p>
-      <div className={cn('mx-5 rounded-2xl overflow-hidden', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
+      <div className={cn('mx-5 rounded-2xl overflow-hidden', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
         {children}
       </div>
     </div>
@@ -44,14 +44,14 @@ export function Settings() {
       onClick={onClick}
       className={cn(
         'w-full flex items-center gap-3 px-4 py-4 border-b last:border-0 transition-all text-left',
-        isDark ? 'border-[#3A3A3C]' : 'border-gray-100',
-        onClick && !danger && (isDark ? 'active:bg-[#3A3A3C]' : 'active:bg-gray-50')
+        isDark ? 'border-[#3F3F46]' : 'border-zinc-100',
+        onClick && !danger && (isDark ? 'active:bg-[#3F3F46]' : 'active:bg-zinc-50')
       )}
     >
-      <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center', danger ? 'bg-red-100' : isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-        <div className={danger ? 'text-red-500' : isDark ? 'text-gray-300' : 'text-gray-600'}>{icon}</div>
+      <div className={cn('w-8 h-8 rounded-xl flex items-center justify-center', danger ? 'bg-red-100' : isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+        <div className={danger ? 'text-red-500' : isDark ? 'text-zinc-300' : 'text-zinc-600'}>{icon}</div>
       </div>
-      <span className={cn('flex-1 text-sm font-semibold', danger ? 'text-red-500' : isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+      <span className={cn('flex-1 text-sm font-semibold font-body', danger ? 'text-red-500' : isDark ? 'text-white' : 'text-[#27272A]')}>
         {label}
       </span>
       {right}
@@ -61,7 +61,7 @@ export function Settings() {
   const Toggle = ({ value, onChange }: { value: boolean; onChange: () => void }) => (
     <button
       onClick={(e) => { e.stopPropagation(); onChange() }}
-      className={cn('w-12 h-6 rounded-full transition-all duration-300 relative', value ? 'bg-[#8B1A1A]' : isDark ? 'bg-[#3A3A3C]' : 'bg-gray-200')}
+      className={cn('w-12 h-6 rounded-full transition-all duration-300 relative', value ? 'bg-[#0891B2]' : isDark ? 'bg-[#3F3F46]' : 'bg-zinc-200')}
     >
       <motion.div
         animate={{ x: value ? 24 : 2 }}
@@ -72,10 +72,10 @@ export function Settings() {
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-10" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="phone-scroll h-[844px] pb-10" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
       {/* Header */}
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
-        <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Settings</h1>
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
+        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Settings</h1>
       </div>
 
       <div className="space-y-6">
@@ -101,8 +101,8 @@ export function Settings() {
             onClick={() => setShowLanguage(true)}
             right={
               <div className="flex items-center gap-2">
-                <span className={cn('text-sm', isDark ? 'text-gray-400' : 'text-gray-500')}>{language}</span>
-                <ChevronRight size={16} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+                <span className={cn('text-sm font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{language}</span>
+                <ChevronRight size={16} className={isDark ? 'text-zinc-500' : 'text-zinc-400'} />
               </div>
             }
           />
@@ -112,13 +112,13 @@ export function Settings() {
           <Row
             icon={<Info size={16} />}
             label="About Clubify"
-            right={<ChevronRight size={16} className={isDark ? 'text-gray-500' : 'text-gray-400'} />}
+            right={<ChevronRight size={16} className={isDark ? 'text-zinc-500' : 'text-zinc-400'} />}
           />
           <div className="px-4 py-3">
-            <p className={cn('text-xs', isDark ? 'text-gray-500' : 'text-gray-400')}>
+            <p className={cn('text-xs font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
               Version 1.0.0 · Built for GUC students
             </p>
-            <p className={cn('text-xs mt-0.5', isDark ? 'text-gray-600' : 'text-gray-300')}>
+            <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-zinc-600' : 'text-zinc-300')}>
               © 2026 Clubify. All rights reserved.
             </p>
           </div>
@@ -150,12 +150,12 @@ export function Settings() {
               animate={{ y: 0 }}
               exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className={cn('fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] rounded-t-3xl z-50 px-5 pb-10 pt-5', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}
+              className={cn('fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] rounded-t-3xl z-50 px-5 pb-10 pt-5', isDark ? 'bg-[#27272A]' : 'bg-white')}
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className={cn('text-lg font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Select Language</h3>
-                <button onClick={() => setShowLanguage(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-                  <X size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+                <h3 className={cn('text-lg font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Select Language</h3>
+                <button onClick={() => setShowLanguage(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+                  <X size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
                 </button>
               </div>
               {(['English', 'Arabic'] as const).map((lang) => (
@@ -164,11 +164,11 @@ export function Settings() {
                   onClick={() => { setLanguage(lang); setShowLanguage(false); toast(`Language set to ${lang}`, 'success') }}
                   className={cn(
                     'w-full flex items-center justify-between px-4 py-4 rounded-2xl mb-2 border-2 transition-all',
-                    language === lang ? 'border-[#8B1A1A] bg-[#8B1A1A]/5' : isDark ? 'border-[#3A3A3C] bg-[#3A3A3C]' : 'border-gray-200'
+                    language === lang ? 'border-[#0891B2] bg-[#0891B2]/5' : isDark ? 'border-[#3F3F46] bg-[#3F3F46]' : 'border-zinc-200'
                   )}
                 >
-                  <span className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{lang}</span>
-                  {language === lang && <div className="w-4 h-4 rounded-full bg-[#8B1A1A]" />}
+                  <span className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{lang}</span>
+                  {language === lang && <div className="w-4 h-4 rounded-full bg-[#0891B2]" />}
                 </button>
               ))}
             </motion.div>

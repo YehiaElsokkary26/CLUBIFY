@@ -16,9 +16,9 @@ const monthlyData = [
 ]
 
 const funnelData = [
-  { stage: 'Applied', count: 48, color: '#8B1A1A' },
-  { stage: 'Interviewed', count: 32, color: '#E07B39' },
-  { stage: 'Accepted', count: 18, color: '#2A8B3A' },
+  { stage: 'Applied', count: 48, color: '#0891B2' },
+  { stage: 'Interviewed', count: 32, color: '#D97706' },
+  { stage: 'Accepted', count: 18, color: '#059669' },
 ]
 
 const maxMonth = Math.max(...monthlyData.map((d) => d.value))
@@ -30,36 +30,36 @@ export function AdminStats() {
     <motion.div
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={cn('rounded-2xl p-4', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
+      className={cn('rounded-2xl p-4', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
     >
       <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-3" style={{ background: `${color}15` }}>
         <div style={{ color }}>{icon}</div>
       </div>
-      <p className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{value}</p>
-      <p className={cn('text-xs mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{label}</p>
-      {sub && <p className="text-xs text-green-500 font-semibold mt-1">{sub}</p>}
+      <p className={cn('text-2xl font-black font-display', isDark ? 'text-white' : 'text-[#27272A]')}>{value}</p>
+      <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{label}</p>
+      {sub && <p className="text-xs text-[#059669] font-semibold font-body mt-1">{sub}</p>}
     </motion.div>
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
-        <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Club Stats</h1>
-        <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>{adminClub.name} · Semester 2026</p>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
+        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Club Stats</h1>
+        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{adminClub.name} · Semester 2026</p>
       </div>
 
       <div className="px-5 space-y-5">
         {/* Quick stat cards 2x2 */}
         <div className="grid grid-cols-2 gap-3">
-          <StatCard icon={<Users size={20} />} label="Total Members" value={adminClub.memberCount} sub="+12 this month" color="#8B1A1A" />
-          <StatCard icon={<TrendingUp size={20} />} label="Active This Month" value={87} sub="61% engagement" color="#E07B39" />
-          <StatCard icon={<UserPlus size={20} />} label="Open Recruitments" value={adminClub.isRecruiting ? 1 : 0} color="#2A8B3A" />
-          <StatCard icon={<ClipboardList size={20} />} label="Pending Applications" value={48} sub="18 in interview" color="#4A4A8B" />
+          <StatCard icon={<Users size={20} />} label="Total Members" value={adminClub.memberCount} sub="+12 this month" color="#0891B2" />
+          <StatCard icon={<TrendingUp size={20} />} label="Active This Month" value={87} sub="61% engagement" color="#D97706" />
+          <StatCard icon={<UserPlus size={20} />} label="Open Recruitments" value={adminClub.isRecruiting ? 1 : 0} color="#059669" />
+          <StatCard icon={<ClipboardList size={20} />} label="Pending Applications" value={48} sub="18 in interview" color="#7C3AED" />
         </div>
 
         {/* Monthly Activity Bar Chart */}
-        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-bold mb-4', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Monthly Activity</h3>
+        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
+          <h3 className={cn('text-sm font-bold font-display tracking-wide mb-4', isDark ? 'text-white' : 'text-[#27272A]')}>Monthly Activity</h3>
           <div className="flex items-end justify-between gap-2 h-32">
             {monthlyData.map((d, i) => (
               <div key={d.month} className="flex-1 flex flex-col items-center gap-1">
@@ -68,27 +68,27 @@ export function AdminStats() {
                   animate={{ height: `${(d.value / maxMonth) * 100}%` }}
                   transition={{ delay: i * 0.08, duration: 0.4 }}
                   className="w-full rounded-t-xl min-h-[4px]"
-                  style={{ background: d.month === 'May' ? '#8B1A1A' : isDark ? '#3A3A3C' : '#E5E5EA' }}
+                  style={{ background: d.month === 'May' ? '#0891B2' : isDark ? '#3F3F46' : '#E4E4E7' }}
                 />
-                <span className={cn('text-[10px] font-semibold', isDark ? 'text-gray-500' : 'text-gray-400')}>{d.month}</span>
+                <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{d.month}</span>
               </div>
             ))}
           </div>
         </div>
 
         {/* Application Funnel */}
-        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-bold mb-4', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Application Funnel</h3>
+        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
+          <h3 className={cn('text-sm font-bold font-display tracking-wide mb-4', isDark ? 'text-white' : 'text-[#27272A]')}>Application Funnel</h3>
           <div className="space-y-3">
             {funnelData.map((f, i) => {
               const pct = Math.round((f.count / funnelData[0].count) * 100)
               return (
                 <div key={f.stage}>
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className={cn('text-xs font-semibold', isDark ? 'text-gray-300' : 'text-gray-600')}>{f.stage}</span>
-                    <span className="text-xs font-black" style={{ color: f.color }}>{f.count}</span>
+                    <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>{f.stage}</span>
+                    <span className="text-xs font-black font-display" style={{ color: f.color }}>{f.count}</span>
                   </div>
-                  <div className={cn('h-3 rounded-full overflow-hidden', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
+                  <div className={cn('h-3 rounded-full overflow-hidden', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${pct}%` }}
@@ -97,7 +97,7 @@ export function AdminStats() {
                       style={{ background: f.color }}
                     />
                   </div>
-                  <p className={cn('text-[10px] mt-0.5', isDark ? 'text-gray-500' : 'text-gray-400')}>{pct}% of applicants</p>
+                  <p className={cn('text-[10px] mt-0.5 font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{pct}% of applicants</p>
                 </div>
               )
             })}
@@ -105,17 +105,17 @@ export function AdminStats() {
         </div>
 
         {/* Top performers preview */}
-        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-bold mb-3', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Top Committee Members</h3>
+        <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
+          <h3 className={cn('text-sm font-bold font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Top Committee Members</h3>
           {adminClub.members.map((m, i) => (
-            <div key={m.id} className={cn('flex items-center gap-3 py-2.5 border-b last:border-0', isDark ? 'border-[#3A3A3C]' : 'border-gray-100')}>
-              <span className={cn('text-xs font-bold w-4', isDark ? 'text-gray-500' : 'text-gray-400')}>#{i + 1}</span>
+            <div key={m.id} className={cn('flex items-center gap-3 py-2.5 border-b last:border-0', isDark ? 'border-[#3F3F46]' : 'border-zinc-100')}>
+              <span className={cn('text-xs font-bold font-body w-4', isDark ? 'text-zinc-500' : 'text-zinc-400')}>#{i + 1}</span>
               <img src={m.avatar} alt={m.name} className="w-8 h-8 rounded-full" />
               <div className="flex-1">
-                <p className={cn('text-xs font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{m.name}</p>
-                <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>{m.role}</p>
+                <p className={cn('text-xs font-semibold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{m.name}</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{m.role}</p>
               </div>
-              <span className="text-xs font-bold text-[#8B1A1A]">98%</span>
+              <span className="text-xs font-bold font-body text-[#0891B2]">98%</span>
             </div>
           ))}
         </div>

@@ -34,12 +34,12 @@ export function Clubs() {
   }
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
       {/* Header */}
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
         <div className="flex items-center justify-between mb-4">
-          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Discover Clubs</h1>
-          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold', isDark ? 'bg-[#2C2C2E] text-gray-400' : 'bg-white text-gray-500 shadow-sm')}>
+          <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Discover Clubs</h1>
+          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold font-body', isDark ? 'bg-[#27272A] text-zinc-400' : 'bg-white text-zinc-500 shadow-sm')}>
             <SlidersHorizontal size={12} />
             {filtered.length} clubs
           </div>
@@ -55,11 +55,11 @@ export function Clubs() {
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState
-            icon={<Search size={28} className="text-gray-400" />}
+            icon={<Search size={28} className="text-zinc-400" />}
             title="No clubs found"
             description={`No clubs match "${search}". Try a different search or category.`}
             action={
-              <button onClick={() => { setSearch(''); setCategory('All') }} className="px-5 py-2.5 rounded-2xl bg-[#8B1A1A] text-white text-sm font-semibold">
+              <button onClick={() => { setSearch(''); setCategory('All') }} className="px-5 py-2.5 rounded-2xl bg-[#0891B2] text-white text-sm font-semibold font-body">
                 Clear filters
               </button>
             }

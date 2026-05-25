@@ -40,15 +40,15 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               className={cn(
-                'flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl pointer-events-auto',
-                t.type === 'success' && 'bg-[#1C1C1E] text-white',
-                t.type === 'error' && 'bg-red-600 text-white',
-                t.type === 'info' && 'bg-blue-600 text-white'
+                'flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl pointer-events-auto font-body',
+                t.type === 'success' && 'bg-[#27272A] text-white',
+                t.type === 'error'   && 'bg-[#DC2626] text-white',
+                t.type === 'info'    && 'bg-[#0891B2] text-white'
               )}
             >
-              {t.type === 'success' && <CheckCircle size={18} className="text-green-400 flex-shrink-0" />}
-              {t.type === 'error' && <AlertCircle size={18} className="flex-shrink-0" />}
-              {t.type === 'info' && <Info size={18} className="flex-shrink-0" />}
+              {t.type === 'success' && <CheckCircle size={18} className="text-[#059669] flex-shrink-0" />}
+              {t.type === 'error'   && <AlertCircle size={18} className="flex-shrink-0" />}
+              {t.type === 'info'    && <Info        size={18} className="flex-shrink-0" />}
               <span className="text-sm font-medium flex-1">{t.message}</span>
               <button
                 onClick={() => setToasts((prev) => prev.filter((tt) => tt.id !== t.id))}
