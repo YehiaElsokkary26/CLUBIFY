@@ -41,22 +41,23 @@
   --color-rose:       #C75A6B;
   --color-sage:       #6E8B5A;
 
-  /* Zinc scale (kept for Tailwind compatibility) */
-  --color-zinc-50:  #FAFAFA;
-  --color-zinc-100: #F4F4F5;
-  --color-zinc-200: #E4E4E7;
-  --color-zinc-300: #D4D4D8;
-  --color-zinc-400: #A1A1AA;
-  --color-zinc-500: #71717A;
-  --color-zinc-600: #52525B;
-  --color-zinc-700: #3F3F46;
-  --color-zinc-800: #27272A;
-  --color-zinc-900: #18181B;
+  /* Zinc scale — warm-tinted equivalents */
+  --color-zinc-50:  #FAFAF8;
+  --color-zinc-100: #F0EDE6;
+  --color-zinc-200: #E0D9CE;
+  --color-zinc-300: #C8BFAF;
+  --color-zinc-400: #A8A09A;
+  --color-zinc-500: #76706A;
+  --color-zinc-600: #5C5650;
+  --color-zinc-700: #42403C;
+  --color-zinc-800: #2A2825;
+  --color-zinc-900: #1A1916;
 
-  /* Typography */
-  --font-family-display: 'Bricolage Grotesque', sans-serif;
-  --font-family-body:    'Bricolage Grotesque', sans-serif;
-  --font-family-sans:    'Bricolage Grotesque', sans-serif;
+  /* Typography — Tailwind v4 font utility names */
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'Bricolage Grotesque', sans-serif;
+  --font-sans:    'Bricolage Grotesque', sans-serif;
+  --font-mono:    'JetBrains Mono', monospace;
 }
 
 /* ── Design tokens as CSS custom properties ─────────────────────────────── */
@@ -92,17 +93,17 @@
   --color-butter:     #E8C76A;
   --color-sky:        #4A7CA8;
 
-  /* Zinc scale */
-  --zinc-50:  #FAFAFA;
-  --zinc-100: #F4F4F5;
-  --zinc-200: #E4E4E7;
-  --zinc-300: #D4D4D8;
-  --zinc-400: #A1A1AA;
-  --zinc-500: #71717A;
-  --zinc-600: #52525B;
-  --zinc-700: #3F3F46;
-  --zinc-800: #27272A;
-  --zinc-900: #18181B;
+  /* Zinc scale — warm-tinted */
+  --zinc-50:  #FAFAF8;
+  --zinc-100: #F0EDE6;
+  --zinc-200: #E0D9CE;
+  --zinc-300: #C8BFAF;
+  --zinc-400: #A8A09A;
+  --zinc-500: #76706A;
+  --zinc-600: #5C5650;
+  --zinc-700: #42403C;
+  --zinc-800: #2A2825;
+  --zinc-900: #1A1916;
 
   /* Typography */
   --font-display: 'Bricolage Grotesque', sans-serif;
@@ -222,7 +223,7 @@ body {
 }
 
 .type-mono {
-  font-family: 'Courier New', Courier, monospace;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.06em;

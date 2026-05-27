@@ -97,8 +97,8 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         </div>
 
         <div className="flex items-center gap-1 mt-2.5">
-          <Users size={12} className="text-zinc-400" />
-          <span className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+          <Users size={12} className="text-[#A8A09A]" />
+          <span className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             {club.memberCount.toLocaleString()} members
           </span>
         </div>
