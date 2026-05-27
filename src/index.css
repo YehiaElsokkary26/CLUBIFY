@@ -41,6 +41,13 @@
   --color-rose:       #C75A6B;
   --color-sage:       #6E8B5A;
 
+  /* Event-type card colors (image-matched vivid palette) */
+  --color-event-meeting:     #7B2D33;
+  --color-event-social:      #C54030;
+  --color-event-workshop:    #1E3A54;
+  --color-event-competition: #2A6070;
+  --color-event-talk:        #4A3870;
+
   /* Zinc scale — warm-tinted equivalents */
   --color-zinc-50:  #FAFAF8;
   --color-zinc-100: #F0EDE6;

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Bell, RefreshCw, ChevronRight, Star, Zap, Calendar } from 'lucide-react'
+import { Bell, RefreshCw, ChevronRight, Star, Zap, Calendar, Plus } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useNotifications } from '../../hooks/useNotifications'
@@ -149,19 +149,64 @@ export function Home() {
 
         {/* Upcoming Events */}
         <div>
-          <div className="flex items-center justify-between mb-3">
-            <h2 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Upcoming Events</h2>
-            <motion.button
-              whileTap={{ scale: 0.95 }}
-              onClick={handleRefresh}
-              className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
-            >
-              <RefreshCw size={14} className={cn(isDark ? 'text-[#A8A09A]' : 'text-[#76706A]', refreshing && 'animate-spin')} />
-            </motion.button>
+          {/* Date header — styled like the image */}
+          <div className={cn('rounded-2xl p-4 mb-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+            <div className="flex items-start justify-between">
+              <div>
+                <p className={cn('text-[11px] font-semibold uppercase tracking-widest font-mono mb-0.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+                  {new Date().toLocaleDateString('en-US', { weekday: 'long' })}
+                </p>
+                <div className="flex items-baseline gap-3">
+                  <span className={cn('text-5xl font-black font-display leading-none', isDark ? 'text-white' : 'text-[#1E1B16]')}>
+                    {new Date().getDate()}
+                  </span>
+                  <span className={cn('text-base font-bold font-display uppercase tracking-wide', isDark ? 'text-white/60' : 'text-[#76706A]')}>
+                    {new Date().toLocaleDateString('en-US', { month: 'long' })}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleRefresh}
+                  className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}
+                >
+                  <RefreshCw size={13} className={cn(isDark ? 'text-[#A8A09A]' : 'text-[#76706A]', refreshing && 'animate-spin')} />
+                </motion.button>
+                <div className={cn('w-8 h-8 rounded-full flex items-center justify-center bg-[#7B2D33]')}>
+                  <Plus size={14} className="text-white" />
+                </div>
+              </div>
+            </div>
+
+            {/* Filter chips */}
+            <div className="flex gap-2 mt-3">
+              {(['Today', 'Tomorrow', 'All'] as const).map((f, i) => (
+                <span
+                  key={f}
+                  className={cn(
+                    'px-3 py-1 rounded-full text-[11px] font-bold font-body',
+                    i === 0
+                      ? isDark ? 'bg-white text-[#1E1B16]' : 'bg-[#1E1B16] text-white'
+                      : isDark ? 'bg-[#2d3d4a] text-[#A8A09A]' : 'bg-[#EDE8D8] text-[#5C5650]'
+                  )}
+                >
+                  {f}
+                </span>
+              ))}
+            </div>
           </div>
-          <div className="events-hscroll flex gap-3 overflow-x-auto pb-3">
-            {upcomingEvents.map((event) => (
-              <EventCard key={event.id} event={event} compact />
+
+          <div className="space-y-3">
+            {upcomingEvents.map((event, i) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 }}
+              >
+                <EventCard event={event} />
+              </motion.div>
             ))}
           </div>
         </div>
