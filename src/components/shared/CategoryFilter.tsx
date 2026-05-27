@@ -27,10 +27,10 @@ export function CategoryFilter({ selected, onChange }: CategoryFilterProps) {
             className={cn(
               'flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold font-body transition-all duration-200',
               active
-                ? 'bg-[#0891B2] text-white shadow-sm'
+                ? 'bg-[#6F2F33] text-white shadow-sm'
                 : isDark
-                ? 'bg-[#27272A] text-zinc-400 border border-[#3F3F46]'
-                : 'bg-white text-zinc-600 border border-[#D4D4D8] shadow-sm'
+                ? 'bg-[#23323F] text-zinc-400 border border-[#2d3d4a]'
+                : 'bg-[#FAF6EA] text-zinc-600 border border-[#D8D0BE] shadow-sm'
             )}
           >
             {cat}

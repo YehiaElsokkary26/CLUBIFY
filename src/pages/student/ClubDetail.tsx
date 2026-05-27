@@ -31,15 +31,15 @@ export function ClubDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
-        <div className="w-8 h-8 rounded-full border-2 border-[#0891B2] border-t-transparent animate-spin" />
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+        <div className="w-8 h-8 rounded-full border-2 border-[#6F2F33] border-t-transparent animate-spin" />
       </div>
     )
   }
 
   if (!club) {
     return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
         <p className={cn('font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Club not found</p>
       </div>
     )
@@ -48,7 +48,7 @@ export function ClubDetail() {
   const memberOfMonth = club.members.find((m) => m.isMonthStar)
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Cover */}
       <div className="relative h-64 overflow-hidden">
         <img src={club.coverImage} alt={club.name} className="w-full h-full object-cover" />
@@ -87,30 +87,30 @@ export function ClubDetail() {
       </div>
 
       {/* Stats row */}
-      <div className={cn('px-5 py-4 flex items-center justify-between border-b', isDark ? 'bg-[#27272A] border-[#3F3F46]' : 'bg-white border-zinc-100')}>
+      <div className={cn('px-5 py-4 flex items-center justify-between border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-zinc-100')}>
         <div className="text-center">
-          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#27272A]')}>{club.memberCount}</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.memberCount}</p>
           <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Members</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-200')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#27272A]')}>{club.events.length}</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.events.length}</p>
           <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Events</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-200')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#27272A]')}>{club.founded}</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.founded}</p>
           <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Founded</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-200')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#27272A]')}>{club.members.length}</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.members.length}</p>
           <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Committee</p>
         </div>
       </div>
 
       {/* Social links */}
-      <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#27272A] border-[#3F3F46]' : 'bg-white border-zinc-100')}>
+      <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-zinc-100')}>
         {club.socialLinks.instagram && (
           <a href={club.socialLinks.instagram} className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
             <InstagramIcon size={16} className="text-white" />
@@ -127,7 +127,7 @@ export function ClubDetail() {
           </a>
         )}
         {club.socialLinks.website && (
-          <a href={club.socialLinks.website} className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+          <a href={club.socialLinks.website} className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
             <Globe size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
           </a>
         )}
@@ -136,7 +136,7 @@ export function ClubDetail() {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate(`/student/apply/${club.id}`)}
-            className="px-4 py-2 rounded-xl bg-[#0891B2] text-white text-xs font-bold font-body flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-[#6F2F33] text-white text-xs font-bold font-body flex items-center gap-1.5"
           >
             Apply Now
             <ChevronRight size={14} />
@@ -145,14 +145,14 @@ export function ClubDetail() {
       </div>
 
       {/* Tab bar */}
-      <div className={cn('flex px-5 pt-4 pb-0 gap-1', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
+      <div className={cn('flex px-5 pt-4 pb-0 gap-1', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         {(['About', 'Events', 'Members'] as Tab[]).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={cn(
               'flex-1 py-2.5 rounded-xl text-sm font-semibold font-body transition-all',
-              activeTab === tab ? 'bg-[#0891B2] text-white shadow-sm' : isDark ? 'text-zinc-400' : 'text-zinc-500'
+              activeTab === tab ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'text-zinc-400' : 'text-zinc-500'
             )}
           >
             {tab}
@@ -179,7 +179,7 @@ export function ClubDetail() {
             <div>
               <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Contact</h3>
               <div className={cn('flex items-center gap-2 text-sm font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>
-                <Mail size={14} className="text-[#0891B2]" />
+                <Mail size={14} className="text-[#6F2F33]" />
                 {club.contactEmail}
               </div>
             </div>
@@ -200,11 +200,11 @@ export function ClubDetail() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
             {/* Member of the month */}
             {memberOfMonth && (
-              <div className="rounded-2xl overflow-hidden mb-4" style={{ background: isDark ? '#27272A' : '#0891B2' }}>
+              <div className="rounded-2xl overflow-hidden mb-4" style={{ background: isDark ? '#23323F' : '#6F2F33' }}>
                 <div className="p-4 flex items-center gap-3">
                   <div className="relative">
                     <img src={memberOfMonth.avatar} alt={memberOfMonth.name} className="w-14 h-14 rounded-xl border-2 border-white/30" />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#D97706] flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C99B2E] flex items-center justify-center">
                       <Star size={10} fill="white" className="text-white" />
                     </div>
                   </div>
@@ -220,15 +220,15 @@ export function ClubDetail() {
 
             {/* All members */}
             {club.members.map((member) => (
-              <div key={member.id} className={cn('flex items-center gap-3 p-3 rounded-2xl', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
+              <div key={member.id} className={cn('flex items-center gap-3 p-3 rounded-2xl', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
                 <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full" />
                 <div>
-                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{member.name}</p>
+                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{member.name}</p>
                   <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{member.role}</p>
                 </div>
                 {member.isMonthStar && (
                   <div className="ml-auto">
-                    <Star size={14} fill="#D97706" className="text-[#D97706]" />
+                    <Star size={14} fill="#C99B2E" className="text-[#C99B2E]" />
                   </div>
                 )}
               </div>

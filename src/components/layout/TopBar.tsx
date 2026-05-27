@@ -20,7 +20,7 @@ export function TopBar({ title, showBack, right, transparent, className }: TopBa
       className={cn(
         'flex items-center justify-between px-5 pt-10 pb-3 z-30',
         transparent ? 'absolute top-0 left-0 right-0 bg-transparent' : '',
-        !transparent && (isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]'),
+        !transparent && (isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]'),
         className
       )}
     >
@@ -30,7 +30,7 @@ export function TopBar({ title, showBack, right, transparent, className }: TopBa
             onClick={() => navigate(-1)}
             className={cn(
               'flex items-center justify-center w-9 h-9 rounded-full transition-all',
-              isDark ? 'bg-[#27272A] text-white' : 'bg-white text-[#27272A] shadow-sm'
+              isDark ? 'bg-[#23323F] text-white' : 'bg-[#FAF6EA] text-[#1E1B16] shadow-sm'
             )}
           >
             <ArrowLeft size={18} />
@@ -42,7 +42,7 @@ export function TopBar({ title, showBack, right, transparent, className }: TopBa
         <h1
           className={cn(
             'text-base font-bold text-center flex-1 font-display tracking-wide',
-            transparent ? 'text-white' : isDark ? 'text-white' : 'text-[#27272A]'
+            transparent ? 'text-white' : isDark ? 'text-white' : 'text-[#1E1B16]'
           )}
         >
           {title}

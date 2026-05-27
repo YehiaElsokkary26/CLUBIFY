@@ -53,12 +53,12 @@ export function AdminManage() {
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => {
     const open = expandedSection === id
     return (
-      <div className={cn('rounded-2xl overflow-hidden shadow-sm', isDark ? 'bg-[#27272A]' : 'bg-white')}>
+      <div className={cn('rounded-2xl overflow-hidden shadow-sm', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}>
         <button
           onClick={() => setExpandedSection(open ? null : id)}
-          className={cn('w-full flex items-center justify-between px-5 py-4', isDark ? 'border-b border-[#3F3F46]' : open ? 'border-b border-zinc-100' : '')}
+          className={cn('w-full flex items-center justify-between px-5 py-4', isDark ? 'border-b border-[#2d3d4a]' : open ? 'border-b border-zinc-100' : '')}
         >
-          <span className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{title}</span>
+          <span className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{title}</span>
           {open ? <ChevronUp size={16} className={isDark ? 'text-zinc-400' : 'text-zinc-500'} /> : <ChevronDown size={16} className={isDark ? 'text-zinc-400' : 'text-zinc-500'} />}
         </button>
         <AnimatePresence>
@@ -85,22 +85,22 @@ export function AdminManage() {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={3}
-          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border resize-none', isDark ? 'bg-[#3F3F46] border-[#52525B] text-white' : 'bg-zinc-50 border-zinc-200 text-[#27272A]')}
+          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border resize-none', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
         />
       ) : (
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#3F3F46] border-[#52525B] text-white' : 'bg-zinc-50 border-zinc-200 text-[#27272A]')}
+          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
         />
       )}
     </div>
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
-        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Manage Content</h1>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
+        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Manage Content</h1>
         <p className={cn('text-xs mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Editing: {adminClub.name}</p>
       </div>
 
@@ -114,7 +114,7 @@ export function AdminManage() {
             <Field label="Image URL" value={spotlight.image} onChange={(v) => setSpotlight((s) => ({ ...s, image: v }))} />
             {spotlight.image && <img src={spotlight.image} alt="preview" className="w-full h-32 object-cover rounded-xl" loading="lazy" />}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Club spotlight saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#0891B2] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
           </div>
@@ -129,7 +129,7 @@ export function AdminManage() {
             <Field label="Photo URL" value={memberEdit.avatar} onChange={(v) => setMemberEdit((m) => ({ ...m, avatar: v }))} />
             {memberEdit.avatar && <img src={memberEdit.avatar} alt="preview" className="w-16 h-16 rounded-xl object-cover" />}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Member of the Month saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#0891B2] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
           </div>
@@ -139,17 +139,17 @@ export function AdminManage() {
         <Section id="events" title="📅 Events">
           <div className="space-y-3">
             {events.map((ev) => (
-              <div key={ev.id} className={cn('flex items-center gap-3 p-3 rounded-xl', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}>
+              <div key={ev.id} className={cn('flex items-center gap-3 p-3 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
                 <div className="flex-1">
-                  <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{ev.title}</p>
+                  <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{ev.title}</p>
                   <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{ev.date} · {ev.location}</p>
                 </div>
-                <span className="px-2 py-0.5 rounded-full bg-[#0891B2]/10 text-[#0891B2] text-[10px] font-bold font-body">{ev.type}</span>
+                <span className="px-2 py-0.5 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-[10px] font-bold font-body">{ev.type}</span>
               </div>
             ))}
 
             {showEventForm && (
-              <div className={cn('p-4 rounded-xl space-y-3 border-2 border-[#0891B2]/20', isDark ? 'bg-[#3F3F46]' : 'bg-[#E0F2FE]/30')}>
+              <div className={cn('p-4 rounded-xl space-y-3 border-2 border-[#6F2F33]/20', isDark ? 'bg-[#2d3d4a]' : 'bg-[#fae8e9]/30')}>
                 {['title', 'date', 'time', 'location'].map((f) => (
                   <Field
                     key={f}
@@ -163,7 +163,7 @@ export function AdminManage() {
                     <button
                       key={t}
                       onClick={() => setNewEvent((e) => ({ ...e, type: t }))}
-                      className={cn('px-2 py-1 rounded-lg text-xs font-semibold font-body', newEvent.type === t ? 'bg-[#0891B2] text-white' : isDark ? 'bg-[#27272A] text-zinc-400' : 'bg-white text-zinc-500')}
+                      className={cn('px-2 py-1 rounded-lg text-xs font-semibold font-body', newEvent.type === t ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-zinc-400' : 'bg-[#FAF6EA] text-zinc-500')}
                     >
                       {t}
                     </button>
@@ -178,7 +178,7 @@ export function AdminManage() {
                     setShowEventForm(false)
                     toast('Event added!', 'success')
                   }}
-                  className="w-full py-2.5 rounded-xl bg-[#0891B2] text-white text-sm font-bold font-body"
+                  className="w-full py-2.5 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body"
                 >
                   Add Event
                 </button>
@@ -187,7 +187,7 @@ export function AdminManage() {
 
             <button
               onClick={() => setShowEventForm(!showEventForm)}
-              className={cn('w-full py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body flex items-center justify-center gap-2', isDark ? 'border-[#3F3F46] text-zinc-400' : 'border-zinc-300 text-zinc-500')}
+              className={cn('w-full py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body flex items-center justify-center gap-2', isDark ? 'border-[#2d3d4a] text-zinc-400' : 'border-zinc-300 text-zinc-500')}
             >
               {showEventForm ? <><X size={16} /> Cancel</> : <><Plus size={16} /> Add Event</>}
             </button>
@@ -205,19 +205,19 @@ export function AdminManage() {
               { key: 'website', icon: <Globe size={16} />, label: 'Website URL' },
             ] as const).map(({ key, icon, label }) => (
               <div key={key} className="flex items-center gap-2">
-                <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#3F3F46] text-zinc-300' : 'bg-zinc-100 text-zinc-500')}>
+                <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-500')}>
                   {icon}
                 </div>
                 <input
                   value={(socialLinks as Record<string, string>)[key] || ''}
                   onChange={(e) => setSocialLinks((s) => ({ ...s, [key]: e.target.value }))}
                   placeholder={label}
-                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#3F3F46] border-[#52525B] text-white' : 'bg-zinc-50 border-zinc-200 text-[#27272A]')}
+                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
                 />
               </div>
             ))}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Social links saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#0891B2] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Links
             </motion.button>
           </div>

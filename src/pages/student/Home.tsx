@@ -38,9 +38,9 @@ export function Home() {
     : announcements
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Top bar */}
-      <div className={cn('sticky top-0 z-20 px-5 pt-12 pb-3', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
+      <div className={cn('sticky top-0 z-20 px-5 pt-12 pb-3', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img
@@ -50,18 +50,18 @@ export function Home() {
             />
             <div>
               <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Good {getTimeOfDay()},</p>
-              <p className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>
+              <p className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {user?.nickname || user?.name?.split(' ')[0] || 'Guest'} 👋
               </p>
             </div>
           </div>
           <button
             onClick={() => navigate('/student/notifications')}
-            className={cn('relative w-10 h-10 rounded-full flex items-center justify-center', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
+            className={cn('relative w-10 h-10 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
           >
-            <Bell size={20} className={isDark ? 'text-white' : 'text-[#27272A]'} />
+            <Bell size={20} className={isDark ? 'text-white' : 'text-[#1E1B16]'} />
             {unreadCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#0891B2] text-white text-[10px] font-bold font-body flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#6F2F33] text-white text-[10px] font-bold font-body flex items-center justify-center">
                 {unreadCount}
               </span>
             )}
@@ -75,18 +75,18 @@ export function Home() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className={cn('rounded-2xl p-4', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
+            className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
           >
             <div className="flex items-center justify-between mb-2">
               <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>Complete your profile</span>
-              <span className="text-xs font-bold font-body text-[#0891B2]">{user.profileCompletion}%</span>
+              <span className="text-xs font-bold font-body text-[#6F2F33]">{user.profileCompletion}%</span>
             </div>
-            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${user.profileCompletion}%` }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="h-full rounded-full bg-[#0891B2]"
+                className="h-full rounded-full bg-[#6F2F33]"
               />
             </div>
           </motion.div>
@@ -99,9 +99,9 @@ export function Home() {
             animate={{ opacity: 1, scale: 1 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate('/student/recruit')}
-            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-[#0891B2] shadow-lg"
+            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-[#6F2F33] shadow-lg"
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-white pulse-dot flex-shrink-0" />
+            <span className="w-2.5 h-2.5 rounded-full bg-[#FAF6EA] pulse-dot flex-shrink-0" />
             <span className="text-white text-sm font-bold font-body flex-1 text-left">
               {recruitingClubs.length} clubs are recruiting now!
             </span>
@@ -120,7 +120,7 @@ export function Home() {
           <img src={cotw.coverImage} alt={cotw.name} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
           <div className="absolute top-3 left-3 flex items-center gap-2">
-            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#D97706] text-white text-xs font-bold font-body">
+            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#C99B2E] text-white text-xs font-bold font-body">
               <Star size={10} fill="white" />
               Club of the Week
             </span>
@@ -150,11 +150,11 @@ export function Home() {
         {/* Upcoming Events */}
         <div>
           <div className="flex items-center justify-between mb-3">
-            <h2 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Upcoming Events</h2>
+            <h2 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Upcoming Events</h2>
             <motion.button
               whileTap={{ scale: 0.95 }}
               onClick={handleRefresh}
-              className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
+              className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
             >
               <RefreshCw size={14} className={cn(isDark ? 'text-zinc-400' : 'text-zinc-500', refreshing && 'animate-spin')} />
             </motion.button>
@@ -168,14 +168,14 @@ export function Home() {
 
         {/* Highlights — clubs with upcoming events */}
         <div>
-          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Highlights</h2>
+          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Highlights</h2>
           <div className="grid grid-cols-2 gap-2">
             {highlights.map(({ club, event }) => (
               <motion.div
                 key={club.id}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                className={cn('rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
+                className={cn('rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <img
@@ -184,17 +184,17 @@ export function Home() {
                     className="w-8 h-8 rounded-lg object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
                   />
-                  <p className={cn('text-xs font-bold leading-tight line-clamp-2 flex-1 font-body', isDark ? 'text-white' : 'text-[#27272A]')}>
+                  <p className={cn('text-xs font-bold leading-tight line-clamp-2 flex-1 font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                     {club.name.replace('GUC ', '')}
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5">
-                  <Calendar size={10} className="text-[#0891B2] flex-shrink-0" />
+                  <Calendar size={10} className="text-[#6F2F33] flex-shrink-0" />
                   <p className={cn('text-[10px] line-clamp-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
                     {event.title}
                   </p>
                 </div>
-                <p className="text-[10px] text-[#0891B2] font-semibold font-body mt-1">{formatDateShort(event.date)}</p>
+                <p className="text-[10px] text-[#6F2F33] font-semibold font-body mt-1">{formatDateShort(event.date)}</p>
               </motion.div>
             ))}
           </div>
@@ -202,24 +202,24 @@ export function Home() {
 
         {/* Members of the Month — carousel */}
         <div>
-          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Members of the Month</h2>
+          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Members of the Month</h2>
           <div className="flex gap-3 overflow-x-auto pb-2 events-hscroll">
             {membersOfMonth.map(({ club, member }) => (
               <motion.div
                 key={club.id}
                 whileTap={{ scale: 0.97 }}
                 onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                className={cn('flex-shrink-0 w-44 rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}
+                className={cn('flex-shrink-0 w-44 rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <div className="relative">
                     <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-xl object-cover" />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#D97706] flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C99B2E] flex items-center justify-center">
                       <Star size={9} fill="white" className="text-white" />
                     </div>
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className={cn('text-xs font-bold leading-tight font-body', isDark ? 'text-white' : 'text-[#27272A]')}>{member.name}</p>
+                    <p className={cn('text-xs font-bold leading-tight font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{member.name}</p>
                     <p className={cn('text-[10px] leading-tight mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{member.role}</p>
                   </div>
                 </div>
@@ -231,7 +231,7 @@ export function Home() {
                     className="w-4 h-4 rounded-md object-cover"
                     onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
                   />
-                  <p className="text-[10px] font-semibold text-[#0891B2] font-body line-clamp-1">{club.name.replace('GUC ', '')}</p>
+                  <p className="text-[10px] font-semibold text-[#6F2F33] font-body line-clamp-1">{club.name.replace('GUC ', '')}</p>
                 </div>
               </motion.div>
             ))}
@@ -240,7 +240,7 @@ export function Home() {
 
         {/* Campus Feed */}
         <div>
-          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Campus Feed</h2>
+          <h2 className={cn('text-base font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Campus Feed</h2>
 
           <div className="flex gap-2 mb-3">
             {(['All', 'My Clubs', 'Announcements'] as const).map((f) => (
@@ -249,7 +249,7 @@ export function Home() {
                 onClick={() => setFeedFilter(f)}
                 className={cn(
                   'px-3 py-1.5 rounded-full text-xs font-semibold font-body transition-all',
-                  feedFilter === f ? 'bg-[#0891B2] text-white' : isDark ? 'bg-[#27272A] text-zinc-400' : 'bg-white text-zinc-500 shadow-sm'
+                  feedFilter === f ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-zinc-400' : 'bg-[#FAF6EA] text-zinc-500 shadow-sm'
                 )}
               >
                 {f}
@@ -269,7 +269,7 @@ export function Home() {
                     transition={{ delay: i * 0.08 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => club && navigate(`/student/clubs/${club.slug}`)}
-                    className={cn('rounded-2xl p-4 shadow-sm cursor-pointer transition-shadow hover:shadow-md', isDark ? 'bg-[#27272A]' : 'bg-white')}
+                    className={cn('rounded-2xl p-4 shadow-sm cursor-pointer transition-shadow hover:shadow-md', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}
                   >
                     <div className="flex items-center gap-3 mb-3">
                       <img
@@ -279,17 +279,17 @@ export function Home() {
                         onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club?.slug}` }}
                       />
                       <div className="flex-1 min-w-0">
-                        <p className={cn('text-xs font-bold font-body truncate', isDark ? 'text-white' : 'text-[#27272A]')}>{club?.name}</p>
+                        <p className={cn('text-xs font-bold font-body truncate', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club?.name}</p>
                         <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
                           {club?.category} · {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </p>
                       </div>
-                      <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#0891B2]/10 text-[#0891B2] text-[10px] font-bold font-body flex-shrink-0">
+                      <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-[10px] font-bold font-body flex-shrink-0">
                         <Zap size={10} />
                         {item.targetAudience}
                       </span>
                     </div>
-                    <h4 className={cn('text-sm font-bold font-body mb-1', isDark ? 'text-white' : 'text-[#27272A]')}>{item.title}</h4>
+                    <h4 className={cn('text-sm font-bold font-body mb-1', isDark ? 'text-white' : 'text-[#1E1B16]')}>{item.title}</h4>
                     <p className={cn('text-xs leading-relaxed font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{item.body}</p>
                     {item.imageUrl && (
                       <img src={item.imageUrl} alt="post" className="w-full h-36 object-cover rounded-xl mt-3" loading="lazy" />

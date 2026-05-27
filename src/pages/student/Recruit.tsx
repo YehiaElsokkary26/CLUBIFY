@@ -49,12 +49,12 @@ export function Recruit() {
   }, [search, sort, categoryFilter, today])
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Header */}
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center justify-between mb-1">
-          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Open Recruitments</h1>
-          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#2C2C2E] text-gray-300' : 'bg-[#8B1A1A]/10 text-[#8B1A1A]')}>
+          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Open Recruitments</h1>
+          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#23323F] text-gray-300' : 'bg-[#6F2F33]/10 text-[#6F2F33]')}>
             {filtered.length} open
           </span>
         </div>
@@ -72,7 +72,7 @@ export function Recruit() {
               onClick={() => setSort(s)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
-                sort === s ? 'bg-[#8B1A1A] text-white' : isDark ? 'bg-[#2C2C2E] text-gray-400' : 'bg-white text-gray-500 shadow-sm'
+                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
               )}
             >
               {s}
@@ -95,8 +95,8 @@ export function Recruit() {
                 className={cn(
                   'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
                   categoryFilter === cat
-                    ? 'bg-[#8B1A1A] text-white'
-                    : isDark ? 'bg-[#2C2C2E] text-gray-400' : 'bg-white text-gray-500 shadow-sm'
+                    ? 'bg-[#6F2F33] text-white'
+                    : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
                 )}
               >
                 {cat}
