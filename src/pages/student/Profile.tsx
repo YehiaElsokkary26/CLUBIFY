@@ -98,7 +98,7 @@ export function Profile() {
       <div className={cn('pt-12 pb-4 px-5 flex items-center justify-between', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Profile</h1>
         <button onClick={() => navigate('/student/settings')} className={cn('w-9 h-9 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-          <Settings size={18} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+          <Settings size={18} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
         </button>
       </div>
 
@@ -118,7 +118,7 @@ export function Profile() {
               <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#6F2F33] flex items-center justify-center">
                 <span className="text-white text-[10px] font-bold">{user.year}</span>
               </div>
-              <div className="absolute -top-1 -left-1 w-6 h-6 rounded-full bg-[#FAF6EA] shadow-md flex items-center justify-center border border-gray-200">
+              <div className="absolute -top-1 -left-1 w-6 h-6 rounded-full bg-[#FAF6EA] shadow-md flex items-center justify-center border border-[#D8D0BE]">
                 <Camera size={11} className="text-[#6F2F33]" />
               </div>
             </button>
@@ -128,22 +128,22 @@ export function Profile() {
                 onClick={openNicknameModal}
                 className={cn(
                   'mt-0.5 flex items-center gap-1.5 text-xs rounded-md px-1.5 py-0.5 -mx-1.5 transition-colors',
-                  isDark ? 'hover:bg-[#3A3A3C]' : 'hover:bg-gray-100'
+                  isDark ? 'hover:bg-[#EDE8D8]' : 'hover:bg-[#EDE8D8]'
                 )}
               >
                 {user.nickname ? (
-                  <span className={cn('italic', isDark ? 'text-gray-300' : 'text-gray-600')}>"{user.nickname}"</span>
+                  <span className={cn('italic', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>"{user.nickname}"</span>
                 ) : (
                   <span className={cn('font-semibold', isDark ? 'text-[#A52020]' : 'text-[#6F2F33]')}>+ Add nickname</span>
                 )}
-                <Edit3 size={10} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+                <Edit3 size={10} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
               </button>
-              <p className={cn('text-xs font-mono mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.gucId}</p>
+              <p className={cn('text-xs font-mono mt-0.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{user.gucId}</p>
               {user.emailPrefix && (
-                <p className={cn('text-xs mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.emailPrefix}@student.guc.edu.eg</p>
+                <p className={cn('text-xs mt-0.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{user.emailPrefix}@student.guc.edu.eg</p>
               )}
-              <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>{user.faculty}</p>
-              <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>Year {user.year}</p>
+              <p className={cn('text-xs mt-1', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{user.faculty}</p>
+              <p className={cn('text-xs', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Year {user.year}</p>
               <button
                 onClick={openInfoEdit}
                 className={cn('mt-1.5 flex items-center gap-1 text-[10px] font-semibold', isDark ? 'text-[#A52020]' : 'text-[#6F2F33]')}
@@ -161,24 +161,24 @@ export function Profile() {
                   value={bioText}
                   onChange={(e) => setBioText(e.target.value)}
                   rows={3}
-                  className={cn('w-full text-sm rounded-xl p-3 outline-none resize-none border', isDark ? 'bg-[#3A3A3C] text-white border-[#4A4A4C]' : 'bg-gray-50 text-[#1E1B16] border-gray-200')}
+                  className={cn('w-full text-sm rounded-xl p-3 outline-none resize-none border', isDark ? 'bg-[#3A3A3C] text-white border-[#4A4A4C]' : 'bg-[#FAF6EA] text-[#1E1B16] border-[#D8D0BE]')}
                 />
                 <div className="flex gap-2 mt-2">
                   <button onClick={saveBio} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#6F2F33] text-white text-xs font-semibold">
                     <Check size={12} /> Save
                   </button>
-                  <button onClick={() => { setEditingBio(false); setBioText(user.bio) }} className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold', isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-600')}>
+                  <button onClick={() => { setEditingBio(false); setBioText(user.bio) }} className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold', isDark ? 'bg-[#3A3A3C] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}>
                     <X size={12} /> Cancel
                   </button>
                 </div>
               </div>
             ) : (
               <div className="flex items-start gap-2">
-                <p className={cn('flex-1 text-sm leading-relaxed', isDark ? 'text-gray-300' : 'text-gray-600')}>
+                <p className={cn('flex-1 text-sm leading-relaxed', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>
                   {user.bio || 'Add a bio to tell others about yourself...'}
                 </p>
                 <button onClick={() => setEditingBio(true)}>
-                  <Edit3 size={15} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+                  <Edit3 size={15} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
                 </button>
               </div>
             )}
@@ -187,10 +187,10 @@ export function Profile() {
           {/* Profile completion bar */}
           <div className="mt-4">
             <div className="flex justify-between text-xs mb-1">
-              <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>Profile completion</span>
+              <span className={isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'}>Profile completion</span>
               <span className="font-bold text-[#6F2F33]">{user.profileCompletion}%</span>
             </div>
-            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
+            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#3A3A3C]' : 'bg-[#EDE8D8]')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${user.profileCompletion}%` }}
@@ -222,9 +222,9 @@ export function Profile() {
             <div>
               <p className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {user.attendedSessions}
-                <span className={cn('text-base font-medium', isDark ? 'text-gray-400' : 'text-gray-400')}>/{user.totalSessions}</span>
+                <span className={cn('text-base font-medium', isDark ? 'text-[#A8A09A]' : 'text-[#A8A09A]')}>/{user.totalSessions}</span>
               </p>
-              <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>sessions attended</p>
+              <p className={cn('text-xs', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>sessions attended</p>
             </div>
           </div>
         </div>
@@ -280,8 +280,8 @@ export function Profile() {
           onClick={() => navigate('/terms')}
           className={cn('w-full flex items-center gap-3 rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
         >
-          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-            <FileText size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+          <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-[#EDE8D8]')}>
+            <FileText size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
           </div>
           <span className={cn('flex-1 text-sm font-semibold text-left', isDark ? 'text-white' : 'text-[#1E1B16]')}>Terms & Conditions</span>
           {localStorage.getItem('clubify_terms_accepted') === 'true'
@@ -302,7 +302,7 @@ export function Profile() {
                   </div>
                   <div className="flex-1">
                     <p className={cn('text-xs font-semibold', isDark ? 'text-white' : 'text-[#1E1B16]')}>{event.title}</p>
-                    <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>{event.date} · {event.time}</p>
+                    <p className={cn('text-[10px] font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{event.date} · {event.time}</p>
                   </div>
                 </div>
               ))}
@@ -337,13 +337,13 @@ export function Profile() {
                   <h3 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                     Choose your nickname
                   </h3>
-                  <p className={cn('text-xs mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                  <p className={cn('text-xs mt-1', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                     A catchy short name your friends can recognize — shown on your profile.
                   </p>
                 </div>
                 <button
                   onClick={() => setShowNicknameModal(false)}
-                  className={cn('w-8 h-8 rounded-full flex items-center justify-center -mt-1 -mr-1', isDark ? 'hover:bg-[#3A3A3C] text-gray-400' : 'hover:bg-gray-100 text-gray-500')}
+                  className={cn('w-8 h-8 rounded-full flex items-center justify-center -mt-1 -mr-1', isDark ? 'hover:bg-[#EDE8D8] text-[#A8A09A]' : 'hover:bg-[#EDE8D8] text-[#76706A]')}
                 >
                   <X size={16} />
                 </button>
@@ -360,11 +360,11 @@ export function Profile() {
                   className={cn(
                     'w-full px-4 py-3.5 rounded-2xl text-sm outline-none border-2 transition-colors',
                     isDark
-                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#6F2F33]'
-                      : 'bg-gray-50 border-gray-200 text-[#1E1B16] placeholder:text-gray-400 focus:border-[#6F2F33]'
+                      ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                      : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]'
                   )}
                 />
-                <p className={cn('text-[10px] mt-1.5 text-right', isDark ? 'text-gray-500' : 'text-gray-400')}>
+                <p className={cn('text-[10px] mt-1.5 text-right', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                   {nicknameText.length}/24
                 </p>
               </div>
@@ -374,7 +374,7 @@ export function Profile() {
                   onClick={() => setShowNicknameModal(false)}
                   className={cn(
                     'flex-1 py-3 rounded-2xl text-sm font-bold',
-                    isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-700'
+                    isDark ? 'bg-[#3A3A3C] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#42403C]'
                   )}
                 >
                   Cancel
@@ -409,7 +409,7 @@ export function Profile() {
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Edit Info</h3>
-                <button onClick={() => setShowInfoEdit(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'hover:bg-[#3A3A3C] text-gray-400' : 'hover:bg-gray-100 text-gray-500')}>
+                <button onClick={() => setShowInfoEdit(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'hover:bg-[#EDE8D8] text-[#A8A09A]' : 'hover:bg-[#EDE8D8] text-[#76706A]')}>
                   <X size={16} />
                 </button>
               </div>
@@ -417,38 +417,38 @@ export function Profile() {
               <div className="space-y-3">
                 {/* Preferred name */}
                 <div>
-                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>Preferred Name</label>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Preferred Name</label>
                   <input
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
                     placeholder="e.g. Youssef"
-                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#6F2F33]' : 'bg-gray-50 border-gray-200 text-[#1E1B16] placeholder:text-gray-400 focus:border-[#6F2F33]')}
+                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
                   />
                 </div>
 
                 {/* GUC ID */}
                 <div>
-                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>GUC ID</label>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>GUC ID</label>
                   <input
                     value={editGucId}
                     onChange={(e) => { setEditGucId(e.target.value); setGucIdError('') }}
                     placeholder="xx-xxxxx (e.g. 49-12345)"
-                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors font-mono', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#6F2F33]' : 'bg-gray-50 border-gray-200 text-[#1E1B16] placeholder:text-gray-400 focus:border-[#6F2F33]', gucIdError ? 'border-red-500' : '')}
+                    className={cn('w-full px-4 py-3 rounded-2xl text-sm outline-none border-2 transition-colors font-mono', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]', gucIdError ? 'border-red-500' : '')}
                   />
                   {gucIdError && <p className="text-[10px] text-red-500 mt-1">{gucIdError}</p>}
                 </div>
 
                 {/* Email prefix */}
                 <div>
-                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-gray-400' : 'text-gray-500')}>GUC Email</label>
+                  <label className={cn('text-xs font-semibold mb-1 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>GUC Email</label>
                   <div className="flex items-center gap-0">
                     <input
                       value={editEmailPrefix}
                       onChange={(e) => setEditEmailPrefix(e.target.value)}
                       placeholder="ahmed.kabil"
-                      className={cn('flex-1 px-4 py-3 rounded-l-2xl text-sm outline-none border-2 border-r-0 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-gray-500 focus:border-[#6F2F33]' : 'bg-gray-50 border-gray-200 text-[#1E1B16] placeholder:text-gray-400 focus:border-[#6F2F33]')}
+                      className={cn('flex-1 px-4 py-3 rounded-l-2xl text-sm outline-none border-2 border-r-0 transition-colors', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
                     />
-                    <span className={cn('px-3 py-3 rounded-r-2xl text-xs border-2 border-l-0', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-gray-400' : 'bg-gray-100 border-gray-200 text-gray-400')}>
+                    <span className={cn('px-3 py-3 rounded-r-2xl text-xs border-2 border-l-0', isDark ? 'bg-[#3A3A3C] border-[#4A4A4C] text-[#A8A09A]' : 'bg-[#EDE8D8] border-[#D8D0BE] text-[#A8A09A]')}>
                       @student.guc.edu.eg
                     </span>
                   </div>
@@ -456,7 +456,7 @@ export function Profile() {
               </div>
 
               <div className="flex gap-2 mt-5">
-                <button onClick={() => setShowInfoEdit(false)} className={cn('flex-1 py-3 rounded-2xl text-sm font-bold', isDark ? 'bg-[#3A3A3C] text-gray-300' : 'bg-gray-100 text-gray-700')}>
+                <button onClick={() => setShowInfoEdit(false)} className={cn('flex-1 py-3 rounded-2xl text-sm font-bold', isDark ? 'bg-[#3A3A3C] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#42403C]')}>
                   Cancel
                 </button>
                 <button onClick={saveInfo} className="flex-1 py-3 rounded-2xl bg-[#6F2F33] text-white text-sm font-bold">
@@ -491,47 +491,47 @@ export function Profile() {
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className={cn('text-base font-bold', isDark ? 'text-white' : 'text-[#1E1B16]')}>Profile photo</h3>
-                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-                  <X size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-[#EDE8D8]')}>
+                  <X size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
                 </button>
               </div>
 
               <button
                 onClick={() => cameraInputRef.current?.click()}
-                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-[#FAF6EA]')}
               >
                 <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
                   <Camera size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
                   <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1E1B16]')}>Take photo</p>
-                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Use your camera</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Use your camera</p>
                 </div>
               </button>
 
               <button
                 onClick={() => fileInputRef.current?.click()}
-                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3A3A3C]' : 'bg-[#FAF6EA]')}
               >
                 <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
                   <Upload size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
                   <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1E1B16]')}>Upload from device</p>
-                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Choose an image from your files</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Choose an image from your files</p>
                 </div>
               </button>
 
               <button
                 onClick={removePhoto}
-                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-50')}
+                className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#3A3A3C]' : 'bg-[#FAF6EA]')}
               >
                 <div className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center">
                   <Trash2 size={16} className="text-red-500" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-semibold text-red-500">Reset to default</p>
-                  <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Use a generated avatar</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Use a generated avatar</p>
                 </div>
               </button>
             </motion.div>

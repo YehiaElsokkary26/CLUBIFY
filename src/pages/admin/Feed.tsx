@@ -133,7 +133,7 @@ export function AdminFeed() {
             </motion.button>
           </div>
         </div>
-        <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+        <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
           {posts.length} post{posts.length !== 1 ? 's' : ''} published
         </p>
       </div>
@@ -150,15 +150,15 @@ export function AdminFeed() {
               <h3 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {editId ? 'Edit Post' : 'New Post'}
               </h3>
-              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
-                <X size={14} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
+              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
+                <X size={14} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
               </button>
             </div>
 
             <div className="space-y-4">
               {/* HEADING */}
               <div>
-                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                   Post heading
                 </label>
                 <input
@@ -169,15 +169,15 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-base font-bold font-body outline-none border-2 transition-colors',
                     isDark
-                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                      : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]'
                   )}
                 />
               </div>
 
               {/* DESCRIPTION */}
               <div>
-                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                   Post description
                 </label>
                 <textarea
@@ -188,15 +188,15 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
                     isDark
-                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                      : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]'
                   )}
                 />
               </div>
 
               {/* COVER IMAGE URL (optional) */}
               <div>
-                <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                   <ImageIcon size={11} /> Cover image URL <span className="font-normal lowercase">(optional)</span>
                 </label>
                 <input
@@ -206,15 +206,15 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2',
                     isDark
-                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                      : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]'
                   )}
                 />
               </div>
 
               {/* ATTACHMENTS */}
               <div>
-                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                   Attachments <span className="font-normal lowercase">(pdf, png, jpg, jpeg · max {MAX_FILE_MB}MB each)</span>
                 </label>
                 <input
@@ -229,7 +229,7 @@ export function AdminFeed() {
                   onClick={() => fileRef.current?.click()}
                   className={cn(
                     'w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body',
-                    isDark ? 'border-[#3a4d5a] text-zinc-300' : 'border-zinc-300 text-zinc-600'
+                    isDark ? 'border-[#3a4d5a] text-[#C8BFAF]' : 'border-[#C8BFAF] text-[#5C5650]'
                   )}
                 >
                   <Paperclip size={14} />
@@ -241,14 +241,14 @@ export function AdminFeed() {
                     {attachments.map((a) => (
                       <div
                         key={a.id}
-                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}
+                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA]')}
                       >
                         <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', a.type === 'pdf' ? 'bg-red-100' : 'bg-blue-100')}>
                           {a.type === 'pdf' ? <FileText size={16} className="text-red-600" /> : <FileImage size={16} className="text-blue-600" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className={cn('text-xs font-semibold font-body truncate', isDark ? 'text-white' : 'text-[#1E1B16]')}>{a.name}</p>
-                          <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{sizeKb(a.size)} KB · {a.type.toUpperCase()}</p>
+                          <p className={cn('text-[10px] font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>{sizeKb(a.size)} KB · {a.type.toUpperCase()}</p>
                         </div>
                         <button
                           onClick={() => removeAttachment(a.id)}
@@ -265,7 +265,7 @@ export function AdminFeed() {
 
               {/* AUDIENCE */}
               <div>
-                <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                   Audience
                 </label>
                 <div className="flex gap-2">
@@ -275,7 +275,7 @@ export function AdminFeed() {
                       onClick={() => setAudience(a)}
                       className={cn(
                         'flex-1 py-2.5 rounded-xl text-xs font-bold font-body',
-                        audience === a ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-zinc-400' : 'bg-zinc-100 text-zinc-600'
+                        audience === a ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-[#A8A09A]' : 'bg-[#EDE8D8] text-[#5C5650]'
                       )}
                     >
                       {a}
@@ -318,7 +318,7 @@ export function AdminFeed() {
                 </button>
               </div>
             </div>
-            <p className={cn('text-xs leading-relaxed mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{post.body}</p>
+            <p className={cn('text-xs leading-relaxed mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{post.body}</p>
             {post.imageUrl && <img src={post.imageUrl} alt="post" className="w-full h-32 object-cover rounded-xl mb-2" loading="lazy" />}
             {post.attachments && post.attachments.length > 0 && (
               <div className="flex flex-wrap gap-2 mb-2">
@@ -327,7 +327,7 @@ export function AdminFeed() {
                     key={a.id}
                     href={a.dataUrl}
                     download={a.name}
-                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold font-body', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}
+                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold font-body', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}
                   >
                     {a.type === 'pdf' ? <FileText size={11} /> : <FileImage size={11} />}
                     <span className="truncate max-w-[120px]">{a.name}</span>
@@ -339,7 +339,7 @@ export function AdminFeed() {
               <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold font-body', post.targetAudience === 'All' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700')}>
                 {post.targetAudience}
               </span>
-              <span className={cn('text-[10px] font-body', isDark ? 'text-zinc-600' : 'text-zinc-400')}>
+              <span className={cn('text-[10px] font-mono', isDark ? 'text-[#5C5650]' : 'text-[#A8A09A]')}>
                 {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · {post.author}
               </span>
             </div>

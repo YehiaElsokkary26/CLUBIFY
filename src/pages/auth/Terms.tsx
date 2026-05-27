@@ -101,9 +101,9 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
         {/* Sections */}
         <div className={cn('rounded-2xl overflow-hidden', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
           {SECTIONS.map((section, i) => (
-            <div key={i} className={cn('px-4 py-4', i < SECTIONS.length - 1 && (isDark ? 'border-b border-[#3A3A3C]' : 'border-b border-gray-100'))}>
+            <div key={i} className={cn('px-4 py-4', i < SECTIONS.length - 1 && (isDark ? 'border-b border-[#3A3A3C]' : 'border-b border-[#EAE5D8]'))}>
               <p className={cn('text-xs font-bold mb-1.5', isDark ? 'text-white' : 'text-[#1E1B16]')}>{section.title}</p>
-              <p className={cn('text-xs leading-relaxed', isDark ? 'text-gray-400' : 'text-gray-500')}>{section.body}</p>
+              <p className={cn('text-xs leading-relaxed', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{section.body}</p>
             </div>
           ))}
         </div>

@@ -87,7 +87,7 @@ export function AdminClub() {
     label: string; value: string; onChange: (v: string) => void; placeholder?: string; textarea?: boolean; rows?: number
   }) => (
     <div>
-      <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+      <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
         {label}
       </label>
       {textarea ? (
@@ -97,8 +97,8 @@ export function AdminClub() {
           placeholder={placeholder}
           rows={rows || 3}
           className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
-            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                   : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
+            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                   : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
         />
       ) : (
         <input
@@ -106,8 +106,8 @@ export function AdminClub() {
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 transition-colors',
-            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                   : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
+            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                   : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
         />
       )}
     </div>
@@ -126,7 +126,7 @@ export function AdminClub() {
             {mode === 'preview' ? <><Edit3 size={12} /> Edit</> : <><Eye size={12} /> Preview</>}
           </button>
         </div>
-        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
           {mode === 'preview' ? 'Student view of your club card' : 'Editing club information'}
         </p>
       </div>
@@ -150,7 +150,7 @@ export function AdminClub() {
           </div>
 
           {/* Stats */}
-          <div className={cn('px-5 py-4 flex gap-4 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-zinc-100')}>
+          <div className={cn('px-5 py-4 flex gap-4 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
             {[
               { label: 'Members', value: adminClub.memberCount },
               { label: 'Events', value: adminClub.events.length },
@@ -158,13 +158,13 @@ export function AdminClub() {
             ].map(({ label, value }) => (
               <div key={label} className="text-center flex-1">
                 <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{value}</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{label}</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{label}</p>
               </div>
             ))}
           </div>
 
           {/* Social row */}
-          <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-zinc-100')}>
+          <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
             {socialConfig.map(({ key, label, icon: Icon, bg }) => {
               const url = socialLinks[key]
               if (!url) return null
@@ -187,9 +187,9 @@ export function AdminClub() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Website"
-                className={cn('w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-transform', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}
+                className={cn('w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-transform', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}
               >
-                <Globe size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
+                <Globe size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
               </a>
             )}
             <div className="flex-1" />
@@ -198,13 +198,13 @@ export function AdminClub() {
 
           {/* About preview */}
           <div className="px-5 pt-5">
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>About</h3>
-            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>{profile.description}</p>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>About</h3>
+            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{profile.description}</p>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Mission</h3>
-            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>{profile.mission}</p>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Mission</h3>
+            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{profile.mission}</p>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Tags</h3>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Tags</h3>
             <div className="flex flex-wrap gap-2">
               {profile.tags.map((t) => (
                 <span key={t} className="px-3 py-1 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-xs font-semibold font-body">
@@ -213,12 +213,12 @@ export function AdminClub() {
               ))}
             </div>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-3 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Committees</h3>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-3 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Committees</h3>
             {adminClub.committees.map((cm) => (
-              <div key={cm.id} className={cn('flex items-center justify-between py-3 border-b', isDark ? 'border-[#D8D0BE]' : 'border-zinc-100')}>
+              <div key={cm.id} className={cn('flex items-center justify-between py-3 border-b', isDark ? 'border-[#D8D0BE]' : 'border-[#EAE5D8]')}>
                 <div>
                   <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{cm.name}</p>
-                  <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{cm.description}</p>
+                  <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{cm.description}</p>
                 </div>
                 <span className="text-xs font-bold font-body text-[#6F2F33]">{cm.spotsAvailable} spots</span>
               </div>
@@ -240,7 +240,7 @@ export function AdminClub() {
               </button>
               <div>
                 <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Logo</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Tap to change</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Tap to change</p>
               </div>
               <input ref={logoRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageFile(e.target.files?.[0], 'logo')} />
             </div>
@@ -264,7 +264,7 @@ export function AdminClub() {
             <Field label="Club name" value={profile.name} onChange={(v) => update('name', v)} placeholder="GUC Media Club" />
 
             <div>
-              <label className={cn('type-label mb-1.5 block', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+              <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                 Category
               </label>
               <div className="flex flex-wrap gap-1.5">
@@ -273,7 +273,7 @@ export function AdminClub() {
                     key={c}
                     onClick={() => update('category', c)}
                     className={cn('px-3 py-1.5 rounded-full text-xs font-semibold font-body',
-                      profile.category === c ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}
+                      profile.category === c ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}
                   >
                     {c}
                   </button>
@@ -286,11 +286,11 @@ export function AdminClub() {
             <div className="flex items-center justify-between pt-1">
               <div>
                 <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Recruiting now</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Shows the "Recruiting" badge</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Shows the "Recruiting" badge</p>
               </div>
               <button
                 onClick={() => update('isRecruiting', !profile.isRecruiting)}
-                className={cn('w-12 h-6 rounded-full transition-all relative', profile.isRecruiting ? 'bg-[#6F2F33]' : isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-200')}
+                className={cn('w-12 h-6 rounded-full transition-all relative', profile.isRecruiting ? 'bg-[#6F2F33]' : isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')}
               >
                 <div className={cn('absolute top-1 w-4 h-4 rounded-full bg-[#FAF6EA] shadow-sm transition-all', profile.isRecruiting ? 'left-7' : 'left-1')} />
               </button>
@@ -323,7 +323,7 @@ export function AdminClub() {
                 onChange={(e) => setNewTag(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') addTag() }}
                 placeholder="New tag"
-                className={cn('flex-1 px-3 py-2 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
+                className={cn('flex-1 px-3 py-2 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
               />
               <button onClick={addTag} className="px-4 rounded-xl bg-[#6F2F33] text-white text-xs font-bold font-body flex items-center gap-1">
                 <Plus size={12} /> Add
@@ -337,27 +337,27 @@ export function AdminClub() {
 
             {socialConfig.map(({ key, label, icon: Icon }) => (
               <div key={key} className="flex items-center gap-2">
-                <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}>
+                <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}>
                   <Icon size={16} />
                 </div>
                 <input
                   value={socialLinks[key] || ''}
                   onChange={(e) => setSocialLinks((s) => ({ ...s, [key]: e.target.value }))}
                   placeholder={`${label} URL`}
-                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
+                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
                 />
               </div>
             ))}
 
             <div className="flex items-center gap-2">
-              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}>
+              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}>
                 <Globe size={16} />
               </div>
               <input
                 value={socialLinks.website || ''}
                 onChange={(e) => setSocialLinks((s) => ({ ...s, website: e.target.value }))}
                 placeholder="Website URL"
-                className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-zinc-50 border-zinc-200 text-[#1E1B16]')}
+                className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
               />
             </div>
           </div>

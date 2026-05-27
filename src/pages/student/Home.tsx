@@ -49,7 +49,7 @@ export function Home() {
               className="w-10 h-10 rounded-full object-cover"
             />
             <div>
-              <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Good {getTimeOfDay()},</p>
+              <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Good {getTimeOfDay()},</p>
               <p className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {user?.nickname || user?.name?.split(' ')[0] || 'Guest'} 👋
               </p>
@@ -78,10 +78,10 @@ export function Home() {
             className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
           >
             <div className="flex items-center justify-between mb-2">
-              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>Complete your profile</span>
+              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>Complete your profile</span>
               <span className="text-xs font-bold font-body text-[#6F2F33]">{user.profileCompletion}%</span>
             </div>
-            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
+            <div className={cn('h-2 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${user.profileCompletion}%` }}
@@ -156,7 +156,7 @@ export function Home() {
               onClick={handleRefresh}
               className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
             >
-              <RefreshCw size={14} className={cn(isDark ? 'text-zinc-400' : 'text-zinc-500', refreshing && 'animate-spin')} />
+              <RefreshCw size={14} className={cn(isDark ? 'text-[#A8A09A]' : 'text-[#76706A]', refreshing && 'animate-spin')} />
             </motion.button>
           </div>
           <div className="events-hscroll flex gap-3 overflow-x-auto pb-3">
@@ -190,7 +190,7 @@ export function Home() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Calendar size={10} className="text-[#6F2F33] flex-shrink-0" />
-                  <p className={cn('text-[10px] line-clamp-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+                  <p className={cn('text-[10px] line-clamp-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                     {event.title}
                   </p>
                 </div>
@@ -220,10 +220,10 @@ export function Home() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className={cn('text-xs font-bold leading-tight font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{member.name}</p>
-                    <p className={cn('text-[10px] leading-tight mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{member.role}</p>
+                    <p className={cn('text-[10px] leading-tight mt-0.5 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{member.role}</p>
                   </div>
                 </div>
-                <p className={cn('text-[10px] italic line-clamp-2 mb-1.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>"{member.quote}"</p>
+                <p className={cn('text-[10px] italic line-clamp-2 mb-1.5 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>"{member.quote}"</p>
                 <div className="flex items-center gap-1.5">
                   <img
                     src={club.logo}
@@ -249,7 +249,7 @@ export function Home() {
                 onClick={() => setFeedFilter(f)}
                 className={cn(
                   'px-3 py-1.5 rounded-full text-xs font-semibold font-body transition-all',
-                  feedFilter === f ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-zinc-400' : 'bg-[#FAF6EA] text-zinc-500 shadow-sm'
+                  feedFilter === f ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
                 )}
               >
                 {f}
@@ -280,7 +280,7 @@ export function Home() {
                       />
                       <div className="flex-1 min-w-0">
                         <p className={cn('text-xs font-bold font-body truncate', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club?.name}</p>
-                        <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+                        <p className={cn('text-[10px] font-mono', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                           {club?.category} · {new Date(item.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </p>
                       </div>
@@ -290,14 +290,14 @@ export function Home() {
                       </span>
                     </div>
                     <h4 className={cn('text-sm font-bold font-body mb-1', isDark ? 'text-white' : 'text-[#1E1B16]')}>{item.title}</h4>
-                    <p className={cn('text-xs leading-relaxed font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{item.body}</p>
+                    <p className={cn('text-xs leading-relaxed font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{item.body}</p>
                     {item.imageUrl && (
                       <img src={item.imageUrl} alt="post" className="w-full h-36 object-cover rounded-xl mt-3" loading="lazy" />
                     )}
                   </motion.div>
                 )
               }) : (
-                <div className={cn('text-center py-8 text-sm font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+                <div className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                   {feedFilter === 'My Clubs' ? 'Join clubs to see their posts here' : 'No posts yet'}
                 </div>
               )}

@@ -36,7 +36,7 @@ export function AdminStats() {
         <div style={{ color }}>{icon}</div>
       </div>
       <p className={cn('text-2xl font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{value}</p>
-      <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{label}</p>
+      <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{label}</p>
       {sub && <p className="text-xs text-[#6E8B5A] font-semibold font-body mt-1">{sub}</p>}
     </motion.div>
   )
@@ -45,7 +45,7 @@ export function AdminStats() {
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Club Stats</h1>
-        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{adminClub.name} · Semester 2026</p>
+        <p className={cn('text-xs mt-1 font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{adminClub.name} · Semester 2026</p>
       </div>
 
       <div className="px-5 space-y-5">
@@ -70,7 +70,7 @@ export function AdminStats() {
                   className="w-full rounded-t-xl min-h-[4px]"
                   style={{ background: d.month === 'May' ? '#6F2F33' : isDark ? '#2d3d4a' : '#EAE5D8' }}
                 />
-                <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{d.month}</span>
+                <span className={cn('text-[10px] font-mono', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>{d.month}</span>
               </div>
             ))}
           </div>
@@ -85,10 +85,10 @@ export function AdminStats() {
               return (
                 <div key={f.stage}>
                   <div className="flex items-center justify-between mb-1.5">
-                    <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>{f.stage}</span>
+                    <span className={cn('text-xs font-semibold font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{f.stage}</span>
                     <span className="text-xs font-black font-display" style={{ color: f.color }}>{f.count}</span>
                   </div>
-                  <div className={cn('h-3 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
+                  <div className={cn('h-3 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
                     <motion.div
                       initial={{ width: 0 }}
                       animate={{ width: `${pct}%` }}
@@ -97,7 +97,7 @@ export function AdminStats() {
                       style={{ background: f.color }}
                     />
                   </div>
-                  <p className={cn('text-[10px] mt-0.5 font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{pct}% of applicants</p>
+                  <p className={cn('text-[10px] mt-0.5 font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>{pct}% of applicants</p>
                 </div>
               )
             })}
@@ -108,12 +108,12 @@ export function AdminStats() {
         <div className={cn('rounded-2xl p-5', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
           <h3 className={cn('text-sm font-bold font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Top Committee Members</h3>
           {adminClub.members.map((m, i) => (
-            <div key={m.id} className={cn('flex items-center gap-3 py-2.5 border-b last:border-0', isDark ? 'border-[#2d3d4a]' : 'border-zinc-100')}>
-              <span className={cn('text-xs font-bold font-body w-4', isDark ? 'text-zinc-500' : 'text-zinc-400')}>#{i + 1}</span>
+            <div key={m.id} className={cn('flex items-center gap-3 py-2.5 border-b last:border-0', isDark ? 'border-[#2d3d4a]' : 'border-[#EAE5D8]')}>
+              <span className={cn('text-xs font-bold font-body w-4', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>#{i + 1}</span>
               <img src={m.avatar} alt={m.name} className="w-8 h-8 rounded-full" />
               <div className="flex-1">
                 <p className={cn('text-xs font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{m.name}</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{m.role}</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{m.role}</p>
               </div>
               <span className="text-xs font-bold font-body text-[#6F2F33]">98%</span>
             </div>

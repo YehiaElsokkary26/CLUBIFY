@@ -79,7 +79,7 @@ export function Clubs() {
       <div className={cn('sticky top-0 z-20 pt-12 pb-2 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center justify-between mb-3">
           <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Discover Clubs</h1>
-          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold', isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm')}>
+          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold', isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm')}>
             <SlidersHorizontal size={12} />
             {filtered.length} clubs
           </div>
@@ -94,7 +94,7 @@ export function Clubs() {
               key={cat} whileTap={{ scale: 0.95 }} onClick={() => setCategory(cat)}
               className={cn(
                 'flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all',
-                category === cat ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
+                category === cat ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
               )}
             >
               {cat}
@@ -104,14 +104,14 @@ export function Clubs() {
 
         {/* Sort pills */}
         <div className="flex items-center gap-2">
-          <ArrowUpDown size={12} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
-          <span className={cn('text-xs font-semibold', isDark ? 'text-gray-500' : 'text-gray-400')}>Sort:</span>
+          <ArrowUpDown size={12} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
+          <span className={cn('text-xs font-semibold', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>Sort:</span>
           {(['A–Z', 'Members', 'Recruiting'] as SortOption[]).map((s) => (
             <button
               key={s} onClick={() => setSort(s)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
-                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
+                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
               )}
             >
               {s}
@@ -127,7 +127,7 @@ export function Clubs() {
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState
-            icon={<Search size={28} className="text-gray-400" />}
+            icon={<Search size={28} className="text-[#A8A09A]" />}
             title="No clubs found"
             description={`No clubs match "${search}". Try a different search or category.`}
             action={
@@ -196,7 +196,7 @@ export function Clubs() {
                           <StatusBadge label={club.category} variant="category" category={club.category} />
                         </div>
                       </div>
-                      <p className={cn('text-xs mt-2', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                      <p className={cn('text-xs mt-2', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                         {club.memberCount.toLocaleString()} members
                       </p>
                     </div>

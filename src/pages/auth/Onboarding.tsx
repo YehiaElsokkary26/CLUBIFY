@@ -77,10 +77,10 @@ export function Onboarding() {
           {/* Header */}
           <div className="pt-14 pb-6 px-6">
             <div className="flex items-center justify-between mb-4">
-              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+              <span className={cn('text-xs font-semibold font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                 Step {step + 1} of 3
               </span>
-              <button onClick={handleFinish} className={cn('text-xs font-semibold font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+              <button onClick={handleFinish} className={cn('text-xs font-semibold font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                 Skip
               </button>
             </div>
@@ -109,7 +109,7 @@ export function Onboarding() {
               <h2 className={cn('text-2xl font-black mb-1 font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {steps[step].title}
               </h2>
-              <p className={cn('text-sm mb-6 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+              <p className={cn('text-sm mb-6 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                 {steps[step].subtitle}
               </p>
 
@@ -124,7 +124,7 @@ export function Onboarding() {
                         'px-5 py-2.5 rounded-2xl text-sm font-semibold font-body border-2 transition-all',
                         selectedInterests.includes(i)
                           ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
-                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
+                          : isDark ? 'border-[#2d3d4a] text-[#C8BFAF] bg-[#23323F]' : 'border-[#D8D0BE] text-[#5C5650] bg-[#FAF6EA]'
                       )}
                     >
                       {i}
@@ -144,7 +144,7 @@ export function Onboarding() {
                         'w-full px-4 py-4 rounded-2xl text-left text-sm font-semibold font-body border-2 transition-all',
                         selectedActivity === level
                           ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
-                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
+                          : isDark ? 'border-[#2d3d4a] text-[#C8BFAF] bg-[#23323F]' : 'border-[#D8D0BE] text-[#5C5650] bg-[#FAF6EA]'
                       )}
                     >
                       {level}
@@ -164,7 +164,7 @@ export function Onboarding() {
                         'px-4 py-2.5 rounded-2xl text-sm font-semibold font-body border-2 transition-all',
                         selectedGoals.includes(g)
                           ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
-                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
+                          : isDark ? 'border-[#2d3d4a] text-[#C8BFAF] bg-[#23323F]' : 'border-[#D8D0BE] text-[#5C5650] bg-[#FAF6EA]'
                       )}
                     >
                       {g}
@@ -196,7 +196,7 @@ export function Onboarding() {
             <h2 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
               Your Top Picks!
             </h2>
-            <p className={cn('text-sm mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+            <p className={cn('text-sm mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
               Based on your interests, we think you'll love these clubs
             </p>
           </div>
@@ -216,7 +216,7 @@ export function Onboarding() {
                 <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
                 <div className="flex-1">
                   <h4 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.name}</h4>
-                  <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{club.memberCount} members · {club.category}</p>
+                  <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{club.memberCount} members · {club.category}</p>
                 </div>
                 {club.isRecruiting && (
                   <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-[#6E8B5A]/10 text-[#6E8B5A] text-[10px] font-bold font-body">
@@ -226,7 +226,7 @@ export function Onboarding() {
                 )}
               </motion.div>
             )) : (
-              <p className={cn('text-center text-sm font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+              <p className={cn('text-center text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                 Explore all clubs to find your match!
               </p>
             )}

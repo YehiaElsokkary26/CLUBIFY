@@ -54,25 +54,25 @@ export function Recruit() {
       <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center justify-between mb-1">
           <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Open Recruitments</h1>
-          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#23323F] text-gray-300' : 'bg-[#6F2F33]/10 text-[#6F2F33]')}>
+          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#23323F] text-[#C8BFAF]' : 'bg-[#6F2F33]/10 text-[#6F2F33]')}>
             {filtered.length} open
           </span>
         </div>
-        <p className={cn('text-xs mb-4', isDark ? 'text-gray-400' : 'text-gray-500')}>
+        <p className={cn('text-xs mb-4', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
           Apply now before spots fill up!
         </p>
         <SearchBar value={search} onChange={setSearch} placeholder="Search clubs..." className="mb-3" />
 
         {/* Sort pills */}
         <div className="flex gap-2 mb-2">
-          <span className={cn('text-xs font-semibold self-center', isDark ? 'text-gray-400' : 'text-gray-500')}>Sort:</span>
+          <span className={cn('text-xs font-semibold self-center', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Sort:</span>
           {(['Deadline', 'Spots', 'Category'] as SortOption[]).map((s) => (
             <button
               key={s}
               onClick={() => setSort(s)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
-                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
+                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
               )}
             >
               {s}
@@ -96,7 +96,7 @@ export function Recruit() {
                   'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
                   categoryFilter === cat
                     ? 'bg-[#6F2F33] text-white'
-                    : isDark ? 'bg-[#23323F] text-gray-400' : 'bg-[#FAF6EA] text-gray-500 shadow-sm'
+                    : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
                 )}
               >
                 {cat}
@@ -111,7 +111,7 @@ export function Recruit() {
           Array.from({ length: 4 }).map((_, i) => <RecruitmentCardSkeleton key={i} />)
         ) : filtered.length === 0 ? (
           <EmptyState
-            icon={<Users size={28} className="text-gray-400" />}
+            icon={<Users size={28} className="text-[#A8A09A]" />}
             title={sort === 'Deadline' ? 'No active recruitments' : 'No clubs found'}
             description={
               sort === 'Deadline'

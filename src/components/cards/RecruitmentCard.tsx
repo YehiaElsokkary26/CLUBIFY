@@ -72,7 +72,7 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
             </div>
           </div>
 
-          <div className={cn('flex items-center gap-3 mt-2 text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+          <div className={cn('flex items-center gap-3 mt-2 text-xs font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             <span className="flex items-center gap-1">
               <Calendar size={11} />
               Deadline: {formatDateShort(recruitment.deadline)}
