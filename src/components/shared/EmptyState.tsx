@@ -18,13 +18,13 @@ export function EmptyState({ icon, title, description, action, className }: Empt
         <div
           className={cn(
             'w-20 h-20 rounded-3xl flex items-center justify-center mb-5',
-            isDark ? 'bg-[#27272A]' : 'bg-[#F4F4F5]'
+            isDark ? 'bg-[#23323F]' : 'bg-[#F2EDDF]'
           )}
         >
           {icon}
         </div>
       )}
-      <h3 className={cn('text-lg font-bold mb-2 font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>{title}</h3>
+      <h3 className={cn('text-lg font-bold mb-2 font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{title}</h3>
       {description && (
         <p className={cn('text-sm leading-relaxed mb-6 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{description}</p>
       )}

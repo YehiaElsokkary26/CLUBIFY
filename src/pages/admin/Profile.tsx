@@ -90,41 +90,41 @@ export function AdminProfile() {
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 transition-colors',
-          isDark ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                 : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]')}
+          isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                 : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
       />
     </div>
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Header */}
-      <div className={cn('pt-12 pb-4 px-5 flex items-center justify-between', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
-        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
-          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#27272A]'} />
+      <div className={cn('pt-12 pb-4 px-5 flex items-center justify-between', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
+        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#1E1B16]'} />
         </button>
-        <h1 className={cn('text-xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>My Profile</h1>
+        <h1 className={cn('text-xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>My Profile</h1>
         <div className="w-9" />
       </div>
 
       <div className="px-5 space-y-4">
         {/* Avatar & header card */}
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
-          className={cn('rounded-2xl p-5 flex flex-col items-center', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
+          className={cn('rounded-2xl p-5 flex flex-col items-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
           <button onClick={() => setShowPhotoMenu(true)} className="relative group">
             <img src={user.avatar} alt={user.name} className="w-24 h-24 rounded-2xl object-cover" />
-            <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#0891B2] flex items-center justify-center shadow-md border-2 border-white">
+            <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[#6F2F33] flex items-center justify-center shadow-md border-2 border-white">
               <Camera size={14} className="text-white" />
             </div>
           </button>
-          <h2 className={cn('text-lg font-black font-display tracking-wide mt-3', isDark ? 'text-white' : 'text-[#27272A]')}>{user.name}</h2>
-          <p className="text-xs font-semibold font-body text-[#0891B2]">{extra.position} · {adminClub.name}</p>
+          <h2 className={cn('text-lg font-black font-display tracking-wide mt-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>{user.name}</h2>
+          <p className="text-xs font-semibold font-body text-[#6F2F33]">{extra.position} · {adminClub.name}</p>
           <p className={cn('text-[10px] mt-0.5 font-mono font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{user.gucId}</p>
         </motion.div>
 
         {/* Role at club */}
-        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Role at club</h3>
+        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Role at club</h3>
           <Field
             icon={<Briefcase size={11} />}
             label="Position"
@@ -135,8 +135,8 @@ export function AdminProfile() {
         </div>
 
         {/* Personal info */}
-        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Personal info</h3>
+        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Personal info</h3>
           <Field icon={<Edit3 size={11} />} label="Full name" value={draft.name} onChange={(v) => setDraft((d) => ({ ...d, name: v }))} placeholder="Your name" />
           <Field icon={<GraduationCap size={11} />} label="Faculty" value={draft.faculty} onChange={(v) => setDraft((d) => ({ ...d, faculty: v }))} placeholder="Faculty / program" />
           <Field icon={<Hash size={11} />} label="Year" type="number" value={draft.year} onChange={(v) => setDraft((d) => ({ ...d, year: Math.max(1, Math.min(6, Number(v) || 1)) }))} />
@@ -151,20 +151,20 @@ export function AdminProfile() {
               rows={3}
               placeholder="Tell students about yourself..."
               className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
-                isDark ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                       : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]')}
+                isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                       : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
             />
           </div>
         </div>
 
         {/* Contact */}
-        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Contact</h3>
+        <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Contact</h3>
           <div>
             <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
               <Mail size={11} /> Email
             </label>
-            <div className={cn('w-full px-4 py-3 rounded-xl text-sm font-body border-2', isDark ? 'bg-[#3F3F46] border-[#52525B] text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-500')}>
+            <div className={cn('w-full px-4 py-3 rounded-xl text-sm font-body border-2', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-500')}>
               {user.email}
             </div>
           </div>
@@ -174,16 +174,16 @@ export function AdminProfile() {
         </div>
 
         {/* Fun */}
-        <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#27272A]' : 'bg-white shadow-sm')}>
-          <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#27272A]')}>Fun fact</h3>
+        <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Fun fact</h3>
           <textarea
             value={extra.funFact}
             onChange={(e) => setExtra((x) => ({ ...x, funFact: e.target.value }))}
             rows={2}
             placeholder="Something students should know about you 🎬"
             className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none',
-              isDark ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                     : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]')}
+              isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                     : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
           />
         </div>
 
@@ -191,7 +191,7 @@ export function AdminProfile() {
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={saveProfile}
-          className="w-full py-4 rounded-2xl bg-[#0891B2] text-white font-bold font-body text-sm flex items-center justify-center gap-2 shadow-lg"
+          className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body text-sm flex items-center justify-center gap-2 shadow-lg"
         >
           <Save size={16} /> Save Profile
         </motion.button>
@@ -218,33 +218,33 @@ export function AdminProfile() {
               onClick={() => setShowPhotoMenu(false)} className="fixed inset-0 bg-black z-40" />
             <motion.div initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
               transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-              className={cn('fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] rounded-t-3xl z-50 px-5 pb-10 pt-5', isDark ? 'bg-[#27272A]' : 'bg-white')}
+              className={cn('fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[430px] rounded-t-3xl z-50 px-5 pb-10 pt-5', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>Profile photo</h3>
-                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+                <h3 className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Profile photo</h3>
+                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
                   <X size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
                 </button>
               </div>
-              <button onClick={() => cameraRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}>
-                <div className="w-9 h-9 rounded-xl bg-[#0891B2]/10 flex items-center justify-center">
-                  <Camera size={16} className="text-[#0891B2]" />
+              <button onClick={() => cameraRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
+                <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
+                  <Camera size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
-                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>Take photo</p>
+                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Take photo</p>
                   <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Use your camera</p>
                 </div>
               </button>
-              <button onClick={() => fileRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}>
-                <div className="w-9 h-9 rounded-xl bg-[#0891B2]/10 flex items-center justify-center">
-                  <Upload size={16} className="text-[#0891B2]" />
+              <button onClick={() => fileRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
+                <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
+                  <Upload size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
-                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#27272A]')}>Upload from device</p>
+                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Upload from device</p>
                   <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Choose an image from your files</p>
                 </div>
               </button>
-              <button onClick={removePhoto} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}>
+              <button onClick={removePhoto} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
                 <div className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center">
                   <Trash2 size={16} className="text-red-500" />
                 </div>
@@ -265,16 +265,16 @@ export function AdminProfile() {
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 0.5 }} exit={{ opacity: 0 }}
               onClick={() => setShowSignOutConfirm(false)} className="fixed inset-0 bg-black z-40" />
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }}
-              className={cn('fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] max-w-sm rounded-3xl p-6 z-50 shadow-2xl', isDark ? 'bg-[#27272A]' : 'bg-white')}
+              className={cn('fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[88%] max-w-sm rounded-3xl p-6 z-50 shadow-2xl', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}
             >
               <div className="flex items-center justify-center w-12 h-12 rounded-full bg-red-100 mx-auto mb-4">
                 <LogOut size={20} className="text-red-500" />
               </div>
-              <h3 className={cn('text-base font-black font-display tracking-wide text-center', isDark ? 'text-white' : 'text-[#27272A]')}>Sign out?</h3>
+              <h3 className={cn('text-base font-black font-display tracking-wide text-center', isDark ? 'text-white' : 'text-[#1E1B16]')}>Sign out?</h3>
               <p className={cn('text-xs text-center mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>You'll be returned to the login screen.</p>
               <div className="flex gap-2 mt-5">
                 <button onClick={() => setShowSignOutConfirm(false)}
-                  className={cn('flex-1 py-3 rounded-2xl text-sm font-bold font-body', isDark ? 'bg-[#3F3F46] text-zinc-300' : 'bg-zinc-100 text-zinc-700')}>
+                  className={cn('flex-1 py-3 rounded-2xl text-sm font-bold font-body', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-700')}>
                   Cancel
                 </button>
                 <button onClick={handleSignOut} className="flex-1 py-3 rounded-2xl bg-red-500 text-white text-sm font-bold font-body">

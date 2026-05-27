@@ -68,17 +68,17 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
   }
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Header */}
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center gap-3">
           <button
             onClick={() => navigate(-1)}
-            className={cn('w-9 h-9 rounded-full flex items-center justify-center', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}
+            className={cn('w-9 h-9 rounded-full flex items-center justify-center', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}
           >
-            <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#1C1C1E]'} />
+            <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#1E1B16]'} />
           </button>
-          <h1 className={cn('text-xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Terms & Conditions</h1>
+          <h1 className={cn('text-xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Terms & Conditions</h1>
         </div>
       </div>
 
@@ -87,7 +87,7 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="rounded-2xl p-4 bg-[#8B1A1A] flex items-center gap-4"
+          className="rounded-2xl p-4 bg-[#6F2F33] flex items-center gap-4"
         >
           <div className="w-12 h-12 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
             <Shield size={24} className="text-white" />
@@ -99,10 +99,10 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
         </motion.div>
 
         {/* Sections */}
-        <div className={cn('rounded-2xl overflow-hidden', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
+        <div className={cn('rounded-2xl overflow-hidden', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
           {SECTIONS.map((section, i) => (
             <div key={i} className={cn('px-4 py-4', i < SECTIONS.length - 1 && (isDark ? 'border-b border-[#3A3A3C]' : 'border-b border-gray-100'))}>
-              <p className={cn('text-xs font-bold mb-1.5', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{section.title}</p>
+              <p className={cn('text-xs font-bold mb-1.5', isDark ? 'text-white' : 'text-[#1E1B16]')}>{section.title}</p>
               <p className={cn('text-xs leading-relaxed', isDark ? 'text-gray-400' : 'text-gray-500')}>{section.body}</p>
             </div>
           ))}
@@ -110,9 +110,9 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
 
         {/* Accept / Already accepted */}
         {alreadyAccepted && !showAcceptButton ? (
-          <div className={cn('flex items-center gap-3 rounded-2xl p-4', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
+          <div className={cn('flex items-center gap-3 rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
             <CheckCircle size={20} className="text-green-500" />
-            <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+            <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1E1B16]')}>
               You have accepted these terms
             </p>
           </div>
@@ -120,7 +120,7 @@ export function Terms({ onAccept, showAcceptButton = false }: TermsProps) {
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleAccept}
-            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base shadow-lg"
+            className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold text-base shadow-lg"
           >
             I Accept the Terms & Conditions
           </motion.button>

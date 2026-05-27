@@ -3,35 +3,45 @@
 /* ── Tailwind v4 theme tokens ─────────────────────────────────────────────── */
 @theme {
   /* Surfaces */
-  --color-bg:            #F4F4F5;
-  --color-surface:       #FFFFFF;
-  --color-surface-2:     #F4F4F5;
-  --color-border:        #D4D4D8;
-  --color-border-soft:   #E4E4E7;
+  --color-bg:            #F2EDDF;
+  --color-surface:       #FAF6EA;
+  --color-surface-2:     #EDE8D8;
+  --color-border:        #D8D0BE;
+  --color-border-soft:   #EAE5D8;
 
-  /* Dark-mode surface variants (used with isDark conditional classes) */
-  --color-bg-dk:         #18181B;
-  --color-surface-dk:    #27272A;
-  --color-surface-2-dk:  #3F3F46;
-  --color-border-dk:     #3F3F46;
+  /* Dark-mode surface variants */
+  --color-bg-dk:         #1E1B16;
+  --color-surface-dk:    #23323F;
+  --color-surface-2-dk:  #2d3d4a;
+  --color-border-dk:     #2d3d4a;
 
   /* Text */
-  --color-text-primary:   #27272A;
-  --color-text-secondary: #71717A;
-  --color-text-inverted:  #FFFFFF;
+  --color-text-primary:   #1E1B16;
+  --color-text-secondary: #76706A;
+  --color-text-inverted:  #FAF6EA;
 
-  /* Ocean Teal — primary brand */
-  --color-primary:       #0891B2;
-  --color-primary-dark:  #0C4A6E;
-  --color-primary-light: #E0F2FE;
-  --color-primary-muted: #BAE6FD;
+  /* Burgundy — primary brand */
+  --color-primary:       #6F2F33;
+  --color-primary-dark:  #5c2427;
+  --color-primary-light: #fae8e9;
+  --color-primary-muted: #e8c5c8;
 
   /* Semantic */
-  --color-success:  #059669;
-  --color-warning:  #D97706;
-  --color-error:    #DC2626;
+  --color-success:  #6E8B5A;
+  --color-warning:  #C99B2E;
+  --color-error:    #C75A6B;
 
-  /* Zinc scale */
+  /* Extended palette */
+  --color-terracotta: #D7704A;
+  --color-navy:       #23323F;
+  --color-lavender:   #9989C4;
+  --color-mustard:    #C99B2E;
+  --color-butter:     #E8C76A;
+  --color-sky:        #4A7CA8;
+  --color-rose:       #C75A6B;
+  --color-sage:       #6E8B5A;
+
+  /* Zinc scale (kept for Tailwind compatibility) */
   --color-zinc-50:  #FAFAFA;
   --color-zinc-100: #F4F4F5;
   --color-zinc-200: #E4E4E7;
@@ -44,36 +54,43 @@
   --color-zinc-900: #18181B;
 
   /* Typography */
-  --font-family-display: 'Josefin Sans', sans-serif;
-  --font-family-body:    'Lato', sans-serif;
-  --font-family-sans:    'Lato', sans-serif;
+  --font-family-display: 'Bricolage Grotesque', sans-serif;
+  --font-family-body:    'Bricolage Grotesque', sans-serif;
+  --font-family-sans:    'Bricolage Grotesque', sans-serif;
 }
 
-/* ── Design tokens as CSS custom properties (for inline styles & raw CSS) ── */
+/* ── Design tokens as CSS custom properties ─────────────────────────────── */
 :root {
   /* Surfaces */
-  --color-bg:            #F4F4F5;
-  --color-surface:       #FFFFFF;
-  --color-surface-2:     #F4F4F5;
-  --color-border:        #D4D4D8;
-  --color-border-soft:   #E4E4E7;
+  --color-bg:            #F2EDDF;
+  --color-surface:       #FAF6EA;
+  --color-surface-2:     #EDE8D8;
+  --color-border:        #D8D0BE;
+  --color-border-soft:   #EAE5D8;
 
   /* Text */
-  --color-text-primary:   #27272A;
-  --color-text-secondary: #71717A;
-  --color-text-inverted:  #FFFFFF;
+  --color-text-primary:   #1E1B16;
+  --color-text-secondary: #76706A;
+  --color-text-inverted:  #FAF6EA;
 
-  /* Ocean Teal */
-  --color-primary:       #0891B2;
-  --color-primary-dark:  #0C4A6E;
-  --color-primary-light: #E0F2FE;
-  --color-primary-muted: #BAE6FD;
+  /* Burgundy — primary brand */
+  --color-primary:       #6F2F33;
+  --color-primary-dark:  #5c2427;
+  --color-primary-light: #fae8e9;
+  --color-primary-muted: #e8c5c8;
 
   /* Semantic */
-  --color-success: #059669;
-  --color-warning: #D97706;
-  --color-error:   #DC2626;
-  --color-info:    #0891B2;
+  --color-success: #6E8B5A;
+  --color-warning: #C99B2E;
+  --color-error:   #C75A6B;
+  --color-info:    #4A7CA8;
+
+  /* Extended palette */
+  --color-terracotta: #D7704A;
+  --color-navy:       #23323F;
+  --color-lavender:   #9989C4;
+  --color-butter:     #E8C76A;
+  --color-sky:        #4A7CA8;
 
   /* Zinc scale */
   --zinc-50:  #FAFAFA;
@@ -88,39 +105,39 @@
   --zinc-900: #18181B;
 
   /* Typography */
-  --font-display: 'Josefin Sans', sans-serif;
-  --font-body:    'Lato', sans-serif;
+  --font-display: 'Bricolage Grotesque', sans-serif;
+  --font-body:    'Bricolage Grotesque', sans-serif;
 
   /* Shape */
   --radius-sm:   6px;
   --radius-md:   10px;
   --radius-lg:   16px;
-  --radius-xl:   20px;
+  --radius-xl:   22px;
   --radius-full: 9999px;
 
   /* Shadows */
-  --shadow-sm:   0 1px 3px rgba(39,39,42,0.08), 0 1px 2px rgba(39,39,42,0.04);
-  --shadow-md:   0 4px 12px rgba(39,39,42,0.10), 0 2px 6px rgba(39,39,42,0.06);
-  --shadow-lg:   0 12px 32px rgba(39,39,42,0.12), 0 4px 12px rgba(39,39,42,0.08);
-  --shadow-teal: 0 4px 20px rgba(8,145,178,0.20);
+  --shadow-sm:        0 1px 3px rgba(30,27,22,0.08), 0 1px 2px rgba(30,27,22,0.04);
+  --shadow-md:        0 4px 12px rgba(30,27,22,0.10), 0 2px 6px rgba(30,27,22,0.06);
+  --shadow-lg:        0 12px 32px rgba(30,27,22,0.12), 0 4px 12px rgba(30,27,22,0.08);
+  --shadow-burgundy:  0 4px 20px rgba(111,47,51,0.20);
 }
 
-/* ── Dark mode overrides ────────────────────────────────────────────────────── */
+/* ── Dark mode overrides ────────────────────────────────────────────────── */
 .dark {
-  --color-bg:            #18181B;
-  --color-surface:       #27272A;
-  --color-surface-2:     #3F3F46;
-  --color-border:        #3F3F46;
-  --color-border-soft:   #52525B;
-  --color-text-primary:  #F4F4F5;
-  --color-text-secondary:#A1A1AA;
-  --color-primary-light: rgba(8,145,178,0.15);
-  --color-primary-muted: rgba(8,145,178,0.25);
+  --color-bg:            #1E1B16;
+  --color-surface:       #23323F;
+  --color-surface-2:     #2d3d4a;
+  --color-border:        #2d3d4a;
+  --color-border-soft:   #3a4d5a;
+  --color-text-primary:  #FAF6EA;
+  --color-text-secondary:#A8A09A;
+  --color-primary-light: rgba(111,47,51,0.15);
+  --color-primary-muted: rgba(111,47,51,0.25);
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 12px rgba(0,0,0,0.4);
 }
 
-/* ── Global reset & body ────────────────────────────────────────────────────── */
+/* ── Global reset & body ────────────────────────────────────────────────── */
 * {
   box-sizing: border-box;
 }
@@ -130,7 +147,7 @@ body {
   font-size: 15px;
   line-height: 1.6;
   color: var(--color-text-primary);
-  background-color: #d1d5db;
+  background-color: #C8BDA8;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -142,32 +159,32 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  background: #d1d5db;
+  background: #C8BDA8;
 }
 
-/* ── Typography utility classes ─────────────────────────────────────────────── */
+/* ── Typography utility classes ─────────────────────────────────────────── */
 .type-hero {
   font-family: var(--font-display);
-  font-size: clamp(28px, 6vw, 42px);
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  line-height: 1.15;
+  font-size: clamp(32px, 7vw, 48px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
   color: var(--color-text-primary);
 }
 
 .type-title {
   font-family: var(--font-display);
-  font-size: clamp(20px, 3vw, 26px);
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  line-height: 1.25;
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 .type-section {
   font-family: var(--font-display);
-  font-size: 18px;
+  font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
 }
@@ -175,7 +192,7 @@ body {
 .type-label {
   font-family: var(--font-display);
   font-size: 11px;
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
@@ -183,7 +200,7 @@ body {
 
 .type-body {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   line-height: 1.65;
   color: var(--color-text-primary);
@@ -199,12 +216,21 @@ body {
 .type-stat {
   font-family: var(--font-display);
   font-size: clamp(28px, 5vw, 40px);
-  font-weight: 700;
-  letter-spacing: -0.01em;
+  font-weight: 800;
+  letter-spacing: -0.02em;
   color: var(--color-text-primary);
 }
 
-/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+.type-mono {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 0px;
   height: 0px;
@@ -223,7 +249,7 @@ body {
 
 .events-hscroll {
   scrollbar-width: thin;
-  scrollbar-color: #0891B2 transparent;
+  scrollbar-color: #6F2F33 transparent;
 }
 
 .events-hscroll::-webkit-scrollbar {
@@ -238,28 +264,28 @@ body {
 }
 
 .events-hscroll::-webkit-scrollbar-thumb {
-  background: #0891B2;
+  background: #6F2F33;
   border-radius: 10px;
 }
 
 .events-hscroll::-webkit-scrollbar-thumb:hover {
-  background: #0C4A6E;
+  background: #5c2427;
 }
 
-/* ── Animations ────────────────────────────────────────────────────────────── */
+/* ── Animations ─────────────────────────────────────────────────────────── */
 @keyframes shimmer {
   0%   { background-position: -200% 0; }
   100% { background-position:  200% 0; }
 }
 
 .shimmer {
-  background: linear-gradient(90deg, #E4E4E7 25%, #D4D4D8 50%, #E4E4E7 75%);
+  background: linear-gradient(90deg, #EAE5D8 25%, #D8D0BE 50%, #EAE5D8 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
 
 .dark .shimmer {
-  background: linear-gradient(90deg, #3F3F46 25%, #52525B 50%, #3F3F46 75%);
+  background: linear-gradient(90deg, #2d3d4a 25%, #3a4d5a 50%, #2d3d4a 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }

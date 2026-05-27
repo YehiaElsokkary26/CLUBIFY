@@ -111,14 +111,14 @@ export function AdminFeed() {
   const sizeKb = (b: number) => (b / 1024).toFixed(0)
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#18181B]' : 'bg-[#F4F4F5]')}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         <div className="flex items-center justify-between mb-1">
-          <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>Feed Manager</h1>
+          <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Feed Manager</h1>
           <div className="flex items-center gap-2">
             <button
               onClick={() => navigate('/admin/profile')}
-              className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#0891B2]/30 shadow-sm"
+              className="w-10 h-10 rounded-full overflow-hidden border-2 border-[#6F2F33]/30 shadow-sm"
               aria-label="My profile"
             >
               <img src={user?.avatar} alt={user?.name} className="w-full h-full object-cover" />
@@ -126,7 +126,7 @@ export function AdminFeed() {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setShowForm(true)}
-              className="w-10 h-10 rounded-full bg-[#0891B2] flex items-center justify-center shadow-lg"
+              className="w-10 h-10 rounded-full bg-[#6F2F33] flex items-center justify-center shadow-lg"
               aria-label="New post"
             >
               <Plus size={20} className="text-white" />
@@ -144,13 +144,13 @@ export function AdminFeed() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={cn('mx-5 mb-4 rounded-2xl p-5 shadow-md', isDark ? 'bg-[#27272A]' : 'bg-white')}
+            className={cn('mx-5 mb-4 rounded-2xl p-5 shadow-md', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>
+              <h3 className={cn('text-base font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {editId ? 'Edit Post' : 'New Post'}
               </h3>
-              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-100')}>
+              <button onClick={resetForm} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
                 <X size={14} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
               </button>
             </div>
@@ -169,8 +169,8 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-base font-bold font-body outline-none border-2 transition-colors',
                     isDark
-                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
                   )}
                 />
               </div>
@@ -188,8 +188,8 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
                     isDark
-                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
                   )}
                 />
               </div>
@@ -206,8 +206,8 @@ export function AdminFeed() {
                   className={cn(
                     'w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2',
                     isDark
-                      ? 'bg-[#3F3F46] border-[#52525B] text-white placeholder:text-zinc-500 focus:border-[#0891B2]'
-                      : 'bg-zinc-50 border-zinc-200 text-[#27272A] placeholder:text-zinc-400 focus:border-[#0891B2]'
+                      ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
+                      : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]'
                   )}
                 />
               </div>
@@ -229,7 +229,7 @@ export function AdminFeed() {
                   onClick={() => fileRef.current?.click()}
                   className={cn(
                     'w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body',
-                    isDark ? 'border-[#52525B] text-zinc-300' : 'border-zinc-300 text-zinc-600'
+                    isDark ? 'border-[#3a4d5a] text-zinc-300' : 'border-zinc-300 text-zinc-600'
                   )}
                 >
                   <Paperclip size={14} />
@@ -241,13 +241,13 @@ export function AdminFeed() {
                     {attachments.map((a) => (
                       <div
                         key={a.id}
-                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#3F3F46]' : 'bg-zinc-50')}
+                        className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}
                       >
                         <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', a.type === 'pdf' ? 'bg-red-100' : 'bg-blue-100')}>
                           {a.type === 'pdf' ? <FileText size={16} className="text-red-600" /> : <FileImage size={16} className="text-blue-600" />}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className={cn('text-xs font-semibold font-body truncate', isDark ? 'text-white' : 'text-[#27272A]')}>{a.name}</p>
+                          <p className={cn('text-xs font-semibold font-body truncate', isDark ? 'text-white' : 'text-[#1E1B16]')}>{a.name}</p>
                           <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{sizeKb(a.size)} KB · {a.type.toUpperCase()}</p>
                         </div>
                         <button
@@ -275,7 +275,7 @@ export function AdminFeed() {
                       onClick={() => setAudience(a)}
                       className={cn(
                         'flex-1 py-2.5 rounded-xl text-xs font-bold font-body',
-                        audience === a ? 'bg-[#0891B2] text-white' : isDark ? 'bg-[#3F3F46] text-zinc-400' : 'bg-zinc-100 text-zinc-600'
+                        audience === a ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-zinc-400' : 'bg-zinc-100 text-zinc-600'
                       )}
                     >
                       {a}
@@ -287,7 +287,7 @@ export function AdminFeed() {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSubmit}
-                className="w-full py-3.5 rounded-2xl bg-[#0891B2] text-white font-bold font-body text-sm flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-2xl bg-[#6F2F33] text-white font-bold font-body text-sm flex items-center justify-center gap-2"
               >
                 <Check size={16} />
                 {editId ? 'Update Post' : 'Publish Post'}
@@ -305,10 +305,10 @@ export function AdminFeed() {
             layout
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#27272A]' : 'bg-white')}
+            className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}
           >
             <div className="flex items-start justify-between gap-2 mb-2">
-              <h4 className={cn('text-sm font-bold font-body flex-1', isDark ? 'text-white' : 'text-[#27272A]')}>{post.title}</h4>
+              <h4 className={cn('text-sm font-bold font-body flex-1', isDark ? 'text-white' : 'text-[#1E1B16]')}>{post.title}</h4>
               <div className="flex gap-2 flex-shrink-0">
                 <button onClick={() => handleEdit(post)} className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center" aria-label="Edit">
                   <Edit2 size={13} className="text-blue-600" />
@@ -327,7 +327,7 @@ export function AdminFeed() {
                     key={a.id}
                     href={a.dataUrl}
                     download={a.name}
-                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold font-body', isDark ? 'bg-[#3F3F46] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}
+                    className={cn('flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-semibold font-body', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-600')}
                   >
                     {a.type === 'pdf' ? <FileText size={11} /> : <FileImage size={11} />}
                     <span className="truncate max-w-[120px]">{a.name}</span>

@@ -71,7 +71,7 @@ export function Onboarding() {
   const recommended = getRecommendedClubs()
 
   return (
-    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#18181B' : '#F4F4F5' }}>
+    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {!showResults ? (
         <>
           {/* Header */}
@@ -91,7 +91,7 @@ export function Onboarding() {
                   key={s}
                   className={cn(
                     'h-1.5 rounded-full flex-1 transition-all duration-300',
-                    s <= step ? 'bg-[#0891B2]' : isDark ? 'bg-[#3F3F46]' : 'bg-[#D4D4D8]'
+                    s <= step ? 'bg-[#6F2F33]' : isDark ? 'bg-[#2d3d4a]' : 'bg-[#D4D4D8]'
                   )}
                 />
               ))}
@@ -106,7 +106,7 @@ export function Onboarding() {
               exit={{ opacity: 0, x: -40 }}
               className="flex-1 px-6"
             >
-              <h2 className={cn('text-2xl font-black mb-1 font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>
+              <h2 className={cn('text-2xl font-black mb-1 font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                 {steps[step].title}
               </h2>
               <p className={cn('text-sm mb-6 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
@@ -123,8 +123,8 @@ export function Onboarding() {
                       className={cn(
                         'px-5 py-2.5 rounded-2xl text-sm font-semibold font-body border-2 transition-all',
                         selectedInterests.includes(i)
-                          ? 'bg-[#0891B2] border-[#0891B2] text-white'
-                          : isDark ? 'border-[#3F3F46] text-zinc-300 bg-[#27272A]' : 'border-[#D4D4D8] text-zinc-600 bg-white'
+                          ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
+                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
                       )}
                     >
                       {i}
@@ -143,8 +143,8 @@ export function Onboarding() {
                       className={cn(
                         'w-full px-4 py-4 rounded-2xl text-left text-sm font-semibold font-body border-2 transition-all',
                         selectedActivity === level
-                          ? 'bg-[#0891B2] border-[#0891B2] text-white'
-                          : isDark ? 'border-[#3F3F46] text-zinc-300 bg-[#27272A]' : 'border-[#D4D4D8] text-zinc-600 bg-white'
+                          ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
+                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
                       )}
                     >
                       {level}
@@ -163,8 +163,8 @@ export function Onboarding() {
                       className={cn(
                         'px-4 py-2.5 rounded-2xl text-sm font-semibold font-body border-2 transition-all',
                         selectedGoals.includes(g)
-                          ? 'bg-[#0891B2] border-[#0891B2] text-white'
-                          : isDark ? 'border-[#3F3F46] text-zinc-300 bg-[#27272A]' : 'border-[#D4D4D8] text-zinc-600 bg-white'
+                          ? 'bg-[#6F2F33] border-[#6F2F33] text-white'
+                          : isDark ? 'border-[#2d3d4a] text-zinc-300 bg-[#23323F]' : 'border-[#D8D0BE] text-zinc-600 bg-[#FAF6EA]'
                       )}
                     >
                       {g}
@@ -180,7 +180,7 @@ export function Onboarding() {
               whileTap={{ scale: 0.97 }}
               onClick={handleNext}
               disabled={!canNext}
-              className="w-full py-4 rounded-2xl bg-[#0891B2] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(8,145,178,0.30)] disabled:opacity-45 flex items-center justify-center gap-2 hover:bg-[#0C4A6E] transition-colors"
+              className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(111,47,51,0.30)] disabled:opacity-45 flex items-center justify-center gap-2 hover:bg-[#5c2427] transition-colors"
             >
               {step < 2 ? 'Next' : 'See My Clubs'}
               <ChevronRight size={18} />
@@ -190,10 +190,10 @@ export function Onboarding() {
       ) : (
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="flex-1 flex flex-col px-6 pt-14">
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-3xl bg-[#E0F2FE] flex items-center justify-center mx-auto mb-4">
-              <Sparkles size={28} className="text-[#0891B2]" />
+            <div className="w-16 h-16 rounded-3xl bg-[#fae8e9] flex items-center justify-center mx-auto mb-4">
+              <Sparkles size={28} className="text-[#6F2F33]" />
             </div>
-            <h2 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>
+            <h2 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
               Your Top Picks!
             </h2>
             <p className={cn('text-sm mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
@@ -209,18 +209,18 @@ export function Onboarding() {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.15 }}
                 className={cn(
-                  'flex items-center gap-4 p-4 rounded-2xl border-l-4 border-l-[#0891B2]',
-                  isDark ? 'bg-[#27272A] border border-[#3F3F46]' : 'bg-white border border-[#D4D4D8] shadow-sm'
+                  'flex items-center gap-4 p-4 rounded-2xl border-l-4 border-l-[#6F2F33]',
+                  isDark ? 'bg-[#23323F] border border-[#2d3d4a]' : 'bg-[#FAF6EA] border border-[#D8D0BE] shadow-sm'
                 )}
               >
                 <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
                 <div className="flex-1">
-                  <h4 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#27272A]')}>{club.name}</h4>
+                  <h4 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.name}</h4>
                   <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{club.memberCount} members · {club.category}</p>
                 </div>
                 {club.isRecruiting && (
-                  <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-[#059669]/10 text-[#059669] text-[10px] font-bold font-body">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669] pulse-dot" />
+                  <span className="flex items-center gap-1 px-2 py-1 rounded-full bg-[#6E8B5A]/10 text-[#6E8B5A] text-[10px] font-bold font-body">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#6E8B5A] pulse-dot" />
                     Recruiting
                   </span>
                 )}
@@ -236,7 +236,7 @@ export function Onboarding() {
             <motion.button
               whileTap={{ scale: 0.97 }}
               onClick={handleFinish}
-              className="w-full py-4 rounded-2xl bg-[#0891B2] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(8,145,178,0.30)] hover:bg-[#0C4A6E] transition-colors"
+              className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(111,47,51,0.30)] hover:bg-[#5c2427] transition-colors"
             >
               Get Started 🎉
             </motion.button>
