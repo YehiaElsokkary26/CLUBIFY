@@ -81,7 +81,7 @@ export function AdminProfile() {
     icon: React.ReactNode; label: string; value: string | number; onChange: (v: string) => void; placeholder?: string; type?: string
   }) => (
     <div>
-      <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+      <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
         {icon} {label}
       </label>
       <input
@@ -90,8 +90,8 @@ export function AdminProfile() {
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 transition-colors',
-          isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                 : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
+          isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                 : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
       />
     </div>
   )
@@ -119,7 +119,7 @@ export function AdminProfile() {
           </button>
           <h2 className={cn('text-lg font-black font-display tracking-wide mt-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>{user.name}</h2>
           <p className="text-xs font-semibold font-body text-[#6F2F33]">{extra.position} · {adminClub.name}</p>
-          <p className={cn('text-[10px] mt-0.5 font-mono font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>{user.gucId}</p>
+          <p className={cn('text-[10px] mt-0.5 font-mono font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>{user.gucId}</p>
         </motion.div>
 
         {/* Role at club */}
@@ -142,7 +142,7 @@ export function AdminProfile() {
           <Field icon={<Hash size={11} />} label="Year" type="number" value={draft.year} onChange={(v) => setDraft((d) => ({ ...d, year: Math.max(1, Math.min(6, Number(v) || 1)) }))} />
 
           <div>
-            <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+            <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
               <Edit3 size={11} /> Bio
             </label>
             <textarea
@@ -151,8 +151,8 @@ export function AdminProfile() {
               rows={3}
               placeholder="Tell students about yourself..."
               className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
-                isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                       : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
+                isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                       : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
             />
           </div>
         </div>
@@ -161,10 +161,10 @@ export function AdminProfile() {
         <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
           <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Contact</h3>
           <div>
-            <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+            <label className={cn('type-label mb-1.5 flex items-center gap-1.5', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
               <Mail size={11} /> Email
             </label>
-            <div className={cn('w-full px-4 py-3 rounded-xl text-sm font-body border-2', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-zinc-400' : 'bg-zinc-100 border-zinc-200 text-zinc-500')}>
+            <div className={cn('w-full px-4 py-3 rounded-xl text-sm font-body border-2', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-[#A8A09A]' : 'bg-[#EDE8D8] border-[#D8D0BE] text-[#76706A]')}>
               {user.email}
             </div>
           </div>
@@ -182,8 +182,8 @@ export function AdminProfile() {
             rows={2}
             placeholder="Something students should know about you 🎬"
             className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none',
-              isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-zinc-500 focus:border-[#6F2F33]'
-                     : 'bg-zinc-50 border-zinc-200 text-[#1E1B16] placeholder:text-zinc-400 focus:border-[#6F2F33]')}
+              isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
+                     : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
           />
         </div>
 
@@ -222,35 +222,35 @@ export function AdminProfile() {
             >
               <div className="flex items-center justify-between mb-4">
                 <h3 className={cn('text-base font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Profile photo</h3>
-                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
-                  <X size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
+                <button onClick={() => setShowPhotoMenu(false)} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
+                  <X size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
                 </button>
               </div>
-              <button onClick={() => cameraRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
+              <button onClick={() => cameraRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA]')}>
                 <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
                   <Camera size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
                   <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Take photo</p>
-                  <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Use your camera</p>
+                  <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Use your camera</p>
                 </div>
               </button>
-              <button onClick={() => fileRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
+              <button onClick={() => fileRef.current?.click()} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl mb-2', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA]')}>
                 <div className="w-9 h-9 rounded-xl bg-[#6F2F33]/10 flex items-center justify-center">
                   <Upload size={16} className="text-[#6F2F33]" />
                 </div>
                 <div className="text-left">
                   <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Upload from device</p>
-                  <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Choose an image from your files</p>
+                  <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Choose an image from your files</p>
                 </div>
               </button>
-              <button onClick={removePhoto} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-50')}>
+              <button onClick={removePhoto} className={cn('w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA]')}>
                 <div className="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center">
                   <Trash2 size={16} className="text-red-500" />
                 </div>
                 <div className="text-left">
                   <p className="text-sm font-semibold font-body text-red-500">Reset to default</p>
-                  <p className={cn('text-[10px] font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Use a generated avatar</p>
+                  <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Use a generated avatar</p>
                 </div>
               </button>
             </motion.div>
@@ -271,10 +271,10 @@ export function AdminProfile() {
                 <LogOut size={20} className="text-red-500" />
               </div>
               <h3 className={cn('text-base font-black font-display tracking-wide text-center', isDark ? 'text-white' : 'text-[#1E1B16]')}>Sign out?</h3>
-              <p className={cn('text-xs text-center mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>You'll be returned to the login screen.</p>
+              <p className={cn('text-xs text-center mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>You'll be returned to the login screen.</p>
               <div className="flex gap-2 mt-5">
                 <button onClick={() => setShowSignOutConfirm(false)}
-                  className={cn('flex-1 py-3 rounded-2xl text-sm font-bold font-body', isDark ? 'bg-[#2d3d4a] text-zinc-300' : 'bg-zinc-100 text-zinc-700')}>
+                  className={cn('flex-1 py-3 rounded-2xl text-sm font-bold font-body', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#42403C]')}>
                   Cancel
                 </button>
                 <button onClick={handleSignOut} className="flex-1 py-3 rounded-2xl bg-red-500 text-white text-sm font-bold font-body">

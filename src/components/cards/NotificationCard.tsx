@@ -48,7 +48,7 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
             isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA] shadow-sm'
           )}
         >
-          {typeIcon[notification.type] || <Bell size={16} className="text-zinc-400" />}
+          {typeIcon[notification.type] || <Bell size={16} className="text-[#A8A09A]" />}
         </div>
 
         <div className="flex-1 min-w-0">
@@ -62,10 +62,10 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
               <span className="w-2 h-2 rounded-full bg-[#6F2F33] flex-shrink-0 mt-1.5" />
             )}
           </div>
-          <p className={cn('text-xs mt-0.5 leading-relaxed line-clamp-2 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+          <p className={cn('text-xs mt-0.5 leading-relaxed line-clamp-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             {notification.body}
           </p>
-          <p className={cn('text-[10px] mt-1 type-caption', isDark ? 'text-zinc-600' : 'text-zinc-400')}>
+          <p className={cn('text-[10px] mt-1 type-mono', isDark ? 'text-[#5C5650]' : 'text-[#A8A09A]')}>
             {timeAgo(notification.timestamp)}
           </p>
         </div>
@@ -74,7 +74,7 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
       {onMenu && (
         <button
           onClick={(e) => { e.stopPropagation(); onMenu(notification.id) }}
-          className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isDark ? 'hover:bg-[#2d3d4a] text-zinc-400' : 'hover:bg-zinc-100 text-zinc-500')}
+          className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isDark ? 'hover:bg-[#2d3d4a] text-[#A8A09A]' : 'hover:bg-[#EDE8D8] text-[#76706A]')}
           aria-label="Notification options"
         >
           <MoreVertical size={14} />

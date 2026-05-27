@@ -52,7 +52,7 @@ export function BottomNav({ role }: BottomNavProps) {
                 'flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all duration-200',
                 active
                   ? 'text-[#6F2F33] bg-[#fae8e9]'
-                  : isDark ? 'text-zinc-500' : 'text-zinc-400'
+                  : isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'
               )}
             >
               <Icon
@@ -63,7 +63,7 @@ export function BottomNav({ role }: BottomNavProps) {
               <span
                 className={cn(
                   'text-[10px] font-semibold tracking-wide font-body',
-                  active ? 'text-[#6F2F33]' : isDark ? 'text-zinc-500' : 'text-zinc-400'
+                  active ? 'text-[#6F2F33]' : isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'
                 )}
               >
                 {label}

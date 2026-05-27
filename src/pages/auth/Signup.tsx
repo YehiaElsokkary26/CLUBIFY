@@ -47,7 +47,7 @@ export function Signup() {
             <span className="text-white text-3xl font-black font-display tracking-widest">C</span>
           </div>
           <h1 className={cn('text-3xl font-black font-display tracking-widest', isDark ? 'text-white' : 'text-[#1E1B16]')}>Join Clubify</h1>
-          <p className={cn('text-sm mt-1 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>Create your GUC student account</p>
+          <p className={cn('text-sm mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Create your GUC student account</p>
         </motion.div>
       </div>
 
@@ -56,13 +56,13 @@ export function Signup() {
           <div>
             <label className="type-label mb-1.5 block">Full Name</label>
             <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
-              <User size={18} className="text-zinc-400" />
+              <User size={18} className="text-[#A8A09A]" />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Youssef Mahmoud"
-                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-zinc-500' : 'text-[#1E1B16] placeholder:text-zinc-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
             </div>
@@ -71,13 +71,13 @@ export function Signup() {
           <div>
             <label className="type-label mb-1.5 block">GUC Email</label>
             <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
-              <Mail size={18} className="text-zinc-400" />
+              <Mail size={18} className="text-[#A8A09A]" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@guc.edu.eg"
-                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-zinc-500' : 'text-[#1E1B16] placeholder:text-zinc-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
             </div>
@@ -86,17 +86,17 @@ export function Signup() {
           <div>
             <label className="type-label mb-1.5 block">Password</label>
             <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
-              <Lock size={18} className="text-zinc-400" />
+              <Lock size={18} className="text-[#A8A09A]" />
               <input
                 type={showPass ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
-                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-zinc-500' : 'text-[#1E1B16] placeholder:text-zinc-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
               <button type="button" onClick={() => setShowPass(!showPass)}>
-                {showPass ? <EyeOff size={16} className="text-zinc-400" /> : <Eye size={16} className="text-zinc-400" />}
+                {showPass ? <EyeOff size={16} className="text-[#A8A09A]" /> : <Eye size={16} className="text-[#A8A09A]" />}
               </button>
             </div>
           </div>
@@ -118,7 +118,7 @@ export function Signup() {
           </motion.button>
         </form>
 
-        <p className={cn('text-center text-sm font-body', isDark ? 'text-zinc-500' : 'text-zinc-500')}>
+        <p className={cn('text-center text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#76706A]')}>
           Already have an account?{' '}
           <Link to="/login" className="text-[#6F2F33] font-semibold">Sign In</Link>
         </p>

@@ -55,7 +55,7 @@ export function Notifications() {
           )}
         </div>
         {unreadCount > 0 && (
-          <p className={cn('text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+          <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             {unreadCount} unread notification{unreadCount !== 1 ? 's' : ''}
           </p>
         )}
@@ -63,7 +63,7 @@ export function Notifications() {
 
       {notifs.length === 0 ? (
         <EmptyState
-          icon={<Bell size={28} className="text-zinc-400" />}
+          icon={<Bell size={28} className="text-[#A8A09A]" />}
           title="No notifications yet"
           description="We'll notify you about new events, recruitments, and announcements from your clubs."
         />
@@ -105,12 +105,12 @@ export function Notifications() {
                 <div className="flex items-center gap-2 flex-1">
                   {current.isPinned && <Pin size={14} className="text-[#C99B2E]" />}
                   {current.isFlagged && <Flag size={14} className="text-red-500" fill="currentColor" />}
-                  <span className={cn('text-[10px] uppercase tracking-wider font-bold font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+                  <span className={cn('text-[10px] uppercase tracking-wider font-bold font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                     {current.type}
                   </span>
                 </div>
-                <button onClick={closeDetail} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-100')}>
-                  <X size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
+                <button onClick={closeDetail} className={cn('w-8 h-8 rounded-full flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
+                  <X size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
                 </button>
               </div>
 
@@ -120,36 +120,36 @@ export function Notifications() {
               {current.clubName && (
                 <p className="text-xs font-semibold font-body text-[#6F2F33] mb-3">{current.clubName}</p>
               )}
-              <p className={cn('text-sm leading-relaxed whitespace-pre-wrap font-body', isDark ? 'text-zinc-300' : 'text-zinc-700')}>
+              <p className={cn('text-sm leading-relaxed whitespace-pre-wrap font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]')}>
                 {current.body}
               </p>
-              <p className={cn('text-[10px] mt-4 font-body', isDark ? 'text-zinc-500' : 'text-zinc-400')}>
+              <p className={cn('text-[10px] mt-4 font-mono', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                 {formatTime(current.timestamp)}
               </p>
 
-              <div className={cn('grid grid-cols-4 gap-2 mt-5 pt-4 border-t', isDark ? 'border-[#2d3d4a]' : 'border-zinc-100')}>
+              <div className={cn('grid grid-cols-4 gap-2 mt-5 pt-4 border-t', isDark ? 'border-[#2d3d4a]' : 'border-[#EAE5D8]')}>
                 <button
                   onClick={() => { togglePin(current.id); toast(current.isPinned ? 'Unpinned' : 'Pinned', 'info') }}
-                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
                 >
-                  {current.isPinned ? <PinOff size={16} className="text-[#C99B2E]" /> : <Pin size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />}
-                  <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>{current.isPinned ? 'Unpin' : 'Pin'}</span>
+                  {current.isPinned ? <PinOff size={16} className="text-[#C99B2E]" /> : <Pin size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />}
+                  <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{current.isPinned ? 'Unpin' : 'Pin'}</span>
                 </button>
 
                 <button
                   onClick={() => { markAsUnread(current.id); toast('Marked as unread', 'info'); closeDetail() }}
-                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
                 >
-                  <Mail size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />
-                  <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-zinc-300' : 'text-zinc-600')}>Unread</span>
+                  <Mail size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
+                  <span className={cn('text-[10px] font-semibold font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>Unread</span>
                 </button>
 
                 <button
                   onClick={() => { toggleFlag(current.id); toast(current.isFlagged ? 'Flag removed' : 'Flagged', 'info') }}
-                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                  className={cn('flex flex-col items-center gap-1 py-2 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
                 >
-                  {current.isFlagged ? <FlagOff size={16} className="text-red-500" /> : <Flag size={16} className={isDark ? 'text-zinc-300' : 'text-zinc-600'} />}
-                  <span className={cn('text-[10px] font-semibold font-body', current.isFlagged ? 'text-red-500' : isDark ? 'text-zinc-300' : 'text-zinc-600')}>
+                  {current.isFlagged ? <FlagOff size={16} className="text-red-500" /> : <Flag size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />}
+                  <span className={cn('text-[10px] font-semibold font-body', current.isFlagged ? 'text-red-500' : isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>
                     {current.isFlagged ? 'Unflag' : 'Flag'}
                   </span>
                 </button>
@@ -188,13 +188,13 @@ export function Notifications() {
                 isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]'
               )}
             >
-              <div className={cn('w-10 h-1 rounded-full mx-auto mb-4', isDark ? 'bg-[#2d3d4a]' : 'bg-zinc-200')} />
+              <div className={cn('w-10 h-1 rounded-full mx-auto mb-4', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')} />
 
               <button
                 onClick={() => { togglePin(menuTarget.id); toast(menuTarget.isPinned ? 'Unpinned' : 'Pinned', 'info'); setMenuId(null) }}
-                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
               >
-                {menuTarget.isPinned ? <PinOff size={18} className="text-[#C99B2E]" /> : <Pin size={18} className={isDark ? 'text-zinc-300' : 'text-zinc-700'} />}
+                {menuTarget.isPinned ? <PinOff size={18} className="text-[#C99B2E]" /> : <Pin size={18} className={isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]'} />}
                 <span className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                   {menuTarget.isPinned ? 'Unpin notification' : 'Pin notification'}
                 </span>
@@ -206,9 +206,9 @@ export function Notifications() {
                   toast(menuTarget.isRead ? 'Marked as unread' : 'Marked as read', 'info')
                   setMenuId(null)
                 }}
-                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
               >
-                {menuTarget.isRead ? <Mail size={18} className={isDark ? 'text-zinc-300' : 'text-zinc-700'} /> : <MailOpen size={18} className={isDark ? 'text-zinc-300' : 'text-zinc-700'} />}
+                {menuTarget.isRead ? <Mail size={18} className={isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]'} /> : <MailOpen size={18} className={isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]'} />}
                 <span className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                   Mark as {menuTarget.isRead ? 'unread' : 'read'}
                 </span>
@@ -216,9 +216,9 @@ export function Notifications() {
 
               <button
                 onClick={() => { toggleFlag(menuTarget.id); toast(menuTarget.isFlagged ? 'Flag removed' : 'Flagged', 'info'); setMenuId(null) }}
-                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-zinc-50')}
+                className={cn('w-full flex items-center gap-3 px-3 py-3 rounded-xl', isDark ? 'hover:bg-[#2d3d4a]' : 'hover:bg-[#FAF6EA]')}
               >
-                {menuTarget.isFlagged ? <FlagOff size={18} className="text-red-500" /> : <Flag size={18} className={isDark ? 'text-zinc-300' : 'text-zinc-700'} />}
+                {menuTarget.isFlagged ? <FlagOff size={18} className="text-red-500" /> : <Flag size={18} className={isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]'} />}
                 <span className={cn('text-sm font-semibold font-body', menuTarget.isFlagged ? 'text-red-500' : isDark ? 'text-white' : 'text-[#1E1B16]')}>
                   {menuTarget.isFlagged ? 'Remove flag' : 'Flag notification'}
                 </span>

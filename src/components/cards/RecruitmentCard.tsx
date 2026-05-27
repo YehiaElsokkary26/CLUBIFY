@@ -42,7 +42,7 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
               <h3 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{recruitment.clubName}</h3>
               <StatusBadge label={recruitment.category} variant="category" category={recruitment.category} className="mt-1" />
             </div>
-            <ChevronRight size={16} className={isDark ? 'text-zinc-500' : 'text-zinc-400'} />
+            <ChevronRight size={16} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
           </div>
 
           {/* Urgency label */}
@@ -56,12 +56,12 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
           {/* Progress bar */}
           <div className="mt-3">
             <div className="flex justify-between text-xs mb-1">
-              <span className={isDark ? 'text-zinc-400' : 'text-zinc-500'}>
+              <span className={isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'}>
                 <span className="font-semibold text-[#6F2F33]">{recruitment.spotsLeft}</span> spots left
               </span>
-              <span className={isDark ? 'text-zinc-500' : 'text-zinc-400'}>{fillPercent}% filled</span>
+              <span className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'}>{fillPercent}% filled</span>
             </div>
-            <div className={cn('h-1 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D4D4D8]')}>
+            <div className={cn('h-1 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${fillPercent}%` }}
@@ -72,7 +72,7 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
             </div>
           </div>
 
-          <div className={cn('flex items-center gap-3 mt-2 text-xs font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>
+          <div className={cn('flex items-center gap-3 mt-2 text-xs font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             <span className="flex items-center gap-1">
               <Calendar size={11} />
               Deadline: {formatDateShort(recruitment.deadline)}

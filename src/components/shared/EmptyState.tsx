@@ -26,7 +26,7 @@ export function EmptyState({ icon, title, description, action, className }: Empt
       )}
       <h3 className={cn('text-lg font-bold mb-2 font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{title}</h3>
       {description && (
-        <p className={cn('text-sm leading-relaxed mb-6 font-body', isDark ? 'text-zinc-400' : 'text-zinc-500')}>{description}</p>
+        <p className={cn('text-sm leading-relaxed mb-6 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{description}</p>
       )}
       {action}
     </div>

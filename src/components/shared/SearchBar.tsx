@@ -29,12 +29,12 @@ export function SearchBar({ value, onChange, placeholder = 'Search...', classNam
         placeholder={placeholder}
         className={cn(
           'flex-1 bg-transparent text-sm outline-none font-body',
-          isDark ? 'text-white placeholder:text-zinc-500' : 'text-[#1E1B16] placeholder:text-zinc-400'
+          isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]'
         )}
       />
       {value && (
         <button onClick={() => onChange('')}>
-          <X size={16} className={isDark ? 'text-zinc-500' : 'text-zinc-400'} />
+          <X size={16} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
         </button>
       )}
     </div>
