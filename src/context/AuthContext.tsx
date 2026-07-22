@@ -3,15 +3,51 @@ import type { Session } from '@supabase/supabase-js'
 import { supabase } from '../lib/supabase'
 import type { User } from '../data/types'
 
+const DEMO_STUDENT: User = {
+  id: 'demo-student',
+  name: 'Youssef Mahmoud',
+  email: 'youssef.mahmoud@guc.edu.eg',
+  gucId: '49-12345',
+  faculty: 'Media Engineering & Technology',
+  year: 3,
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=youssef&backgroundColor=b6e3f4',
+  bio: 'CS student passionate about tech, media, and making a difference.',
+  role: 'student',
+  joinedClubs: ['c1', 'c7', 'c10'],
+  attendedSessions: 14,
+  totalSessions: 18,
+  warnings: [],
+  profileCompletion: 75,
+}
+
+const DEMO_ADMIN: User = {
+  id: 'demo-admin',
+  name: 'Sara Ahmed',
+  email: 'sara.ahmed@guc.edu.eg',
+  gucId: '49-67890',
+  faculty: 'Management Technology',
+  year: 4,
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sara&backgroundColor=ffdfbf',
+  bio: 'President of GUC Media Club. Passionate about storytelling and student leadership.',
+  role: 'admin',
+  joinedClubs: ['c1'],
+  attendedSessions: 28,
+  totalSessions: 30,
+  warnings: [],
+  profileCompletion: 95,
+}
+
 interface AuthContextValue {
   user: User | null
   role: 'student' | 'admin' | null
   isGuest: boolean
+  isDemo: boolean
   loading: boolean
   login: (email: string, password: string) => Promise<{ error: string | null }>
   signup: (email: string, password: string, name: string) => Promise<{ error: string | null }>
   loginAsAdmin: (email: string, password: string) => Promise<{ error: string | null }>
   loginAsGuest: () => Promise<void>
+  loginAsDemo: (demoRole: 'student' | 'admin') => void
   logout: () => Promise<void>
   updateUser: (updates: Partial<User>) => Promise<void>
 }
@@ -52,12 +88,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [role, setRole] = useState<'student' | 'admin' | null>(null)
   const [isGuest, setIsGuest] = useState(false)
+  const [isDemo, setIsDemo] = useState(false)
   const [loading, setLoading] = useState(true)
 
-  const applyUser = (u: User, anonymous = false) => {
+  const applyUser = (u: User, anonymous = false, demo = false) => {
     setUser(u)
     setRole(u.role)
     setIsGuest(anonymous)
+    setIsDemo(demo)
   }
 
   useEffect(() => {
@@ -75,16 +113,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           const u = await fetchProfile(session)
           if (u) applyUser(u, session.user.is_anonymous ?? false)
         } else {
-          setUser(null)
-          setRole(null)
-          setIsGuest(false)
+          // Don't clear state for demo/guest logins — they have no Supabase session
+          setLoading(false)
         }
-        setLoading(false)
       }
     )
 
     return () => subscription.unsubscribe()
   }, [])
+
+  const loginAsDemo = (demoRole: 'student' | 'admin') => {
+    const demoUser = demoRole === 'admin' ? DEMO_ADMIN : DEMO_STUDENT
+    applyUser(demoUser, false, true)
+    if (demoRole === 'student') {
+      localStorage.setItem('clubify_onboarded', 'true')
+    }
+  }
 
   const login = async (email: string, password: string): Promise<{ error: string | null }> => {
     const { error } = await supabase.auth.signInWithPassword({ email, password })
@@ -134,7 +178,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const loginAsGuest = async () => {
     const { error } = await supabase.auth.signInAnonymously()
     if (error) {
-      // Fallback: set a local guest state if anonymous auth is disabled
       setUser({
         id: 'guest',
         name: 'Guest',
@@ -157,22 +200,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = async () => {
-    await supabase.auth.signOut()
+    // For demo/guest accounts there's no Supabase session to sign out of
+    if (!isDemo && !isGuest) {
+      await supabase.auth.signOut()
+    }
+    setUser(null)
+    setRole(null)
+    setIsGuest(false)
+    setIsDemo(false)
   }
 
   const updateUser = async (updates: Partial<User>) => {
     if (!user) return
-
-    const dbUpdates: Record<string, unknown> = {}
-    if (updates.bio !== undefined)               dbUpdates.bio = updates.bio
-    if (updates.name !== undefined)              dbUpdates.name = updates.name
-    if (updates.faculty !== undefined)           dbUpdates.faculty = updates.faculty
-    if (updates.year !== undefined)              dbUpdates.year = updates.year
-    if (updates.avatar !== undefined)            dbUpdates.avatar_url = updates.avatar
-    if (updates.profileCompletion !== undefined) dbUpdates.profile_completion = updates.profileCompletion
-    if (updates.joinedClubs !== undefined)       dbUpdates.joined_clubs = updates.joinedClubs
-
-    if (user.id !== 'guest') {
+    const isLocal = user.id === 'guest' || isDemo
+    if (!isLocal) {
+      const dbUpdates: Record<string, unknown> = {}
+      if (updates.bio !== undefined)               dbUpdates.bio = updates.bio
+      if (updates.name !== undefined)              dbUpdates.name = updates.name
+      if (updates.faculty !== undefined)           dbUpdates.faculty = updates.faculty
+      if (updates.year !== undefined)              dbUpdates.year = updates.year
+      if (updates.avatar !== undefined)            dbUpdates.avatar_url = updates.avatar
+      if (updates.profileCompletion !== undefined) dbUpdates.profile_completion = updates.profileCompletion
+      if (updates.joinedClubs !== undefined)       dbUpdates.joined_clubs = updates.joinedClubs
       await supabase.from('profiles').update(dbUpdates).eq('id', user.id)
     }
     setUser({ ...user, ...updates })
@@ -180,7 +229,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, role, isGuest, loading, login, signup, loginAsAdmin, loginAsGuest, logout, updateUser }}
+      value={{ user, role, isGuest, isDemo, loading, login, signup, loginAsAdmin, loginAsGuest, loginAsDemo, logout, updateUser }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,20 +1,21 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, Eye, EyeOff, AlertCircle } from 'lucide-react'
+import { Mail, Lock, Eye, EyeOff, AlertCircle, Zap } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { cn } from '../../lib/utils'
 
 export function Login() {
   const navigate = useNavigate()
-  const { login, loginAsGuest, loginAsAdmin } = useAuth()
+  const { login, loginAsAdmin, loginAsGuest, loginAsDemo } = useAuth()
   const { isDark } = useTheme()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [demoLoading, setDemoLoading] = useState<'student' | 'admin' | null>(null)
   const [error, setError] = useState('')
   const [mode, setMode] = useState<'student' | 'admin'>('student')
 
@@ -33,7 +34,7 @@ export function Login() {
         navigate('/admin/feed')
       } else {
         const { error: err } = await login(email, password)
-        if (err) { setError('Invalid credentials. Try the demo account below.'); return }
+        if (err) { setError('Invalid credentials. Use the demo buttons above to explore!'); return }
         const onboarded = localStorage.getItem('clubify_onboarded')
         navigate(onboarded ? '/student/home' : '/onboarding')
       }
@@ -42,13 +43,21 @@ export function Login() {
     }
   }
 
+  const handleDemo = (demoRole: 'student' | 'admin') => {
+    setDemoLoading(demoRole)
+    setTimeout(() => {
+      loginAsDemo(demoRole)
+      navigate(demoRole === 'admin' ? '/admin/feed' : '/student/home')
+    }, 600)
+  }
+
   return (
     <div
       className="min-h-[844px] flex flex-col"
       style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}
     >
       {/* Hero */}
-      <div className="flex-shrink-0 pt-16 pb-8 px-6">
+      <div className="flex-shrink-0 pt-14 pb-5 px-6">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -64,6 +73,79 @@ export function Login() {
         </motion.div>
       </div>
 
+      {/* ── ONE-TAP DEMO ACCOUNTS ── */}
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.1 }}
+        className="px-6 mb-5"
+      >
+        <div className={cn(
+          'rounded-3xl p-4 border-2 border-dashed',
+          isDark ? 'bg-[#2C2C2E] border-[#8B1A1A]/40' : 'bg-[#8B1A1A]/5 border-[#8B1A1A]/25'
+        )}>
+          <div className="flex items-center gap-2 mb-3">
+            <Zap size={13} className="text-[#8B1A1A]" />
+            <span className="text-[11px] font-bold uppercase tracking-wider text-[#8B1A1A]">
+              Try instantly — no sign up needed
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5">
+            {/* Student demo */}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => handleDemo('student')}
+              disabled={demoLoading !== null}
+              className="flex flex-col items-center gap-2.5 py-4 px-3 rounded-2xl bg-[#8B1A1A] text-white disabled:opacity-60 transition-opacity"
+            >
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=youssef&backgroundColor=b6e3f4"
+                alt="Student"
+                className="w-11 h-11 rounded-full bg-white"
+              />
+              <div className="text-center">
+                <p className="text-xs font-bold leading-tight">Youssef Mahmoud</p>
+                <p className="text-[10px] opacity-75 mt-0.5">
+                  {demoLoading === 'student' ? 'Entering…' : '👤 Student View'}
+                </p>
+              </div>
+            </motion.button>
+
+            {/* Admin demo */}
+            <motion.button
+              whileTap={{ scale: 0.96 }}
+              onClick={() => handleDemo('admin')}
+              disabled={demoLoading !== null}
+              className={cn(
+                'flex flex-col items-center gap-2.5 py-4 px-3 rounded-2xl border-2 disabled:opacity-60 transition-opacity',
+                isDark ? 'border-[#3A3A3C] bg-[#3A3A3C]' : 'border-gray-200 bg-white'
+              )}
+            >
+              <img
+                src="https://api.dicebear.com/7.x/avataaars/svg?seed=sara&backgroundColor=ffdfbf"
+                alt="Officer"
+                className="w-11 h-11 rounded-full bg-gray-100"
+              />
+              <div className="text-center">
+                <p className={cn('text-xs font-bold leading-tight', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+                  Sara Ahmed
+                </p>
+                <p className={cn('text-[10px] mt-0.5', isDark ? 'text-gray-400' : 'text-gray-500')}>
+                  {demoLoading === 'admin' ? 'Entering…' : '🎓 Club Officer'}
+                </p>
+              </div>
+            </motion.button>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Divider */}
+      <div className="flex items-center gap-3 px-6 mb-4">
+        <div className={cn('flex-1 h-px', isDark ? 'bg-[#2C2C2E]' : 'bg-gray-200')} />
+        <span className={cn('text-[11px]', isDark ? 'text-gray-500' : 'text-gray-400')}>or sign in with GUC account</span>
+        <div className={cn('flex-1 h-px', isDark ? 'bg-[#2C2C2E]' : 'bg-gray-200')} />
+      </div>
+
       {/* Mode toggle */}
       <div className="px-6 mb-4">
         <div className={cn('flex p-1 rounded-2xl', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
@@ -72,7 +154,7 @@ export function Login() {
               key={m}
               onClick={() => { setMode(m); setError('') }}
               className={cn(
-                'flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 capitalize',
+                'flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200',
                 mode === m ? 'bg-[#8B1A1A] text-white shadow-sm' : isDark ? 'text-gray-400' : 'text-gray-500'
               )}
             >
@@ -81,53 +163,6 @@ export function Login() {
           ))}
         </div>
       </div>
-
-      {/* Demo credentials card */}
-      <motion.div
-        key={`demo-${mode}`}
-        initial={{ opacity: 0, y: -6 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="px-6 mb-2"
-      >
-        <div className={cn('rounded-2xl px-4 py-3 border border-dashed', isDark ? 'bg-[#2C2C2E] border-[#8B1A1A]/40' : 'bg-[#8B1A1A]/5 border-[#8B1A1A]/30')}>
-          <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#8B1A1A]">Demo Account</span>
-            <button
-              type="button"
-              onClick={() => {
-                setEmail(mode === 'student' ? 'youssef.mahmoud@guc.edu.eg' : 'sara.ahmed@guc.edu.eg')
-                setPassword('demo1234')
-              }}
-              className="text-[10px] font-bold text-[#8B1A1A] px-2 py-0.5 rounded-full border border-[#8B1A1A]/40 active:scale-95 transition-transform"
-            >
-              Autofill
-            </button>
-          </div>
-          {mode === 'student' ? (
-            <div className="space-y-0.5">
-              <p className={cn('text-xs', isDark ? 'text-gray-300' : 'text-gray-700')}>
-                <span className={cn('font-semibold', isDark ? 'text-gray-400' : 'text-gray-500')}>Email: </span>
-                youssef.mahmoud@guc.edu.eg
-              </p>
-              <p className={cn('text-xs', isDark ? 'text-gray-300' : 'text-gray-700')}>
-                <span className={cn('font-semibold', isDark ? 'text-gray-400' : 'text-gray-500')}>Password: </span>
-                demo1234
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-0.5">
-              <p className={cn('text-xs', isDark ? 'text-gray-300' : 'text-gray-700')}>
-                <span className={cn('font-semibold', isDark ? 'text-gray-400' : 'text-gray-500')}>Email: </span>
-                sara.ahmed@guc.edu.eg
-              </p>
-              <p className={cn('text-xs', isDark ? 'text-gray-300' : 'text-gray-700')}>
-                <span className={cn('font-semibold', isDark ? 'text-gray-400' : 'text-gray-500')}>Password: </span>
-                demo1234
-              </p>
-            </div>
-          )}
-        </div>
-      </motion.div>
 
       {/* Form */}
       <motion.div
@@ -185,9 +220,9 @@ export function Login() {
             type="submit"
             disabled={loading}
             whileTap={{ scale: 0.97 }}
-            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base shadow-lg disabled:opacity-60 mt-2"
+            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base shadow-lg disabled:opacity-60"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? 'Signing in…' : 'Sign In'}
           </motion.button>
         </form>
 
@@ -205,7 +240,7 @@ export function Login() {
           Continue as Guest
         </motion.button>
 
-        <p className={cn('text-center text-sm', isDark ? 'text-gray-500' : 'text-gray-500')}>
+        <p className={cn('text-center text-sm pb-6', isDark ? 'text-gray-500' : 'text-gray-500')}>
           Don't have an account?{' '}
           <Link to="/signup" className="text-[#8B1A1A] font-semibold">Sign Up</Link>
         </p>
