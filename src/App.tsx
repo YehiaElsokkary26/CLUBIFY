@@ -11,6 +11,7 @@ import { AdminShell } from './components/layout/AdminShell'
 import { Login } from './pages/auth/Login'
 import { Signup } from './pages/auth/Signup'
 import { Onboarding } from './pages/auth/Onboarding'
+import { Terms } from './pages/auth/Terms'
 
 // Student pages
 import { Home } from './pages/student/Home'
@@ -27,21 +28,14 @@ import { AdminFeed } from './pages/admin/Feed'
 import { AdminManage } from './pages/admin/Manage'
 import { AdminClub } from './pages/admin/ClubPreview'
 import { AdminStats } from './pages/admin/Stats'
+import { AdminProfile } from './pages/admin/Profile'
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { staleTime: 1000 * 60 * 5, retry: false } },
 })
 
 function AppRoutes() {
-  const { role, loading } = useAuth()
-
-  if (loading) {
-    return (
-      <div className="min-h-[844px] flex items-center justify-center bg-[#FAF8F5]">
-        <div className="w-14 h-14 rounded-3xl bg-[#8B1A1A] animate-pulse" />
-      </div>
-    )
-  }
+  const { role } = useAuth()
 
   return (
     <Routes>
@@ -49,6 +43,7 @@ function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/onboarding" element={<Onboarding />} />
+      <Route path="/terms" element={<Terms />} />
 
       {/* Student */}
       <Route path="/student" element={<StudentShell />}>
@@ -68,6 +63,7 @@ function AppRoutes() {
         <Route path="manage" element={<AdminManage />} />
         <Route path="club" element={<AdminClub />} />
         <Route path="stats" element={<AdminStats />} />
+        <Route path="profile" element={<AdminProfile />} />
       </Route>
 
       {/* Default redirect */}

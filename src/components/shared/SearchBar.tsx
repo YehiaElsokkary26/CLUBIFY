@@ -15,24 +15,26 @@ export function SearchBar({ value, onChange, placeholder = 'Search...', classNam
   return (
     <div
       className={cn(
-        'flex items-center gap-3 px-4 py-3 rounded-2xl',
-        isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm',
+        'flex items-center gap-3 px-4 py-3 rounded-2xl border',
+        isDark
+          ? 'bg-[#23323F] border-[#2d3d4a]'
+          : 'bg-[#FAF6EA] border-[#D8D0BE] shadow-sm',
         className
       )}
     >
-      <Search size={18} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+      <Search size={18} className="text-[#6F2F33]" />
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className={cn(
-          'flex-1 bg-transparent text-sm outline-none',
-          isDark ? 'text-white placeholder:text-gray-500' : 'text-[#1C1C1E] placeholder:text-gray-400'
+          'flex-1 bg-transparent text-sm outline-none font-body',
+          isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]'
         )}
       />
       {value && (
         <button onClick={() => onChange('')}>
-          <X size={16} className={isDark ? 'text-gray-500' : 'text-gray-400'} />
+          <X size={16} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
         </button>
       )}
     </div>

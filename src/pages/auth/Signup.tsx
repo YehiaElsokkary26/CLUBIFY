@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { Mail, Lock, User, Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
+import { Mail, Lock, User, Eye, EyeOff, AlertCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { cn } from '../../lib/utils'
 
 export function Signup() {
   const navigate = useNavigate()
-  const { signup } = useAuth()
+  const { login } = useAuth()
   const { isDark } = useTheme()
 
   const [name, setName] = useState('')
@@ -17,115 +17,94 @@ export function Signup() {
   const [showPass, setShowPass] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-  const [success, setSuccess] = useState(false)
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
-    if (!name.trim()) { setError('Please enter your full name'); return }
-    if (!email.endsWith('@guc.edu.eg')) { setError('Please use your GUC email (@guc.edu.eg)'); return }
-    if (password.length < 8) { setError('Password must be at least 8 characters'); return }
-
-    setLoading(true)
-    const { error: err } = await signup(email, password, name.trim())
-    setLoading(false)
-
-    if (err) {
-      setError(err)
+    if (!email.endsWith('@guc.edu.eg')) {
+      setError('Please use your GUC email (@guc.edu.eg)')
       return
     }
-
-    // If email confirmation is disabled in Supabase, navigate directly.
-    // If enabled, show success message and ask them to confirm email.
-    setSuccess(true)
-    setTimeout(() => navigate('/onboarding'), 1500)
-  }
-
-  if (success) {
-    return (
-      <div
-        className="min-h-[844px] flex flex-col items-center justify-center px-6 text-center"
-        style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}
-      >
-        <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: 'spring' }}>
-          <div className="w-20 h-20 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-6">
-            <CheckCircle size={40} className="text-green-500" />
-          </div>
-        </motion.div>
-        <h2 className={cn('text-2xl font-black mb-2', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Account Created!</h2>
-        <p className={cn('text-sm', isDark ? 'text-gray-400' : 'text-gray-500')}>
-          Welcome to Clubify. Setting up your profile…
-        </p>
-      </div>
-    )
+    if (password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
+    }
+    setLoading(true)
+    await new Promise((r) => setTimeout(r, 900))
+    await login(email, password)
+    setLoading(false)
+    navigate('/onboarding')
   }
 
   return (
-    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-      <div className="flex-shrink-0 pt-16 pb-8 px-6">
+    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+      {/* Teal accent line */}
+      <div className="h-1 w-full bg-gradient-to-r from-[#6F2F33] to-[#5c2427]" />
+
+      <div className="flex-shrink-0 pt-14 pb-8 px-6">
         <motion.div initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col items-center text-center">
-          <div className="w-20 h-20 rounded-3xl bg-[#8B1A1A] flex items-center justify-center shadow-lg mb-5">
-            <span className="text-white text-3xl font-black">C</span>
+          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6F2F33] to-[#5c2427] flex items-center justify-center shadow-[0_4px_20px_rgba(111,47,51,0.4)] mb-5">
+            <span className="text-white text-3xl font-black font-display tracking-widest">C</span>
           </div>
-          <h1 className={cn('text-3xl font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Join Clubify</h1>
-          <p className={cn('text-sm mt-1', isDark ? 'text-gray-400' : 'text-gray-500')}>Create your GUC student account</p>
+          <h1 className={cn('text-3xl font-black font-display tracking-widest', isDark ? 'text-white' : 'text-[#1E1B16]')}>Join Clubify</h1>
+          <p className={cn('text-sm mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Create your GUC student account</p>
         </motion.div>
       </div>
 
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex-1 px-6 space-y-4">
         <form onSubmit={handleSignup} className="space-y-4">
           <div>
-            <label className={cn('text-xs font-semibold mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-600')}>Full Name</label>
-            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border', isDark ? 'bg-[#2C2C2E] border-[#3A3A3C]' : 'bg-white border-gray-200')}>
-              <User size={18} className="text-gray-400" />
+            <label className="type-label mb-1.5 block">Full Name</label>
+            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+              <User size={18} className="text-[#A8A09A]" />
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Youssef Mahmoud"
-                className={cn('flex-1 bg-transparent text-sm outline-none', isDark ? 'text-white placeholder:text-gray-500' : 'text-[#1C1C1E] placeholder:text-gray-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className={cn('text-xs font-semibold mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-600')}>GUC Email</label>
-            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border', isDark ? 'bg-[#2C2C2E] border-[#3A3A3C]' : 'bg-white border-gray-200')}>
-              <Mail size={18} className="text-gray-400" />
+            <label className="type-label mb-1.5 block">GUC Email</label>
+            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+              <Mail size={18} className="text-[#A8A09A]" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@guc.edu.eg"
-                className={cn('flex-1 bg-transparent text-sm outline-none', isDark ? 'text-white placeholder:text-gray-500' : 'text-[#1C1C1E] placeholder:text-gray-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
             </div>
           </div>
 
           <div>
-            <label className={cn('text-xs font-semibold mb-1.5 block', isDark ? 'text-gray-400' : 'text-gray-600')}>Password</label>
-            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border', isDark ? 'bg-[#2C2C2E] border-[#3A3A3C]' : 'bg-white border-gray-200')}>
-              <Lock size={18} className="text-gray-400" />
+            <label className="type-label mb-1.5 block">Password</label>
+            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+              <Lock size={18} className="text-[#A8A09A]" />
               <input
                 type={showPass ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Min. 8 characters"
-                className={cn('flex-1 bg-transparent text-sm outline-none', isDark ? 'text-white placeholder:text-gray-500' : 'text-[#1C1C1E] placeholder:text-gray-400')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
                 required
               />
               <button type="button" onClick={() => setShowPass(!showPass)}>
-                {showPass ? <EyeOff size={16} className="text-gray-400" /> : <Eye size={16} className="text-gray-400" />}
+                {showPass ? <EyeOff size={16} className="text-[#A8A09A]" /> : <Eye size={16} className="text-[#A8A09A]" />}
               </button>
             </div>
           </div>
 
           {error && (
-            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-red-50 border border-red-100">
-              <AlertCircle size={14} className="text-red-500 flex-shrink-0" />
-              <p className="text-xs text-red-600">{error}</p>
+            <div className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-[#C75A6B]/10 border border-[#C75A6B]/20">
+              <AlertCircle size={14} className="text-[#C75A6B] flex-shrink-0" />
+              <p className="text-xs text-[#C75A6B] font-body">{error}</p>
             </div>
           )}
 
@@ -133,15 +112,15 @@ export function Signup() {
             type="submit"
             disabled={loading}
             whileTap={{ scale: 0.97 }}
-            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base shadow-lg disabled:opacity-60"
+            className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(111,47,51,0.30)] disabled:opacity-45 hover:bg-[#5c2427] transition-colors active:scale-[0.98]"
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </motion.button>
         </form>
 
-        <p className={cn('text-center text-sm', isDark ? 'text-gray-500' : 'text-gray-500')}>
+        <p className={cn('text-center text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#76706A]')}>
           Already have an account?{' '}
-          <Link to="/login" className="text-[#8B1A1A] font-semibold">Sign In</Link>
+          <Link to="/login" className="text-[#6F2F33] font-semibold">Sign In</Link>
         </p>
       </motion.div>
     </div>

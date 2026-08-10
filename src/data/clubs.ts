@@ -1,4 +1,4 @@
-import type { Club } from './types'
+import type { Club, ClubEvent } from './types'
 
 export const clubs: Club[] = [
   {
@@ -650,6 +650,280 @@ export const clubs: Club[] = [
     },
     whoShouldJoin: 'Experienced volleyball players ready to compete at a high level and commit to regular training.',
   },
+  {
+    id: 'c19',
+    name: 'Athar GUC',
+    slug: 'athar-guc',
+    category: 'Arts',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=athar&backgroundColor=E07B39',
+    coverImage: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=800&q=80',
+    description: 'Where Arabic heritage meets modern expression — Athar celebrates our cultural roots through calligraphy, traditional arts, storytelling, and cultural exhibitions.',
+    mission: 'To preserve and promote Arab and Egyptian heritage among GUC students through creative events and artistic expression.',
+    memberCount: 78,
+    founded: 2018,
+    contactEmail: 'athar@guc.edu.eg',
+    socialLinks: { instagram: 'https://instagram.com/atharguc', facebook: 'https://facebook.com/atharguc' },
+    tags: ['Culture', 'Arabic', 'Heritage', 'Arts', 'Calligraphy'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-10',
+    spotsLeft: 15,
+    committees: [
+      { id: 'cm39', name: 'Calligraphy & Visual Arts', description: 'Arabic calligraphy workshops and exhibitions.', spotsAvailable: 8 },
+      { id: 'cm40', name: 'Cultural Events', description: 'Organize heritage days and storytelling nights.', spotsAvailable: 7 },
+    ],
+    events: [
+      { id: 'e21', clubId: 'c19', title: 'Arabic Heritage Night', date: '2026-06-07', time: '6:00 PM', location: 'GUC Gallery', description: 'An evening celebrating Arab culture through art, music, and storytelling.', type: 'Social' },
+    ],
+    members: [
+      { id: 'm38', name: 'Fatma El-Zahraa', role: 'President', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=fatma' },
+      { id: 'm39', name: 'Amr Khalaf', role: 'Head of Calligraphy', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=amrk', isMonthStar: true, quote: 'Art is the language of the soul.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Amr Khalaf', role: 'Head of Calligraphy', quote: 'Art is the language of the soul.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=amrk' },
+    },
+    whoShouldJoin: 'Students who cherish Arab culture and want to keep its spirit alive on campus through art and events.',
+  },
+  {
+    id: 'c20',
+    name: 'عشانك يا بلدي GUC',
+    slug: 'palestine-guc',
+    category: 'Community',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=palestine&backgroundColor=006633',
+    coverImage: 'https://images.unsplash.com/photo-1635274605638-d44babc08a4f?w=800&q=80',
+    description: 'A voice for solidarity — عشانك يا بلدي unites the GUC community in support of Palestine through cultural awareness, educational panels, and solidarity campaigns.',
+    mission: 'To raise awareness and foster solidarity with Palestine through education, culture, and community action.',
+    memberCount: 112,
+    founded: 2021,
+    contactEmail: 'palestineguc@guc.edu.eg',
+    socialLinks: { instagram: 'https://instagram.com/3ashankguc', facebook: 'https://facebook.com/3ashankguc' },
+    tags: ['Solidarity', 'Palestine', 'Community', 'Awareness', 'Culture'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-15',
+    spotsLeft: 20,
+    committees: [
+      { id: 'cm41', name: 'Awareness & Media', description: 'Create content and campaigns about Palestinian culture.', spotsAvailable: 10 },
+      { id: 'cm42', name: 'Events', description: 'Organize solidarity events and cultural exhibitions.', spotsAvailable: 10 },
+    ],
+    events: [
+      { id: 'e22', clubId: 'c20', title: 'Palestine Cultural Day', date: '2026-06-11', time: '10:00 AM', location: 'GUC Main Hall', description: 'A day of Palestinian cultural heritage, food, and solidarity.', type: 'Social' },
+    ],
+    members: [
+      { id: 'm40', name: 'Laila Barakat', role: 'President', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=laila2' },
+      { id: 'm41', name: 'Younes Nassar', role: 'Campaigns Lead', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=younes', isMonthStar: true, quote: 'From the river to the sea.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Younes Nassar', role: 'Campaigns Lead', quote: 'Awareness is the first act of change.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=younes' },
+    },
+    whoShouldJoin: 'Any student who believes in solidarity and wants to contribute to Palestinian cultural awareness and community support.',
+  },
+  {
+    id: 'c21',
+    name: 'CURA GUC',
+    slug: 'cura-guc',
+    category: 'Academic',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=cura&backgroundColor=3B5FA0',
+    coverImage: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
+    description: 'Bridging science and humanity — CURA is GUC\'s clinical and research club, hosting anatomy workshops, hospital visits, and healthcare seminars for aspiring medical professionals.',
+    mission: 'To prepare GUC students for careers in healthcare through hands-on learning, clinical exposure, and medical research.',
+    memberCount: 95,
+    founded: 2019,
+    contactEmail: 'cura@guc.edu.eg',
+    socialLinks: { instagram: 'https://instagram.com/curaguc', facebook: 'https://facebook.com/curaguc' },
+    tags: ['Medical', 'Healthcare', 'Research', 'Clinical', 'Science'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-05',
+    spotsLeft: 12,
+    committees: [
+      { id: 'cm43', name: 'Clinical Training', description: 'Organize hospital visits and hands-on clinical sessions.', spotsAvailable: 6 },
+      { id: 'cm44', name: 'Research Team', description: 'Lead medical research projects and academic publications.', spotsAvailable: 6 },
+    ],
+    events: [
+      { id: 'e23', clubId: 'c21', title: 'Anatomy & Clinical Skills Workshop', date: '2026-05-30', time: '11:00 AM', location: 'Science Labs, B3', description: 'Hands-on anatomy and first aid skills training.', type: 'Workshop' },
+    ],
+    members: [
+      { id: 'm42', name: 'Nada Farid', role: 'President', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=nada2' },
+      { id: 'm43', name: 'Kareem Sharaf', role: 'Research Lead', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=kareem', isMonthStar: true, quote: 'Heal with knowledge, serve with compassion.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Kareem Sharaf', role: 'Research Lead', quote: 'Heal with knowledge, serve with compassion.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=kareem' },
+    },
+    whoShouldJoin: 'Students in medicine, pharmacy, or health sciences who want clinical experience and research opportunities beyond the classroom.',
+  },
+  {
+    id: 'c22',
+    name: 'IEEE GUC Student Branch',
+    slug: 'ieee-guc',
+    category: 'Technology',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=ieee&backgroundColor=00629B',
+    coverImage: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80',
+    description: 'The world\'s largest engineering society, right at GUC — IEEE connects engineers, runs technical workshops, and opens doors to global opportunities in technology.',
+    mission: 'To advance technology for the benefit of humanity by connecting GUC engineers with industry, research, and the global IEEE network.',
+    memberCount: 163,
+    founded: 2013,
+    contactEmail: 'ieee@guc.edu.eg',
+    socialLinks: {
+      instagram: 'https://instagram.com/ieeeguc',
+      facebook: 'https://facebook.com/ieeeguc',
+      linkedin: 'https://linkedin.com/company/ieee-guc',
+      website: 'https://ieeeguc.com',
+    },
+    tags: ['Engineering', 'Technology', 'IEEE', 'Electronics', 'AI'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-01',
+    spotsLeft: 18,
+    committees: [
+      { id: 'cm45', name: 'Technical Committee', description: 'Workshops on AI, embedded systems, and software engineering.', spotsAvailable: 8 },
+      { id: 'cm46', name: 'Professional Development', description: 'Connect members with internships and IEEE global events.', spotsAvailable: 10 },
+    ],
+    events: [
+      { id: 'e24', clubId: 'c22', title: 'IEEE Tech Summit 2026', date: '2026-06-14', time: '9:00 AM', location: 'Engineering Building', description: 'Annual tech summit featuring industry talks, hackathon, and workshops.', type: 'Workshop' },
+    ],
+    members: [
+      { id: 'm44', name: 'Ibrahim Samir', role: 'Chair', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=ibrahim' },
+      { id: 'm45', name: 'Sara Zaki', role: 'Technical Lead', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saraz', isMonthStar: true, quote: 'Engineer the future you want to live in.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Sara Zaki', role: 'Technical Lead', quote: 'Engineer the future you want to live in.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=saraz' },
+    },
+    whoShouldJoin: 'Engineering and CS students who want to build real projects, grow professionally, and tap into the global IEEE network.',
+  },
+  {
+    id: 'c23',
+    name: 'The Insider GUC',
+    slug: 'insider-guc',
+    category: 'Media',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=insider&backgroundColor=FF6B00',
+    coverImage: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=800&q=80',
+    description: 'Your campus voice — The Insider is GUC\'s student-run magazine covering campus news, student stories, opinion pieces, and the real pulse of university life.',
+    mission: 'To give every GUC student a platform to be heard through honest, engaging, and student-driven journalism.',
+    memberCount: 82,
+    founded: 2016,
+    contactEmail: 'insider@guc.edu.eg',
+    socialLinks: {
+      instagram: 'https://instagram.com/theinsiderguc',
+      facebook: 'https://facebook.com/theinsiderguc',
+    },
+    tags: ['Journalism', 'Magazine', 'Writing', 'Media', 'Campus News'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-08',
+    spotsLeft: 10,
+    committees: [
+      { id: 'cm47', name: 'Editorial Team', description: 'Write, edit, and publish The Insider magazine.', spotsAvailable: 6 },
+      { id: 'cm48', name: 'Design & Photography', description: 'Visual design and photography for magazine spreads.', spotsAvailable: 4 },
+    ],
+    events: [
+      { id: 'e25', clubId: 'c23', title: 'The Insider Issue Launch Party', date: '2026-06-04', time: '5:00 PM', location: 'Student Lounge', description: 'Launch of the semester\'s flagship magazine issue.', type: 'Social' },
+    ],
+    members: [
+      { id: 'm46', name: 'Mariam Fouad', role: 'Editor-in-Chief', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=mariam' },
+      { id: 'm47', name: 'Ali Hassan', role: 'Lead Writer', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aliH', isMonthStar: true, quote: 'The pen is mightier than the algorithm.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Ali Hassan', role: 'Lead Writer', quote: 'The pen is mightier than the algorithm.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=aliH' },
+    },
+    whoShouldJoin: 'Students who love writing, photography, graphic design, or storytelling and want their work seen by the whole campus.',
+  },
+  {
+    id: 'c24',
+    name: 'INSPIRE GUC',
+    slug: 'inspire-guc',
+    category: 'Academic',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=inspire&backgroundColor=2C2C2C',
+    coverImage: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800&q=80',
+    description: 'Reach higher — INSPIRE helps GUC students unlock their full potential through motivational talks, mentorship programs, and leadership development workshops.',
+    mission: 'To inspire a generation of confident, purpose-driven GUC students through personal development and leadership excellence.',
+    memberCount: 99,
+    founded: 2017,
+    contactEmail: 'inspire@guc.edu.eg',
+    socialLinks: { instagram: 'https://instagram.com/inspireguc', facebook: 'https://facebook.com/inspireguc' },
+    tags: ['Leadership', 'Personal Development', 'Motivation', 'Mentorship', 'Growth'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-12',
+    spotsLeft: 14,
+    committees: [
+      { id: 'cm49', name: 'Speakers & Events', description: 'Curate and organize inspirational talks and panels.', spotsAvailable: 7 },
+      { id: 'cm50', name: 'Mentorship Program', description: 'Pair students with senior mentors for personal growth.', spotsAvailable: 7 },
+    ],
+    events: [
+      { id: 'e26', clubId: 'c24', title: 'INSPIRE Leadership Summit', date: '2026-06-09', time: '10:00 AM', location: 'Main Auditorium', description: 'A full-day summit featuring talks, workshops, and networking.', type: 'Talk' },
+    ],
+    members: [
+      { id: 'm48', name: 'Hana Mostafa', role: 'President', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=hana2' },
+      { id: 'm49', name: 'Tarek Medhat', role: 'Head of Mentorship', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=tarekM', isMonthStar: true, quote: 'Every great leader was first a great student.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Tarek Medhat', role: 'Head of Mentorship', quote: 'Every great leader was first a great student.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=tarekM' },
+    },
+    whoShouldJoin: 'Any student who wants to grow as a leader, build confidence, and be part of a community that pushes each other forward.',
+  },
+  {
+    id: 'c25',
+    name: 'TEDxGUC',
+    slug: 'tedx-guc',
+    category: 'Academic',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=tedx&backgroundColor=E62B1E',
+    coverImage: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80',
+    description: 'Ideas worth spreading, right here at GUC — TEDxGUC hosts independently organized TED-style talks that challenge minds, ignite curiosity, and change perspectives.',
+    mission: 'To create a platform where the big ideas shaping our world are shared by and for the GUC community.',
+    memberCount: 74,
+    founded: 2015,
+    contactEmail: 'tedx@guc.edu.eg',
+    socialLinks: {
+      instagram: 'https://instagram.com/tedxguc',
+      facebook: 'https://facebook.com/tedxguc',
+      website: 'https://tedxguc.com',
+    },
+    tags: ['TED', 'Ideas', 'Innovation', 'Public Speaking', 'Inspiration'],
+    isRecruiting: false,
+    committees: [
+      { id: 'cm51', name: 'Curation Team', description: 'Select and coach TEDx speakers.', spotsAvailable: 0 },
+      { id: 'cm52', name: 'Production Team', description: 'Manage event production, AV, and stage design.', spotsAvailable: 0 },
+    ],
+    events: [
+      { id: 'e27', clubId: 'c25', title: 'TEDxGUC 2026 Main Event', date: '2026-06-20', time: '3:00 PM', location: 'GUC Main Auditorium', description: 'Annual flagship TEDx event with 8 speaker talks across diverse themes.', type: 'Talk' },
+    ],
+    members: [
+      { id: 'm50', name: 'Dina Kamal', role: 'Licensee & Organizer', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=dinak' },
+      { id: 'm51', name: 'Youssef Gouda', role: 'Speaker Coach', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=youssefG', isMonthStar: true, quote: 'One idea, delivered well, can change a room.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Youssef Gouda', role: 'Speaker Coach', quote: 'One idea, delivered well, can change a room.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=youssefG' },
+    },
+    whoShouldJoin: 'Students with a big idea to share, or those passionate about curating, producing, and bringing world-class talks to campus.',
+  },
+  {
+    id: 'c26',
+    name: 'REVIVE GUC',
+    slug: 'revive-guc',
+    category: 'Community',
+    logo: 'https://api.dicebear.com/7.x/shapes/svg?seed=revive&backgroundColor=2E7D32',
+    coverImage: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80',
+    description: 'Reviving the planet, one action at a time — REVIVE leads GUC\'s wellness and sustainability movement through community projects, mental health initiatives, and green living.',
+    mission: 'To build a healthier, more conscious GUC community by merging personal wellness with environmental responsibility.',
+    memberCount: 88,
+    founded: 2020,
+    contactEmail: 'revive@guc.edu.eg',
+    socialLinks: { instagram: 'https://instagram.com/reviveguc', facebook: 'https://facebook.com/reviveguc' },
+    tags: ['Wellness', 'Sustainability', 'Mental Health', 'Community', 'Green'],
+    isRecruiting: true,
+    recruitmentDeadline: '2026-06-14',
+    spotsLeft: 16,
+    committees: [
+      { id: 'cm53', name: 'Wellness & Mental Health', description: 'Workshops and campaigns around student wellbeing.', spotsAvailable: 8 },
+      { id: 'cm54', name: 'Green Initiatives', description: 'Lead campus sustainability and zero-waste projects.', spotsAvailable: 8 },
+    ],
+    events: [
+      { id: 'e28', clubId: 'c26', title: 'REVIVE Wellness Fair', date: '2026-06-06', time: '10:00 AM', location: 'GUC Courtyard', description: 'A fair featuring wellness activities, mental health resources, and eco-living tips.', type: 'Social' },
+    ],
+    members: [
+      { id: 'm52', name: 'Rana Hazem', role: 'President', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rana2' },
+      { id: 'm53', name: 'Sana Khalil', role: 'Wellness Lead', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sana', isMonthStar: true, quote: 'A healthy mind lives in a healthy world.' },
+    ],
+    spotlightContent: {
+      memberOfMonth: { name: 'Sana Khalil', role: 'Wellness Lead', quote: 'A healthy mind lives in a healthy world.', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sana' },
+    },
+    whoShouldJoin: 'Students who care about their mental health, physical wellbeing, and the environment — and want to inspire others to do the same.',
+  },
 ]
 
 export const getClubBySlug = (slug: string): Club | undefined =>
@@ -660,3 +934,42 @@ export const getClubById = (id: string): Club | undefined =>
 
 export const getRecruitingClubs = (): Club[] =>
   clubs.filter((c) => c.isRecruiting)
+
+export function computeClubOfWeek(): Club {
+  const today = new Date()
+  const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
+  const maxMembers = Math.max(...clubs.map((c) => c.memberCount))
+
+  const scored = clubs.map((club) => {
+    const memberScore = (club.memberCount / maxMembers) * 40
+    const eventScore = Math.min(club.events.length * 10, 30)
+    const recruitScore = club.isRecruiting ? (club.spotsLeft && club.spotsLeft > 10 ? 20 : 10) : 0
+    const recentEvent = club.events.some((e) => {
+      const d = new Date(e.date)
+      return d >= thirtyDaysAgo && d <= today
+    })
+    return { club, score: memberScore + eventScore + recruitScore + (recentEvent ? 10 : 0) }
+  })
+
+  return scored.sort((a, b) => b.score - a.score)[0].club
+}
+
+export function getClubHighlights(count = 4): Array<{ club: Club; event: ClubEvent }> {
+  const today = new Date()
+  const results: Array<{ club: Club; event: ClubEvent }> = []
+  for (const club of clubs) {
+    const upcoming = club.events
+      .filter((e) => new Date(e.date) >= today)
+      .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
+    if (upcoming.length > 0) results.push({ club, event: upcoming[0] })
+  }
+  return results
+    .sort((a, b) => new Date(a.event.date).getTime() - new Date(b.event.date).getTime())
+    .slice(0, count)
+}
+
+export function getAllMembersOfMonth() {
+  return clubs
+    .filter((c) => c.spotlightContent.memberOfMonth)
+    .map((c) => ({ club: c, member: c.spotlightContent.memberOfMonth! }))
+}

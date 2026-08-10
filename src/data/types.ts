@@ -11,6 +11,7 @@ export interface SocialLinks {
   instagram?: string
   facebook?: string
   linkedin?: string
+  tiktok?: string
   website?: string
 }
 
@@ -101,6 +102,8 @@ export interface Notification {
   body: string
   timestamp: string
   isRead: boolean
+  isPinned?: boolean
+  isFlagged?: boolean
   clubId?: string
   clubName?: string
 }
@@ -108,6 +111,7 @@ export interface Notification {
 export interface User {
   id: string
   name: string
+  nickname?: string
   email: string
   gucId: string
   faculty: string
@@ -122,11 +126,21 @@ export interface User {
   profileCompletion: number
 }
 
+export interface PostAttachment {
+  id: string
+  name: string
+  type: 'pdf' | 'image'
+  mimeType: string
+  dataUrl: string
+  size: number
+}
+
 export interface Announcement {
   id: string
   title: string
   body: string
   imageUrl?: string
+  attachments?: PostAttachment[]
   targetAudience: 'All' | 'Members'
   clubId: string
   createdAt: string

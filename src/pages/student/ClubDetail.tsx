@@ -31,16 +31,16 @@ export function ClubDetail() {
 
   if (isLoading) {
     return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-        <div className="w-8 h-8 rounded-full border-2 border-[#8B1A1A] border-t-transparent animate-spin" />
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+        <div className="w-8 h-8 rounded-full border-2 border-[#6F2F33] border-t-transparent animate-spin" />
       </div>
     )
   }
 
   if (!club) {
     return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-        <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>Club not found</p>
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+        <p className={cn('font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Club not found</p>
       </div>
     )
   }
@@ -48,7 +48,7 @@ export function ClubDetail() {
   const memberOfMonth = club.members.find((m) => m.isMonthStar)
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Cover */}
       <div className="relative h-64 overflow-hidden">
         <img src={club.coverImage} alt={club.name} className="w-full h-full object-cover" />
@@ -74,7 +74,7 @@ export function ClubDetail() {
         <div className="absolute bottom-4 left-5 flex items-end gap-3">
           <img src={club.logo} alt={club.name} className="w-16 h-16 rounded-2xl border-2 border-white object-cover shadow-lg" />
           <div>
-            <h1 className="text-white text-xl font-black leading-tight">{club.name}</h1>
+            <h1 className="text-white text-xl font-black font-display tracking-wide leading-tight">{club.name}</h1>
             <div className="flex items-center gap-2 mt-1">
               <StatusBadge label={club.category} variant="category" category={club.category} />
               {club.isRecruiting
@@ -87,30 +87,30 @@ export function ClubDetail() {
       </div>
 
       {/* Stats row */}
-      <div className={cn('px-5 py-4 flex items-center justify-between border-b', isDark ? 'bg-[#2C2C2E] border-[#3A3A3C]' : 'bg-white border-gray-100')}>
+      <div className={cn('px-5 py-4 flex items-center justify-between border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
         <div className="text-center">
-          <p className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club.memberCount}</p>
-          <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Members</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.memberCount}</p>
+          <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Members</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club.events.length}</p>
-          <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Events</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.events.length}</p>
+          <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Events</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club.founded}</p>
-          <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Founded</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.founded}</p>
+          <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Founded</p>
         </div>
-        <div className={cn('w-px h-8', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-200')} />
+        <div className={cn('w-px h-8', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club.members.length}</p>
-          <p className={cn('text-[10px]', isDark ? 'text-gray-400' : 'text-gray-500')}>Committee</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.members.length}</p>
+          <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Committee</p>
         </div>
       </div>
 
       {/* Social links */}
-      <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#2C2C2E] border-[#3A3A3C]' : 'bg-white border-gray-100')}>
+      <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
         {club.socialLinks.instagram && (
           <a href={club.socialLinks.instagram} className="w-9 h-9 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center">
             <InstagramIcon size={16} className="text-white" />
@@ -127,8 +127,8 @@ export function ClubDetail() {
           </a>
         )}
         {club.socialLinks.website && (
-          <a href={club.socialLinks.website} className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#3A3A3C]' : 'bg-gray-100')}>
-            <Globe size={16} className={isDark ? 'text-gray-300' : 'text-gray-600'} />
+          <a href={club.socialLinks.website} className={cn('w-9 h-9 rounded-xl flex items-center justify-center', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}>
+            <Globe size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
           </a>
         )}
         <div className="flex-1" />
@@ -136,7 +136,7 @@ export function ClubDetail() {
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => navigate(`/student/apply/${club.id}`)}
-            className="px-4 py-2 rounded-xl bg-[#8B1A1A] text-white text-xs font-bold flex items-center gap-1.5"
+            className="px-4 py-2 rounded-xl bg-[#6F2F33] text-white text-xs font-bold font-body flex items-center gap-1.5"
           >
             Apply Now
             <ChevronRight size={14} />
@@ -145,14 +145,14 @@ export function ClubDetail() {
       </div>
 
       {/* Tab bar */}
-      <div className={cn('flex px-5 pt-4 pb-0 gap-1', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
+      <div className={cn('flex px-5 pt-4 pb-0 gap-1', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
         {(['About', 'Events', 'Members'] as Tab[]).map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={cn(
-              'flex-1 py-2.5 rounded-xl text-sm font-semibold transition-all',
-              activeTab === tab ? 'bg-[#8B1A1A] text-white shadow-sm' : isDark ? 'text-gray-400' : 'text-gray-500'
+              'flex-1 py-2.5 rounded-xl text-sm font-semibold font-body transition-all',
+              activeTab === tab ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'
             )}
           >
             {tab}
@@ -165,21 +165,21 @@ export function ClubDetail() {
         {activeTab === 'About' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-5">
             <div>
-              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2', isDark ? 'text-gray-400' : 'text-gray-500')}>About</h3>
-              <p className={cn('text-sm leading-relaxed', isDark ? 'text-gray-300' : 'text-gray-600')}>{club.description}</p>
+              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>About</h3>
+              <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{club.description}</p>
             </div>
             <div>
-              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2', isDark ? 'text-gray-400' : 'text-gray-500')}>Our Mission</h3>
-              <p className={cn('text-sm leading-relaxed', isDark ? 'text-gray-300' : 'text-gray-600')}>{club.mission}</p>
+              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Our Mission</h3>
+              <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{club.mission}</p>
             </div>
             <div>
-              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2', isDark ? 'text-gray-400' : 'text-gray-500')}>Who Should Join?</h3>
-              <p className={cn('text-sm leading-relaxed', isDark ? 'text-gray-300' : 'text-gray-600')}>{club.whoShouldJoin}</p>
+              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Who Should Join?</h3>
+              <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{club.whoShouldJoin}</p>
             </div>
             <div>
-              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2', isDark ? 'text-gray-400' : 'text-gray-500')}>Contact</h3>
-              <div className={cn('flex items-center gap-2 text-sm', isDark ? 'text-gray-300' : 'text-gray-600')}>
-                <Mail size={14} className="text-[#8B1A1A]" />
+              <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Contact</h3>
+              <div className={cn('flex items-center gap-2 text-sm font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>
+                <Mail size={14} className="text-[#6F2F33]" />
                 {club.contactEmail}
               </div>
             </div>
@@ -191,7 +191,7 @@ export function ClubDetail() {
             {club.events.length > 0 ? club.events.map((event) => (
               <EventCard key={event.id} event={event} />
             )) : (
-              <p className={cn('text-center py-8 text-sm', isDark ? 'text-gray-500' : 'text-gray-400')}>No events scheduled yet</p>
+              <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>No events scheduled yet</p>
             )}
           </motion.div>
         )}
@@ -200,19 +200,19 @@ export function ClubDetail() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
             {/* Member of the month */}
             {memberOfMonth && (
-              <div className="rounded-2xl overflow-hidden mb-4" style={{ background: isDark ? '#2C2C2E' : '#8B1A1A' }}>
+              <div className="rounded-2xl overflow-hidden mb-4" style={{ background: isDark ? '#23323F' : '#6F2F33' }}>
                 <div className="p-4 flex items-center gap-3">
                   <div className="relative">
                     <img src={memberOfMonth.avatar} alt={memberOfMonth.name} className="w-14 h-14 rounded-xl border-2 border-white/30" />
-                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#E07B39] flex items-center justify-center">
+                    <div className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#C99B2E] flex items-center justify-center">
                       <Star size={10} fill="white" className="text-white" />
                     </div>
                   </div>
                   <div>
-                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-wider">Member of the Month</span>
-                    <h4 className="text-white text-sm font-bold">{memberOfMonth.name}</h4>
-                    <p className="text-white/70 text-xs">{memberOfMonth.role}</p>
-                    {memberOfMonth.quote && <p className="text-white/60 text-xs italic mt-1">"{memberOfMonth.quote}"</p>}
+                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-wider font-body">Member of the Month</span>
+                    <h4 className="text-white text-sm font-bold font-display tracking-wide">{memberOfMonth.name}</h4>
+                    <p className="text-white/70 text-xs font-body">{memberOfMonth.role}</p>
+                    {memberOfMonth.quote && <p className="text-white/60 text-xs italic font-body mt-1">"{memberOfMonth.quote}"</p>}
                   </div>
                 </div>
               </div>
@@ -220,15 +220,15 @@ export function ClubDetail() {
 
             {/* All members */}
             {club.members.map((member) => (
-              <div key={member.id} className={cn('flex items-center gap-3 p-3 rounded-2xl', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
+              <div key={member.id} className={cn('flex items-center gap-3 p-3 rounded-2xl', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
                 <img src={member.avatar} alt={member.name} className="w-10 h-10 rounded-full" />
                 <div>
-                  <p className={cn('text-sm font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{member.name}</p>
-                  <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>{member.role}</p>
+                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{member.name}</p>
+                  <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{member.role}</p>
                 </div>
                 {member.isMonthStar && (
                   <div className="ml-auto">
-                    <Star size={14} fill="#E07B39" className="text-[#E07B39]" />
+                    <Star size={14} fill="#C99B2E" className="text-[#C99B2E]" />
                   </div>
                 )}
               </div>

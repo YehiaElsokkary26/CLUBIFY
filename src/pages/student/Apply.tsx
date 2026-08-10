@@ -46,8 +46,8 @@ export function Apply() {
 
   if (!club) {
     return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
-        <p className={isDark ? 'text-gray-400' : 'text-gray-500'}>Club not found</p>
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+        <p className={cn('font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Club not found</p>
       </div>
     )
   }
@@ -70,7 +70,7 @@ export function Apply() {
   const canNext = (step === 0 && selectedCommittee) || (step === 1 && selectedSlot)
 
   const Confetti = () => {
-    const colors = ['#8B1A1A', '#E07B39', '#FAF8F5', '#1C1C1E', '#FFD700']
+    const colors = ['#6F2F33', '#C99B2E', '#F2EDDF', '#1E1B16', '#FFD700']
     return (
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {Array.from({ length: 20 }).map((_, i) => (
@@ -92,25 +92,25 @@ export function Apply() {
   if (success) {
     return (
       <div className="min-h-[844px] flex flex-col items-center justify-center relative px-6"
-        style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+        style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
         <Confetti />
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', duration: 0.6 }}
-          className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6"
+          className="w-24 h-24 rounded-full bg-[#fae8e9] flex items-center justify-center mb-6"
         >
-          <CheckCircle size={48} className="text-green-500" />
+          <CheckCircle size={48} className="text-[#6E8B5A]" />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-center">
-          <h2 className={cn('text-2xl font-black mb-2', isDark ? 'text-white' : 'text-[#1C1C1E]')}>You're in the queue!</h2>
-          <p className={cn('text-sm mb-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
-            Application submitted to <span className="font-semibold text-[#8B1A1A]">{club.name}</span>
+          <h2 className={cn('text-2xl font-black font-display tracking-wide mb-2', isDark ? 'text-white' : 'text-[#1E1B16]')}>You're in the queue!</h2>
+          <p className={cn('text-sm mb-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+            Application submitted to <span className="font-semibold text-[#6F2F33]">{club.name}</span>
           </p>
-          <p className={cn('text-sm', isDark ? 'text-gray-400' : 'text-gray-500')}>
+          <p className={cn('text-sm font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             Committee: <span className="font-semibold">{selectedCommittee?.name}</span>
           </p>
-          <p className={cn('text-sm', isDark ? 'text-gray-400' : 'text-gray-500')}>
+          <p className={cn('text-sm font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             Interview: <span className="font-semibold">{selectedSlot?.date} at {selectedSlot?.time}</span>
           </p>
         </motion.div>
@@ -120,7 +120,7 @@ export function Apply() {
           transition={{ delay: 0.5 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => navigate('/student/home')}
-          className="mt-8 px-8 py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold"
+          className="mt-8 px-8 py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body"
         >
           Back to Home
         </motion.button>
@@ -129,27 +129,27 @@ export function Apply() {
   }
 
   return (
-    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#1C1C1E' : '#FAF8F5' }}>
+    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
       {/* Header */}
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1C1C1E]' : 'bg-[#FAF8F5]')}>
-        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center mb-4', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
-          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#1C1C1E]'} />
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
+        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center mb-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#1E1B16]'} />
         </button>
         <div className="flex items-center gap-3 mb-4">
           <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
           <div>
-            <h1 className={cn('text-lg font-black', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Apply to {club.name}</h1>
-            <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>Step {step + 1} of 3 — {stepTitles[step]}</p>
+            <h1 className={cn('text-lg font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Apply to {club.name}</h1>
+            <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Step {step + 1} of 3 — {stepTitles[step]}</p>
           </div>
         </div>
 
         {/* Progress */}
         <div className="flex gap-1.5">
           {[0, 1, 2].map((s) => (
-            <div key={s} className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: isDark ? '#2C2C2E' : '#E5E5EA' }}>
+            <div key={s} className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: isDark ? '#23323F' : '#EAE5D8' }}>
               <motion.div
                 animate={{ width: step >= s ? '100%' : '0%' }}
-                className="h-full rounded-full bg-[#8B1A1A]"
+                className="h-full rounded-full bg-[#6F2F33]"
                 transition={{ duration: 0.3 }}
               />
             </div>
@@ -162,7 +162,7 @@ export function Apply() {
         <AnimatePresence mode="wait">
           {step === 0 && (
             <motion.div key="step0" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-              <h2 className={cn('text-base font-bold mb-4', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Which committee interests you?</h2>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#1E1B16]')}>Which committee interests you?</h2>
               <div className="space-y-3">
                 {club.committees.map((cm) => (
                   <motion.button
@@ -172,21 +172,21 @@ export function Apply() {
                     className={cn(
                       'w-full p-4 rounded-2xl text-left border-2 transition-all',
                       selectedCommittee?.id === cm.id
-                        ? 'border-[#8B1A1A] bg-[#8B1A1A]/5'
-                        : isDark ? 'border-[#3A3A3C] bg-[#2C2C2E]' : 'border-gray-200 bg-white'
+                        ? 'border-[#6F2F33] bg-[#6F2F33]/5'
+                        : isDark ? 'border-[#2d3d4a] bg-[#23323F]' : 'border-[#D8D0BE] bg-[#FAF6EA]'
                     )}
                   >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{cm.name}</h3>
-                        <p className={cn('text-xs mt-1 leading-relaxed', isDark ? 'text-gray-400' : 'text-gray-500')}>{cm.description}</p>
+                        <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{cm.name}</h3>
+                        <p className={cn('text-xs mt-1 leading-relaxed font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{cm.description}</p>
                         <div className="flex items-center gap-1 mt-2">
-                          <Users size={12} className="text-[#8B1A1A]" />
-                          <span className="text-xs font-semibold text-[#8B1A1A]">{cm.spotsAvailable} spots available</span>
+                          <Users size={12} className="text-[#6F2F33]" />
+                          <span className="text-xs font-semibold font-body text-[#6F2F33]">{cm.spotsAvailable} spots available</span>
                         </div>
                       </div>
                       {selectedCommittee?.id === cm.id && (
-                        <div className="w-5 h-5 rounded-full bg-[#8B1A1A] flex items-center justify-center flex-shrink-0 ml-3 mt-0.5">
+                        <div className="w-5 h-5 rounded-full bg-[#6F2F33] flex items-center justify-center flex-shrink-0 ml-3 mt-0.5">
                           <Check size={12} className="text-white" />
                         </div>
                       )}
@@ -199,7 +199,7 @@ export function Apply() {
 
           {step === 1 && (
             <motion.div key="step1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-              <h2 className={cn('text-base font-bold mb-4', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Choose an interview slot</h2>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#1E1B16]')}>Choose an interview slot</h2>
               <div className="grid grid-cols-2 gap-3">
                 {timeSlots.map((slot, i) => {
                   const selected = selectedSlot?.date === slot.date && selectedSlot?.time === slot.time
@@ -210,16 +210,16 @@ export function Apply() {
                       onClick={() => setSelectedSlot(slot)}
                       className={cn(
                         'p-3 rounded-2xl border-2 transition-all text-left',
-                        selected ? 'border-[#8B1A1A] bg-[#8B1A1A]/5' : isDark ? 'border-[#3A3A3C] bg-[#2C2C2E]' : 'border-gray-200 bg-white'
+                        selected ? 'border-[#6F2F33] bg-[#6F2F33]/5' : isDark ? 'border-[#2d3d4a] bg-[#23323F]' : 'border-[#D8D0BE] bg-[#FAF6EA]'
                       )}
                     >
                       <div className="flex items-center gap-1.5 mb-1">
-                        <Calendar size={12} className={selected ? 'text-[#8B1A1A]' : 'text-gray-400'} />
-                        <span className={cn('text-[10px] font-semibold', selected ? 'text-[#8B1A1A]' : isDark ? 'text-gray-400' : 'text-gray-500')}>
+                        <Calendar size={12} className={selected ? 'text-[#6F2F33]' : 'text-[#A8A09A]'} />
+                        <span className={cn('text-[10px] font-mono', selected ? 'text-[#6F2F33]' : isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
                           {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                         </span>
                       </div>
-                      <p className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{slot.time}</p>
+                      <p className={cn('text-sm font-bold font-mono', isDark ? 'text-white' : 'text-[#1E1B16]')}>{slot.time}</p>
                     </motion.button>
                   )
                 })}
@@ -229,33 +229,33 @@ export function Apply() {
 
           {step === 2 && (
             <motion.div key="step2" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-              <h2 className={cn('text-base font-bold mb-4', isDark ? 'text-white' : 'text-[#1C1C1E]')}>Confirm your application</h2>
-              <div className={cn('rounded-2xl p-5 space-y-4', isDark ? 'bg-[#2C2C2E]' : 'bg-white shadow-sm')}>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#1E1B16]')}>Confirm your application</h2>
+              <div className={cn('rounded-2xl p-5 space-y-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
                 <div className="flex items-center gap-3">
                   <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
                   <div>
-                    <h3 className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{club.name}</h3>
-                    <p className={cn('text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>{club.category}</p>
+                    <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{club.name}</h3>
+                    <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{club.category}</p>
                   </div>
                 </div>
-                <div className={cn('border-t pt-4 space-y-3', isDark ? 'border-[#3A3A3C]' : 'border-gray-100')}>
+                <div className={cn('border-t pt-4 space-y-3', isDark ? 'border-[#2d3d4a]' : 'border-[#EAE5D8]')}>
                   <div className="flex justify-between text-sm">
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>Committee</span>
-                    <span className={cn('font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{selectedCommittee?.name}</span>
+                    <span className={cn('font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Committee</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{selectedCommittee?.name}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>Interview Date</span>
-                    <span className={cn('font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+                    <span className={cn('font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Interview Date</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>
                       {selectedSlot && new Date(selectedSlot.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className={isDark ? 'text-gray-400' : 'text-gray-500'}>Interview Time</span>
-                    <span className={cn('font-semibold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{selectedSlot?.time}</span>
+                    <span className={cn('font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Interview Time</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{selectedSlot?.time}</span>
                   </div>
                 </div>
               </div>
-              <p className={cn('text-xs text-center mt-4', isDark ? 'text-gray-500' : 'text-gray-400')}>
+              <p className={cn('text-xs text-center mt-4 font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>
                 By submitting, you confirm you'll attend the interview slot.
               </p>
             </motion.div>
@@ -270,7 +270,7 @@ export function Apply() {
             whileTap={{ scale: 0.97 }}
             onClick={() => setStep(step + 1)}
             disabled={!canNext}
-            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base disabled:opacity-40 flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body text-base disabled:opacity-40 flex items-center justify-center gap-2"
           >
             Next
             <ChevronRight size={18} />
@@ -279,7 +279,7 @@ export function Apply() {
           <motion.button
             whileTap={{ scale: 0.97 }}
             onClick={handleSubmit}
-            className="w-full py-4 rounded-2xl bg-[#8B1A1A] text-white font-bold text-base flex items-center justify-center gap-2"
+            className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body text-base flex items-center justify-center gap-2"
           >
             <CheckCircle size={18} />
             Submit Application

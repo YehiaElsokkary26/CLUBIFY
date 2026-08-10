@@ -5,11 +5,11 @@ import type { ClubEvent } from '../../data/types'
 import { clubs } from '../../data/clubs'
 
 const typeColors: Record<string, string> = {
-  Workshop: 'bg-blue-100 text-blue-700',
-  Social: 'bg-pink-100 text-pink-700',
-  Competition: 'bg-orange-100 text-orange-700',
-  Meeting: 'bg-gray-100 text-gray-600',
-  Talk: 'bg-purple-100 text-purple-700',
+  Workshop:    'bg-blue-100 text-blue-700',
+  Social:      'bg-pink-100 text-pink-700',
+  Competition: 'bg-[#C99B2E]/10 text-[#C99B2E]',
+  Meeting:     'bg-[#EDE8D8] text-[#5C5650]',
+  Talk:        'bg-purple-100 text-purple-700',
 }
 
 interface EventCardProps {
@@ -25,26 +25,27 @@ export function EventCard({ event, compact }: EventCardProps) {
     return (
       <div
         className={cn(
-          'flex-shrink-0 w-52 rounded-2xl p-4 shadow-sm',
-          isDark ? 'bg-[#2C2C2E]' : 'bg-white'
+          'flex-shrink-0 w-52 rounded-2xl p-4 border',
+          isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]',
+          'shadow-[0_1px_3px_rgba(30,27,22,0.08)]'
         )}
       >
         <div
           className={cn(
-            'inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mb-3',
-            typeColors[event.type] || 'bg-gray-100 text-gray-600'
+            'inline-block px-2 py-0.5 rounded-full text-[10px] font-bold mb-3 font-body',
+            typeColors[event.type] || 'bg-[#EDE8D8] text-[#5C5650]'
           )}
         >
           {event.type}
         </div>
-        <h4 className={cn('text-sm font-bold leading-tight mb-2', isDark ? 'text-white' : 'text-[#1C1C1E]')}>
+        <h4 className={cn('text-sm font-bold leading-tight mb-2 font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>
           {event.title}
         </h4>
-        <div className={cn('flex items-center gap-1 text-xs mb-1', isDark ? 'text-gray-400' : 'text-gray-500')}>
+        <div className={cn('flex items-center gap-1 text-xs mb-1 font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
           <Calendar size={11} />
           <span>{formatDateShort(event.date)}</span>
         </div>
-        <div className={cn('flex items-center gap-1 text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>
+        <div className={cn('flex items-center gap-1 text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
           <MapPin size={11} />
           <span className="truncate">{event.location}</span>
         </div>
@@ -53,34 +54,38 @@ export function EventCard({ event, compact }: EventCardProps) {
   }
 
   return (
-    <div className={cn('rounded-2xl p-4 shadow-sm', isDark ? 'bg-[#2C2C2E]' : 'bg-white')}>
+    <div className={cn(
+      'rounded-2xl p-4 border',
+      isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]',
+      'shadow-[0_1px_3px_rgba(30,27,22,0.08)]'
+    )}>
       <div className="flex items-start gap-3">
         {/* Date block */}
-        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#8B1A1A] flex flex-col items-center justify-center">
-          <span className="text-white text-xs font-bold leading-none">
+        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#6F2F33] flex flex-col items-center justify-center">
+          <span className="text-white text-xs font-bold leading-none font-display tracking-wide">
             {new Date(event.date).toLocaleDateString('en-US', { month: 'short' }).toUpperCase()}
           </span>
-          <span className="text-white text-lg font-black leading-none">
+          <span className="text-white text-lg font-black leading-none font-display">
             {new Date(event.date).getDate()}
           </span>
         </div>
 
         <div className="flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h4 className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#1C1C1E]')}>{event.title}</h4>
+            <h4 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{event.title}</h4>
             <span
               className={cn(
-                'flex-shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold',
-                typeColors[event.type] || 'bg-gray-100 text-gray-600'
+                'flex-shrink-0 px-2 py-0.5 rounded-full text-[10px] font-bold font-body',
+                typeColors[event.type] || 'bg-[#EDE8D8] text-[#5C5650]'
               )}
             >
               {event.type}
             </span>
           </div>
           {club && (
-            <p className="text-xs text-[#8B1A1A] font-medium mt-0.5">{club.name}</p>
+            <p className="text-xs text-[#6F2F33] font-medium mt-0.5 font-body">{club.name}</p>
           )}
-          <div className={cn('flex items-center gap-3 mt-1.5 text-xs', isDark ? 'text-gray-400' : 'text-gray-500')}>
+          <div className={cn('flex items-center gap-3 mt-1.5 text-xs font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
             <span className="flex items-center gap-1"><Clock size={11} />{event.time}</span>
             <span className="flex items-center gap-1"><MapPin size={11} /><span className="truncate">{event.location}</span></span>
           </div>
