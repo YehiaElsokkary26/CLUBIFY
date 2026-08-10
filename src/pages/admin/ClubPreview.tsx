@@ -87,7 +87,7 @@ export function AdminClub() {
     label: string; value: string; onChange: (v: string) => void; placeholder?: string; textarea?: boolean; rows?: number
   }) => (
     <div>
-      <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+      <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
         {label}
       </label>
       {textarea ? (
@@ -97,8 +97,8 @@ export function AdminClub() {
           placeholder={placeholder}
           rows={rows || 3}
           className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 resize-none transition-colors',
-            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
-                   : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
+            isDark ? 'bg-[#35363F] border-[#3D3E48] text-white placeholder:text-[#929397] focus:border-[#6F2F33]'
+                   : 'bg-[#FFFFFF] border-[#E5E5E8] text-[#272831] placeholder:text-[#929397] focus:border-[#6F2F33]')}
         />
       ) : (
         <input
@@ -106,18 +106,18 @@ export function AdminClub() {
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
           className={cn('w-full px-4 py-3 rounded-xl text-sm font-body outline-none border-2 transition-colors',
-            isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white placeholder:text-[#76706A] focus:border-[#6F2F33]'
-                   : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16] placeholder:text-[#A8A09A] focus:border-[#6F2F33]')}
+            isDark ? 'bg-[#35363F] border-[#3D3E48] text-white placeholder:text-[#929397] focus:border-[#6F2F33]'
+                   : 'bg-[#FFFFFF] border-[#E5E5E8] text-[#272831] placeholder:text-[#929397] focus:border-[#6F2F33]')}
         />
       )}
     </div>
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#272831]' : 'bg-[#F5F5F6]')}>
         <div className="flex items-center justify-between">
-          <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Club Profile</h1>
+          <h1 className={cn('text-xl font-semibold font-display tracking-wide', isDark ? 'text-white' : 'text-[#272831]')}>Club Profile</h1>
           <button
             onClick={() => setMode(mode === 'preview' ? 'edit' : 'preview')}
             className={cn('flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold font-body border-2 transition-all',
@@ -126,7 +126,7 @@ export function AdminClub() {
             {mode === 'preview' ? <><Edit3 size={12} /> Edit</> : <><Eye size={12} /> Preview</>}
           </button>
         </div>
-        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
           {mode === 'preview' ? 'Student view of your club card' : 'Editing club information'}
         </p>
       </div>
@@ -143,28 +143,28 @@ export function AdminClub() {
                 <h2 className="text-white text-xl font-black font-display tracking-wide">{profile.name}</h2>
                 <div className="flex items-center gap-2 mt-1">
                   <StatusBadge label={profile.category} variant="category" category={profile.category} />
-                  {profile.isRecruiting && <StatusBadge label="Recruiting Now 🟢" variant="recruiting" />}
+                  {profile.isRecruiting && <StatusBadge label="Recruiting Now" variant="recruiting" />}
                 </div>
               </div>
             </div>
           </div>
 
           {/* Stats */}
-          <div className={cn('px-5 py-4 flex gap-4 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
+          <div className={cn('px-5 py-4 flex gap-4 border-b', isDark ? 'bg-[#272831] border-[#35363F]' : 'bg-[#FFFFFF] border-[#ECECEF]')}>
             {[
               { label: 'Members', value: adminClub.memberCount },
               { label: 'Events', value: adminClub.events.length },
               { label: 'Founded', value: adminClub.founded },
             ].map(({ label, value }) => (
               <div key={label} className="text-center flex-1">
-                <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#1E1B16]')}>{value}</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{label}</p>
+                <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#272831]')}>{value}</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{label}</p>
               </div>
             ))}
           </div>
 
           {/* Social row */}
-          <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#EAE5D8]')}>
+          <div className={cn('px-5 py-3 flex items-center gap-3 border-b', isDark ? 'bg-[#272831] border-[#35363F]' : 'bg-[#FFFFFF] border-[#ECECEF]')}>
             {socialConfig.map(({ key, label, icon: Icon, bg }) => {
               const url = socialLinks[key]
               if (!url) return null
@@ -187,9 +187,9 @@ export function AdminClub() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Website"
-                className={cn('w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-transform', isDark ? 'bg-[#2d3d4a]' : 'bg-[#EDE8D8]')}
+                className={cn('w-9 h-9 rounded-xl flex items-center justify-center hover:scale-110 transition-transform', isDark ? 'bg-[#35363F]' : 'bg-[#F0F0F2]')}
               >
-                <Globe size={16} className={isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]'} />
+                <Globe size={16} className={isDark ? 'text-[#B8B9C1]' : 'text-[#6B6C72]'} />
               </a>
             )}
             <div className="flex-1" />
@@ -198,29 +198,29 @@ export function AdminClub() {
 
           {/* About preview */}
           <div className="px-5 pt-5">
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>About</h3>
-            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{profile.description}</p>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mb-2 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>About</h3>
+            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#B8B9C1]' : 'text-[#6B6C72]')}>{profile.description}</p>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Mission</h3>
-            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#5C5650]')}>{profile.mission}</p>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Mission</h3>
+            <p className={cn('text-sm leading-relaxed font-body', isDark ? 'text-[#B8B9C1]' : 'text-[#6B6C72]')}>{profile.mission}</p>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Tags</h3>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-2 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Tags</h3>
             <div className="flex flex-wrap gap-2">
               {profile.tags.map((t) => (
-                <span key={t} className="px-3 py-1 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-xs font-semibold font-body">
+                <span key={t} className="px-3 py-1 rounded-full bg-[#FDA014]/10 text-[#FDA014] text-xs font-semibold font-body">
                   {t}
                 </span>
               ))}
             </div>
 
-            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-3 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Committees</h3>
+            <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-3 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Committees</h3>
             {adminClub.committees.map((cm) => (
-              <div key={cm.id} className={cn('flex items-center justify-between py-3 border-b', isDark ? 'border-[#D8D0BE]' : 'border-[#EAE5D8]')}>
+              <div key={cm.id} className={cn('flex items-center justify-between py-3 border-b', isDark ? 'border-[#E5E5E8]' : 'border-[#ECECEF]')}>
                 <div>
-                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{cm.name}</p>
-                  <p className={cn('text-xs font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{cm.description}</p>
+                  <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#272831]')}>{cm.name}</p>
+                  <p className={cn('text-xs font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{cm.description}</p>
                 </div>
-                <span className="text-xs font-bold font-body text-[#6F2F33]">{cm.spotsAvailable} spots</span>
+                <span className="text-xs font-bold font-body text-[#FDA014]">{cm.spotsAvailable} spots</span>
               </div>
             ))}
           </div>
@@ -228,8 +228,8 @@ export function AdminClub() {
       ) : (
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="px-5 pt-2 space-y-5">
           {/* Images */}
-          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-            <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Images</h3>
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
+            <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#272831]')}>Images</h3>
 
             <div className="flex items-center gap-3 mb-3">
               <button onClick={() => logoRef.current?.click()} className="relative group flex-shrink-0">
@@ -239,8 +239,8 @@ export function AdminClub() {
                 </div>
               </button>
               <div>
-                <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Logo</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Tap to change</p>
+                <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#272831]')}>Logo</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Tap to change</p>
               </div>
               <input ref={logoRef} type="file" accept="image/*" className="hidden" onChange={(e) => handleImageFile(e.target.files?.[0], 'logo')} />
             </div>
@@ -259,12 +259,12 @@ export function AdminClub() {
           </div>
 
           {/* Basic info */}
-          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-            <h3 className={cn('text-sm font-black font-display tracking-wide mb-1', isDark ? 'text-white' : 'text-[#1E1B16]')}>Basics</h3>
+          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
+            <h3 className={cn('text-sm font-black font-display tracking-wide mb-1', isDark ? 'text-white' : 'text-[#272831]')}>Basics</h3>
             <Field label="Club name" value={profile.name} onChange={(v) => update('name', v)} placeholder="GUC Media Club" />
 
             <div>
-              <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+              <label className={cn('type-label mb-1.5 block', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
                 Category
               </label>
               <div className="flex flex-wrap gap-1.5">
@@ -273,7 +273,7 @@ export function AdminClub() {
                     key={c}
                     onClick={() => update('category', c)}
                     className={cn('px-3 py-1.5 rounded-full text-xs font-semibold font-body',
-                      profile.category === c ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}
+                      profile.category === c ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#35363F] text-[#B8B9C1]' : 'bg-[#F0F0F2] text-[#6B6C72]')}
                   >
                     {c}
                   </button>
@@ -285,31 +285,31 @@ export function AdminClub() {
 
             <div className="flex items-center justify-between pt-1">
               <div>
-                <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>Recruiting now</p>
-                <p className={cn('text-[10px] font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Shows the "Recruiting" badge</p>
+                <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#272831]')}>Recruiting now</p>
+                <p className={cn('text-[10px] font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Shows the "Recruiting" badge</p>
               </div>
               <button
                 onClick={() => update('isRecruiting', !profile.isRecruiting)}
-                className={cn('w-12 h-6 rounded-full transition-all relative', profile.isRecruiting ? 'bg-[#6F2F33]' : isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')}
+                className={cn('w-12 h-6 rounded-full transition-all relative', profile.isRecruiting ? 'bg-[#6F2F33]' : isDark ? 'bg-[#35363F]' : 'bg-[#E5E5E8]')}
               >
-                <div className={cn('absolute top-1 w-4 h-4 rounded-full bg-[#FAF6EA] shadow-sm transition-all', profile.isRecruiting ? 'left-7' : 'left-1')} />
+                <div className={cn('absolute top-1 w-4 h-4 rounded-full bg-[#FFFFFF] shadow-sm transition-all', profile.isRecruiting ? 'left-7' : 'left-1')} />
               </button>
             </div>
           </div>
 
           {/* About */}
-          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-            <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>About the club</h3>
+          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
+            <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#272831]')}>About the club</h3>
             <Field label="Description" value={profile.description} onChange={(v) => update('description', v)} textarea rows={3} placeholder="Short blurb students see first" />
             <Field label="Mission" value={profile.mission} onChange={(v) => update('mission', v)} textarea rows={3} placeholder="What does the club exist to do?" />
           </div>
 
           {/* Tags */}
-          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-            <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#1E1B16]')}>Tags</h3>
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
+            <h3 className={cn('text-sm font-black font-display tracking-wide mb-3', isDark ? 'text-white' : 'text-[#272831]')}>Tags</h3>
             <div className="flex flex-wrap gap-2 mb-3">
               {profile.tags.map((t) => (
-                <span key={t} className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-xs font-semibold font-body">
+                <span key={t} className="flex items-center gap-1 px-3 py-1 rounded-full bg-[#FDA014]/10 text-[#FDA014] text-xs font-semibold font-body">
                   {t}
                   <button onClick={() => removeTag(t)} aria-label={`Remove ${t}`}>
                     <X size={11} />
@@ -323,7 +323,7 @@ export function AdminClub() {
                 onChange={(e) => setNewTag(e.target.value)}
                 onKeyDown={(e) => { if (e.key === 'Enter') addTag() }}
                 placeholder="New tag"
-                className={cn('flex-1 px-3 py-2 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+                className={cn('flex-1 px-3 py-2 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#35363F] border-[#3D3E48] text-white' : 'bg-[#FFFFFF] border-[#E5E5E8] text-[#272831]')}
               />
               <button onClick={addTag} className="px-4 rounded-xl bg-[#6F2F33] text-white text-xs font-bold font-body flex items-center gap-1">
                 <Plus size={12} /> Add
@@ -332,32 +332,32 @@ export function AdminClub() {
           </div>
 
           {/* Social links */}
-          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
-            <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Social links</h3>
+          <div className={cn('rounded-2xl p-4 space-y-3', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
+            <h3 className={cn('text-sm font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#272831]')}>Social links</h3>
 
             {socialConfig.map(({ key, label, icon: Icon }) => (
               <div key={key} className="flex items-center gap-2">
-                <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}>
+                <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#35363F] text-[#B8B9C1]' : 'bg-[#F0F0F2] text-[#6B6C72]')}>
                   <Icon size={16} />
                 </div>
                 <input
                   value={socialLinks[key] || ''}
                   onChange={(e) => setSocialLinks((s) => ({ ...s, [key]: e.target.value }))}
                   placeholder={`${label} URL`}
-                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#35363F] border-[#3D3E48] text-white' : 'bg-[#FFFFFF] border-[#E5E5E8] text-[#272831]')}
                 />
               </div>
             ))}
 
             <div className="flex items-center gap-2">
-              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#5C5650]')}>
+              <div className={cn('w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#35363F] text-[#B8B9C1]' : 'bg-[#F0F0F2] text-[#6B6C72]')}>
                 <Globe size={16} />
               </div>
               <input
                 value={socialLinks.website || ''}
                 onChange={(e) => setSocialLinks((s) => ({ ...s, website: e.target.value }))}
                 placeholder="Website URL"
-                className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+                className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#35363F] border-[#3D3E48] text-white' : 'bg-[#FFFFFF] border-[#E5E5E8] text-[#272831]')}
               />
             </div>
           </div>

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { User } from '../data/types'
 import { studentUser, adminUser, guestUser } from '../data/users'
+import { apiRequest } from '../lib/api'
 
 const DEMO_STUDENT: User = {
   id: 'demo-student',
@@ -40,6 +41,9 @@ interface AuthContextValue {
   user: User | null
   role: 'student' | 'admin' | null
   isGuest: boolean
+  isLoading: boolean
+  /** Real JWT from the Express/Supabase backend, when we managed to obtain one. Null for demo/guest sessions. */
+  accessToken: string | null
   login: (email: string, password: string) => Promise<boolean>
   loginAsGuest: () => void
   loginAsAdmin: (email: string, password: string) => Promise<boolean>
@@ -50,26 +54,46 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+// The rest of the app (joinedClubs, warnings, profileCompletion, ...) still runs on the
+// mock user model, so login here never fails just because the real backend is unreachable
+// or the account doesn't exist in Supabase yet — we just won't have a usable accessToken.
+async function tryGetRealAccessToken(email: string, password: string): Promise<string | null> {
+  try {
+    const data = await apiRequest<{ accessToken: string }>('/auth/login', {
+      method: 'POST',
+      body: { email, password },
+    })
+    return data.accessToken
+  } catch {
+    return null
+  }
+}
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
   const [role, setRole] = useState<'student' | 'admin' | null>(null)
   const [isGuest, setIsGuest] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [accessToken, setAccessToken] = useState<string | null>(null)
 
   useEffect(() => {
-    const saved = sessionStorage.getItem('clubify_session')
+    const saved = localStorage.getItem('clubify_session')
     if (saved) {
-      const { user: u, role: r, isGuest: ig } = JSON.parse(saved)
+      const { user: u, role: r, isGuest: ig, accessToken: t } = JSON.parse(saved)
       setUser(u)
       setRole(r)
       setIsGuest(ig ?? false)
+      setAccessToken(t ?? null)
     }
+    setIsLoading(false)
   }, [])
 
-  const saveSession = (u: User, r: 'student' | 'admin', ig = false) => {
-    sessionStorage.setItem('clubify_session', JSON.stringify({ user: u, role: r, isGuest: ig }))
+  const saveSession = (u: User, r: 'student' | 'admin', ig = false, token: string | null = null) => {
+    localStorage.setItem('clubify_session', JSON.stringify({ user: u, role: r, isGuest: ig, accessToken: token }))
     setUser(u)
     setRole(r)
     setIsGuest(ig)
+    setAccessToken(token)
   }
 
   const loginAsDemo = (demoRole: 'student' | 'admin') => {
@@ -80,19 +104,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
-  const login = async (email: string, _password: string): Promise<boolean> => {
-    await new Promise((r) => setTimeout(r, 800))
+  const login = async (email: string, password: string): Promise<boolean> => {
+    const [, token] = await Promise.all([
+      new Promise((r) => setTimeout(r, 800)),
+      tryGetRealAccessToken(email, password),
+    ])
     if (email.endsWith('@guc.edu.eg') || email === studentUser.email) {
-      saveSession(studentUser, 'student')
+      saveSession(studentUser, 'student', false, token)
       return true
     }
     return false
   }
 
-  const loginAsAdmin = async (email: string, _password: string): Promise<boolean> => {
-    await new Promise((r) => setTimeout(r, 800))
+  const loginAsAdmin = async (email: string, password: string): Promise<boolean> => {
+    const [, token] = await Promise.all([
+      new Promise((r) => setTimeout(r, 800)),
+      tryGetRealAccessToken(email, password),
+    ])
     if (email.endsWith('@guc.edu.eg')) {
-      saveSession(adminUser, 'admin')
+      saveSession(adminUser, 'admin', false, token)
       return true
     }
     return false
@@ -103,25 +133,26 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   const logout = () => {
-    sessionStorage.removeItem('clubify_session')
+    localStorage.removeItem('clubify_session')
     setUser(null)
     setRole(null)
     setIsGuest(false)
+    setAccessToken(null)
   }
 
   const updateUser = (updates: Partial<User>) => {
     if (!user) return
     const updated = { ...user, ...updates }
     setUser(updated)
-    const saved = sessionStorage.getItem('clubify_session')
+    const saved = localStorage.getItem('clubify_session')
     if (saved) {
       const session = JSON.parse(saved)
-      sessionStorage.setItem('clubify_session', JSON.stringify({ ...session, user: updated }))
+      localStorage.setItem('clubify_session', JSON.stringify({ ...session, user: updated }))
     }
   }
 
   return (
-    <AuthContext.Provider value={{ user, role, isGuest, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, role, isGuest, isLoading, accessToken, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   )

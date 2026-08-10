@@ -1,26 +1,26 @@
 const supabase = require('../config/supabase')
 const { createNotification } = require('./notifications.service')
 
-async function applyToClub(userId, clubId, { committeeId, interviewSlotId, motivationNote } = {}) {
+async function applyToClub(userId, clubId, { committeeId, motivationNote } = {}) {
   try {
+    const { data: club, error: clubErr } = await supabase
+      .from('clubs')
+      .select('name, is_recruiting')
+      .eq('id', clubId)
+      .single()
+    if (clubErr || !club) throw new Error('Club not found')
+    if (!club.is_recruiting) {
+      const err = new Error('RECRUITMENT_CLOSED')
+      err.statusCode = 409
+      throw err
+    }
+
     const { data: committee, error: commErr } = await supabase
       .from('committees')
       .select('name')
       .eq('id', committeeId)
       .single()
     if (commErr || !committee) throw new Error('Committee not found')
-
-    const { data: slot, error: slotErr } = await supabase
-      .from('interview_slots')
-      .select('*')
-      .eq('id', interviewSlotId)
-      .single()
-    if (slotErr || !slot) throw new Error('Slot not found')
-    if (slot.is_booked) {
-      const err = new Error('SLOT_TAKEN')
-      err.statusCode = 409
-      throw err
-    }
 
     const { data: existing } = await supabase
       .from('applications')
@@ -34,22 +34,14 @@ async function applyToClub(userId, clubId, { committeeId, interviewSlotId, motiv
       throw err
     }
 
-    await supabase
-      .from('interview_slots')
-      .update({ is_booked: true, booked_by: userId })
-      .eq('id', interviewSlotId)
-
-    const { data: club } = await supabase.from('clubs').select('name').eq('id', clubId).single()
-
     const { data: application, error: appErr } = await supabase
       .from('applications')
       .insert({
         user_id: userId,
         entity_id: clubId,
         entity_type: 'club',
-        entity_name: club?.name || null,
+        entity_name: club.name || null,
         committee: committee.name,
-        interview_slot: slot.datetime,
         motivation_note: motivationNote,
         status: 'pending',
       })
@@ -59,13 +51,78 @@ async function applyToClub(userId, clubId, { committeeId, interviewSlotId, motiv
 
     createNotification({
       userId,
-      message: `Your application to ${club?.name || 'the club'} has been submitted successfully!`,
+      message: `Your application to ${club.name || 'the club'} has been submitted successfully!`,
       type: 'application_update',
       clubId,
     }).catch(() => {})
 
     return application
   } catch (err) {
+    if (err.statusCode) throw err
+    throw new Error(err.message)
+  }
+}
+
+async function selectSlot(applicationId, userId, slotId) {
+  try {
+    const { data: application, error: appErr } = await supabase
+      .from('applications')
+      .select('*')
+      .eq('id', applicationId)
+      .single()
+    if (appErr || !application) throw new Error('Application not found')
+    if (application.user_id !== userId) {
+      const err = new Error('Not your application')
+      err.statusCode = 403
+      throw err
+    }
+    if (application.entity_type !== 'club') {
+      const err = new Error('Slot selection only applies to club applications')
+      err.statusCode = 400
+      throw err
+    }
+
+    const { data: slot, error: slotErr } = await supabase
+      .from('interview_slots')
+      .select('*')
+      .eq('id', slotId)
+      .single()
+    if (slotErr || !slot) throw new Error('Slot not found')
+    if (slot.club_id !== application.entity_id) {
+      const err = new Error('Slot does not belong to this club')
+      err.statusCode = 400
+      throw err
+    }
+    if (slot.is_booked) {
+      const err = new Error('SLOT_TAKEN')
+      err.statusCode = 409
+      throw err
+    }
+
+    const { error: bookErr } = await supabase
+      .from('interview_slots')
+      .update({ is_booked: true, booked_by: userId })
+      .eq('id', slotId)
+    if (bookErr) throw new Error(bookErr.message)
+
+    const { data: updatedApplication, error: updateErr } = await supabase
+      .from('applications')
+      .update({ interview_slot: slot.datetime })
+      .eq('id', applicationId)
+      .select()
+      .single()
+    if (updateErr) throw new Error(updateErr.message)
+
+    createNotification({
+      userId,
+      message: `Your interview slot for ${application.entity_name || 'your application'} is confirmed for ${slot.datetime}.`,
+      type: 'application_update',
+      clubId: application.entity_id,
+    }).catch(() => {})
+
+    return { ...updatedApplication, slot: { ...slot, is_booked: true, booked_by: userId } }
+  } catch (err) {
+    if (err.statusCode) throw err
     throw new Error(err.message)
   }
 }
@@ -211,6 +268,6 @@ async function updateStatus(applicationId, status) {
 }
 
 module.exports = {
-  applyToClub, applyToVolunteer, getMyApplications,
+  applyToClub, applyToVolunteer, getMyApplications, selectSlot,
   getClubApplications, getVolunteerApplications, updateStatus,
 }

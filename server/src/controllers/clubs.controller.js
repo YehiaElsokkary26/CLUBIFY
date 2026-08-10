@@ -32,7 +32,7 @@ const updateSocialLinks = async (req, res, next) => {
   try { return sendSuccess(res, await clubsService.updateSocialLinks(req.params.id, req.body)) } catch (err) { next(err) }
 }
 const getSlots = async (req, res, next) => {
-  try { return sendSuccess(res, await clubsService.getSlots(req.params.id)) } catch (err) { next(err) }
+  try { return sendSuccess(res, await clubsService.getSlots(req.params.id, true)) } catch (err) { next(err) }
 }
 const addSlot = async (req, res, next) => {
   try { return sendSuccess(res, await clubsService.addSlot(req.params.id, req.body), 201) } catch (err) { next(err) }

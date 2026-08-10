@@ -14,9 +14,12 @@ async function getAll({ category, search, recruiting } = {}) {
   }
 }
 
-async function getBySlug(slug) {
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+async function getBySlug(idOrSlug) {
   try {
-    const { data: club, error } = await supabase.from('clubs').select('*').eq('slug', slug).single()
+    const lookupField = UUID_RE.test(idOrSlug) ? 'id' : 'slug'
+    const { data: club, error } = await supabase.from('clubs').select('*').eq(lookupField, idOrSlug).single()
     if (error) throw new Error('Club not found')
 
     const [{ data: committees }, { data: staff }, { data: events }] = await Promise.all([

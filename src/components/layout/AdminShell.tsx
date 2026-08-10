@@ -8,7 +8,7 @@ export function AdminShell() {
   return (
     <div
       className="relative flex flex-col h-full min-h-[844px]"
-      style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}
+      style={{ background: isDark ? '#272831' : '#F5F5F6' }}
     >
       <div className="flex-1 overflow-hidden">
         <Outlet />

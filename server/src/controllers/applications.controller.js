@@ -19,8 +19,11 @@ const getVolunteerApplications = async (req, res, next) => {
 const updateStatus = async (req, res, next) => {
   try { return sendSuccess(res, await applicationsService.updateStatus(req.params.id, req.body.status)) } catch (err) { next(err) }
 }
+const selectSlot = async (req, res, next) => {
+  try { return sendSuccess(res, await applicationsService.selectSlot(req.params.id, req.user.id, req.body.slotId)) } catch (err) { next(err) }
+}
 
 module.exports = {
-  applyToClub, applyToVolunteer, getMyApplications,
+  applyToClub, applyToVolunteer, getMyApplications, selectSlot,
   getClubApplications, getVolunteerApplications, updateStatus,
 }

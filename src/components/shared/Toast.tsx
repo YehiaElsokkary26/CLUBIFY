@@ -41,12 +41,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               className={cn(
                 'flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl pointer-events-auto font-body',
-                t.type === 'success' && 'bg-[#23323F] text-white',
-                t.type === 'error'   && 'bg-[#C75A6B] text-white',
-                t.type === 'info'    && 'bg-[#6F2F33] text-white'
+                t.type === 'success' && 'bg-[#272831] text-white',
+                t.type === 'error'   && 'bg-[#E14535] text-white',
+                t.type === 'info'    && 'bg-[#FDA014] text-white'
               )}
             >
-              {t.type === 'success' && <CheckCircle size={18} className="text-[#6E8B5A] flex-shrink-0" />}
+              {t.type === 'success' && <CheckCircle size={18} className="text-[#5FC756] flex-shrink-0" />}
               {t.type === 'error'   && <AlertCircle size={18} className="flex-shrink-0" />}
               {t.type === 'info'    && <Info        size={18} className="flex-shrink-0" />}
               <span className="text-sm font-medium flex-1">{t.message}</span>

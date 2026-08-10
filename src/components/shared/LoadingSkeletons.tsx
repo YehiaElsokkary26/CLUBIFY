@@ -8,7 +8,7 @@ function Skeleton({ className }: { className?: string }) {
 export function ClubCardSkeleton() {
   const { isDark } = useTheme()
   return (
-    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#272831] border-[#35363F]' : 'bg-[#FFFFFF] border-[#E5E5E8]')}>
       <Skeleton className="h-24 w-full rounded-xl" />
       <Skeleton className="h-4 w-3/4" />
       <Skeleton className="h-3 w-1/2" />
@@ -23,7 +23,7 @@ export function ClubCardSkeleton() {
 export function FeedItemSkeleton() {
   const { isDark } = useTheme()
   return (
-    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#272831] border-[#35363F]' : 'bg-[#FFFFFF] border-[#E5E5E8]')}>
       <div className="flex items-center gap-3">
         <Skeleton className="h-10 w-10 rounded-full" />
         <div className="flex-1 space-y-2">
@@ -40,7 +40,7 @@ export function FeedItemSkeleton() {
 export function RecruitmentCardSkeleton() {
   const { isDark } = useTheme()
   return (
-    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
+    <div className={cn('rounded-2xl p-4 space-y-3 border', isDark ? 'bg-[#272831] border-[#35363F]' : 'bg-[#FFFFFF] border-[#E5E5E8]')}>
       <div className="flex gap-3">
         <Skeleton className="h-12 w-12 rounded-xl" />
         <div className="flex-1 space-y-2">

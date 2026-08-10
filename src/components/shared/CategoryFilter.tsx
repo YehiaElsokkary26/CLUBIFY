@@ -29,8 +29,8 @@ export function CategoryFilter({ selected, onChange }: CategoryFilterProps) {
               active
                 ? 'bg-[#6F2F33] text-white shadow-sm'
                 : isDark
-                ? 'bg-[#23323F] text-[#A8A09A] border border-[#2d3d4a]'
-                : 'bg-[#FAF6EA] text-[#5C5650] border border-[#D8D0BE] shadow-sm'
+                ? 'bg-[#272831] text-[#929397] border border-[#35363F]'
+                : 'bg-[#FFFFFF] text-[#6B6C72] border border-[#E5E5E8] shadow-sm'
             )}
           >
             {cat}
