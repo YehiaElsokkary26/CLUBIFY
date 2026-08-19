@@ -2,10 +2,10 @@ import { cn } from '../../lib/utils'
 import type { ClubCategory } from '../../data/types'
 
 const categoryColors: Record<ClubCategory, string> = {
-  Media:      'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
-  Business:   'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
-  Academic:   'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
-  Arts:       'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300',
+  Media:      'bg-[#E14535]/10 text-[#E14535] dark:bg-[#E14535]/20 dark:text-[#E14535]',
+  Business:   'bg-[#F0F0F2] text-[#4A4B52] dark:bg-[#35363F] dark:text-[#B8B9C1]',
+  Academic:   'bg-[#FFEDCF] text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FFE3B3]',
+  Arts:       'bg-[#FAE8E9] text-[#6F2F33] dark:bg-[#6F2F33]/20 dark:text-[#E8C5C8]',
   Sports:     'bg-[#5FC756]/10 text-[#5FC756] dark:bg-[#5FC756]/20 dark:text-[#5FC756]',
   Community:  'bg-[#FFEDCF] text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FFE3B3]',
   Technology: 'bg-[#FDA014]/10 text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FDA014]',

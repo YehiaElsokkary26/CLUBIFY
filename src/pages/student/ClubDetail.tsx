@@ -10,6 +10,7 @@ import { useToast } from '../../components/shared/Toast'
 import { StatusBadge } from '../../components/shared/StatusBadge'
 import { EventCard } from '../../components/cards/EventCard'
 import { cn, formatDate } from '../../lib/utils'
+import { getEvents } from '../../lib/db'
 
 type Tab = 'About' | 'Events' | 'Members'
 
@@ -46,6 +47,7 @@ export function ClubDetail() {
   }
 
   const memberOfMonth = club.members.find((m) => m.isMonthStar)
+  const dbEvents = getEvents(club.id)
 
   return (
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
@@ -94,7 +96,7 @@ export function ClubDetail() {
         </div>
         <div className={cn('w-px h-8', isDark ? 'bg-[#35363F]' : 'bg-[#E5E5E8]')} />
         <div className="text-center">
-          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#272831]')}>{club.events.length}</p>
+          <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#272831]')}>{dbEvents.length}</p>
           <p className={cn('text-[10px] font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Events</p>
         </div>
         <div className={cn('w-px h-8', isDark ? 'bg-[#35363F]' : 'bg-[#E5E5E8]')} />
@@ -188,7 +190,7 @@ export function ClubDetail() {
 
         {activeTab === 'Events' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-            {club.events.length > 0 ? club.events.map((event) => (
+            {dbEvents.length > 0 ? dbEvents.map((event) => (
               <EventCard key={event.id} event={event} />
             )) : (
               <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>No events scheduled yet</p>

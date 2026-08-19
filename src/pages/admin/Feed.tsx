@@ -243,8 +243,8 @@ export function AdminFeed() {
                         key={a.id}
                         className={cn('flex items-center gap-3 px-3 py-2 rounded-xl', isDark ? 'bg-[#35363F]' : 'bg-[#FFFFFF]')}
                       >
-                        <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', a.type === 'pdf' ? 'bg-red-100' : 'bg-blue-100')}>
-                          {a.type === 'pdf' ? <FileText size={16} className="text-red-600" /> : <FileImage size={16} className="text-blue-600" />}
+                        <div className={cn('w-9 h-9 rounded-lg flex items-center justify-center', a.type === 'pdf' ? 'bg-[#E14535]/10' : 'bg-[#6F2F33]/10')}>
+                          {a.type === 'pdf' ? <FileText size={16} className="text-[#E14535]" /> : <FileImage size={16} className="text-[#6F2F33]" />}
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className={cn('text-xs font-semibold font-body truncate', isDark ? 'text-white' : 'text-[#272831]')}>{a.name}</p>
@@ -252,10 +252,10 @@ export function AdminFeed() {
                         </div>
                         <button
                           onClick={() => removeAttachment(a.id)}
-                          className="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center"
+                          className="w-7 h-7 rounded-lg bg-[#E14535]/10 flex items-center justify-center"
                           aria-label="Remove attachment"
                         >
-                          <X size={13} className="text-red-600" />
+                          <X size={13} className="text-[#E14535]" />
                         </button>
                       </div>
                     ))}
@@ -310,11 +310,11 @@ export function AdminFeed() {
             <div className="flex items-start justify-between gap-2 mb-2">
               <h4 className={cn('text-sm font-bold font-body flex-1', isDark ? 'text-white' : 'text-[#272831]')}>{post.title}</h4>
               <div className="flex gap-2 flex-shrink-0">
-                <button onClick={() => handleEdit(post)} className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center" aria-label="Edit">
-                  <Edit2 size={13} className="text-blue-600" />
+                <button onClick={() => handleEdit(post)} className="w-7 h-7 rounded-lg bg-[#6F2F33]/10 flex items-center justify-center" aria-label="Edit">
+                  <Edit2 size={13} className="text-[#6F2F33]" />
                 </button>
-                <button onClick={() => handleDelete(post.id)} className="w-7 h-7 rounded-lg bg-red-100 flex items-center justify-center" aria-label="Delete">
-                  <Trash2 size={13} className="text-red-600" />
+                <button onClick={() => handleDelete(post.id)} className="w-7 h-7 rounded-lg bg-[#E14535]/10 flex items-center justify-center" aria-label="Delete">
+                  <Trash2 size={13} className="text-[#E14535]" />
                 </button>
               </div>
             </div>
@@ -336,7 +336,7 @@ export function AdminFeed() {
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold font-body', post.targetAudience === 'All' ? 'bg-blue-100 text-blue-700' : 'bg-purple-100 text-purple-700')}>
+              <span className={cn('px-2 py-0.5 rounded-full text-[10px] font-semibold font-body', post.targetAudience === 'All' ? 'bg-[#FDA014]/10 text-[#E08E0F]' : 'bg-[#6F2F33]/10 text-[#6F2F33]')}>
                 {post.targetAudience}
               </span>
               <span className={cn('text-[10px] font-mono', isDark ? 'text-[#6B6C72]' : 'text-[#929397]')}>

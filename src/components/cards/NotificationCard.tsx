@@ -4,9 +4,9 @@ import { cn } from '../../lib/utils'
 import type { Notification } from '../../data/types'
 
 const typeIcon: Record<string, React.ReactNode> = {
-  event:        <Calendar  size={16} className="text-blue-500" />,
+  event:        <Calendar  size={16} className="text-[#6F2F33]" />,
   recruitment:  <Users     size={16} className="text-[#5FC756]" />,
-  announcement: <Megaphone size={16} className="text-purple-500" />,
+  announcement: <Megaphone size={16} className="text-[#E14535]" />,
   reminder:     <Clock     size={16} className="text-[#FDA014]" />,
 }
 

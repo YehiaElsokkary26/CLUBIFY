@@ -29,19 +29,23 @@ export function Login() {
     setLoading(true)
     try {
       if (mode === 'admin') {
-        await loginAsAdmin(email, password)
-        navigate('/admin/feed')
+        const ok = await loginAsAdmin(email, password)
+        if (ok) navigate('/admin/feed')
+        else setError('Invalid admin credentials.')
       } else {
         const ok = await login(email, password)
         if (ok) {
           const termsAccepted = localStorage.getItem('clubify_terms_accepted') === 'true'
-          const onboarded = localStorage.getItem('clubify_onboarded')
-          const destination = onboarded ? '/student/home' : '/onboarding'
+          const onboarded = localStorage.getItem('clubify_onboarded') === 'true'
           if (!termsAccepted) {
-            navigate('/terms', { state: { postLoginRedirect: destination } })
-            return
+            // First ever login → terms → then onboarding
+            navigate('/terms', { state: { postLoginRedirect: onboarded ? '/student/home' : '/onboarding' } })
+          } else if (!onboarded) {
+            // Terms done before but interests not yet selected
+            navigate('/onboarding')
+          } else {
+            navigate('/student/home')
           }
-          navigate(destination)
         } else {
           setError('Invalid credentials. Try youssef.mahmoud@guc.edu.eg')
         }

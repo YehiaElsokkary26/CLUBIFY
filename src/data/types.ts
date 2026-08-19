@@ -113,12 +113,15 @@ export interface User {
   name: string
   nickname?: string
   email: string
+  emailPrefix?: string
   gucId: string
   faculty: string
   year: number
   avatar: string
   bio: string
   role: 'student' | 'admin'
+  /** For admin users — the club they manage */
+  managedClubId?: string
   joinedClubs: string[]
   attendedSessions: number
   totalSessions: number

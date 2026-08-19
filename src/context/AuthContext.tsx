@@ -2,6 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react'
 import type { User } from '../data/types'
 import { studentUser, adminUser, guestUser } from '../data/users'
 import { apiRequest } from '../lib/api'
+import { initDB, getAdminClubId } from '../lib/db'
+
+// Initialize the DB once on import
+initDB()
 
 const DEMO_STUDENT: User = {
   id: 'demo-student',
@@ -13,7 +17,7 @@ const DEMO_STUDENT: User = {
   avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=youssef&backgroundColor=b6e3f4',
   bio: 'CS student passionate about tech, media, and making a difference.',
   role: 'student',
-  joinedClubs: ['c1', 'c7', 'c10'],
+  joinedClubs: [],
   attendedSessions: 14,
   totalSessions: 18,
   warnings: [],
@@ -28,9 +32,10 @@ const DEMO_ADMIN: User = {
   faculty: 'Management Technology',
   year: 4,
   avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sara&backgroundColor=ffdfbf',
-  bio: 'President of GUC Media Club. Passionate about storytelling and student leadership.',
+  bio: 'President of GUC Enactus. Passionate about entrepreneurship and student leadership.',
   role: 'admin',
-  joinedClubs: ['c1'],
+  managedClubId: 'guc-enactus',
+  joinedClubs: ['guc-enactus'],
   attendedSessions: 28,
   totalSessions: 30,
   warnings: [],
@@ -42,7 +47,6 @@ interface AuthContextValue {
   role: 'student' | 'admin' | null
   isGuest: boolean
   isLoading: boolean
-  /** Real JWT from the Express/Supabase backend, when we managed to obtain one. Null for demo/guest sessions. */
   accessToken: string | null
   login: (email: string, password: string) => Promise<boolean>
   loginAsGuest: () => void
@@ -54,9 +58,6 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
-// The rest of the app (joinedClubs, warnings, profileCompletion, ...) still runs on the
-// mock user model, so login here never fails just because the real backend is unreachable
-// or the account doesn't exist in Supabase yet — we just won't have a usable accessToken.
 async function tryGetRealAccessToken(email: string, password: string): Promise<string | null> {
   try {
     const data = await apiRequest<{ accessToken: string }>('/auth/login', {
@@ -79,11 +80,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem('clubify_session')
     if (saved) {
-      const { user: u, role: r, isGuest: ig, accessToken: t } = JSON.parse(saved)
-      setUser(u)
-      setRole(r)
-      setIsGuest(ig ?? false)
-      setAccessToken(t ?? null)
+      try {
+        const { user: u, role: r, isGuest: ig, accessToken: t } = JSON.parse(saved)
+        setUser(u)
+        setRole(r)
+        setIsGuest(ig ?? false)
+        setAccessToken(t ?? null)
+      } catch {
+        localStorage.removeItem('clubify_session')
+      }
     }
     setIsLoading(false)
   }, [])
@@ -101,6 +106,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     saveSession(demoUser, demoRole)
     if (demoRole === 'student') {
       localStorage.setItem('clubify_onboarded', 'true')
+      localStorage.setItem('clubify_terms_accepted', 'true')
     }
   }
 
@@ -122,7 +128,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       tryGetRealAccessToken(email, password),
     ])
     if (email.endsWith('@guc.edu.eg')) {
-      saveSession(adminUser, 'admin', false, token)
+      // Look up which club this admin manages
+      const managedClubId = getAdminClubId(email) ?? 'guc-enactus'
+      const adminWithClub: User = { ...adminUser, managedClubId, email }
+      saveSession(adminWithClub, 'admin', false, token)
       return true
     }
     return false
@@ -146,8 +155,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     setUser(updated)
     const saved = localStorage.getItem('clubify_session')
     if (saved) {
-      const session = JSON.parse(saved)
-      localStorage.setItem('clubify_session', JSON.stringify({ ...session, user: updated }))
+      try {
+        const session = JSON.parse(saved)
+        localStorage.setItem('clubify_session', JSON.stringify({ ...session, user: updated }))
+      } catch {
+        /* ignore */
+      }
     }
   }
 

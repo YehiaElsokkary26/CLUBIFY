@@ -1,36 +1,28 @@
 import { useQuery } from '@tanstack/react-query'
-import { clubs, getRecruitingClubs } from '../data/clubs'
+import { getClubs, getClubBySlug } from '../lib/db'
 import type { Club } from '../data/types'
-
-const fakeDelay = (ms = 600) => new Promise((r) => setTimeout(r, ms))
 
 export function useClubs() {
   return useQuery({
     queryKey: ['clubs'],
-    queryFn: async (): Promise<Club[]> => {
-      await fakeDelay()
-      return clubs
-    },
+    queryFn: (): Club[] => getClubs(),
+    staleTime: 0, // always fresh so admin changes reflect immediately
   })
 }
 
 export function useClub(slug: string) {
   return useQuery({
     queryKey: ['club', slug],
-    queryFn: async (): Promise<Club | undefined> => {
-      await fakeDelay(400)
-      return clubs.find((c) => c.slug === slug)
-    },
+    queryFn: (): Club | undefined => getClubBySlug(slug) ?? getClubs().find((c) => c.id === slug),
     enabled: !!slug,
+    staleTime: 0,
   })
 }
 
 export function useRecruitingClubs() {
   return useQuery({
     queryKey: ['clubs', 'recruiting'],
-    queryFn: async (): Promise<Club[]> => {
-      await fakeDelay(500)
-      return getRecruitingClubs()
-    },
+    queryFn: (): Club[] => getClubs().filter((c) => c.isRecruiting),
+    staleTime: 0,
   })
 }

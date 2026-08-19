@@ -1,13 +1,15 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2, FileText, CheckCircle, UserCog, Users, UserMinus, Star, History } from 'lucide-react'
+import { Edit3, Check, X, AlertTriangle, Calendar, Settings, Camera, Upload, Trash2, FileText, CheckCircle, UserCog, Users, UserMinus, Star, History, Clock } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { cn } from '../../lib/utils'
 import { clubs } from '../../data/clubs'
 import { getUpcomingEvents, allEvents } from '../../data/events'
+import { getStudentApplications, getClub as getDbClub } from '../../lib/db'
+import type { Application } from '../../lib/db'
 
 interface Membership {
   clubId: string
@@ -53,6 +55,7 @@ export function Profile() {
   const [gucIdError, setGucIdError] = useState('')
   const fileInputRef = useRef<HTMLInputElement>(null)
   const cameraInputRef = useRef<HTMLInputElement>(null)
+  const [myApplications, setMyApplications] = useState<Application[]>([])
   const [memberships, setMemberships] = useState<Membership[]>(() => readJSON('clubify_memberships', []))
   const [rsvps, setRsvps] = useState<Rsvp[]>(() => readJSON('clubify_rsvps', []))
   const [reviews, setReviews] = useState<Review[]>(() => readJSON('clubify_reviews', []))
@@ -96,6 +99,11 @@ export function Profile() {
       setFollowing(seededFollowing)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id])
+
+  useEffect(() => {
+    if (!user) return
+    setMyApplications(getStudentApplications(user.id))
   }, [user?.id])
 
   if (!user) return null
@@ -326,27 +334,72 @@ export function Profile() {
           </div>
         </div>
 
-        {/* My Clubs */}
-        {myMemberships.length > 0 && (
+        {/* My Clubs & Applications */}
+        {(myMemberships.length > 0 || myApplications.length > 0) && (
           <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF] shadow-sm')}>
             <div className="flex items-center gap-2 mb-3">
               <Users size={15} className="text-[#FDA014]" />
               <h3 className={cn('text-sm font-bold', isDark ? 'text-white' : 'text-[#272831]')}>My Clubs</h3>
             </div>
-            <div className="space-y-2">
-              {myMemberships.map((m) => (
-                <div key={m.clubId} className="flex items-center gap-3 p-2.5 rounded-xl bg-[#FDA014]/5">
-                  <img src={m.club.logo} alt={m.club.name} className="w-9 h-9 rounded-xl object-cover" />
-                  <div className="flex-1 min-w-0">
-                    <p className={cn('text-xs font-semibold truncate', isDark ? 'text-white' : 'text-[#272831]')}>{m.club.name}</p>
-                    <p className={cn('text-[10px]', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{m.committee}</p>
-                  </div>
-                  <p className={cn('text-[10px] font-mono whitespace-nowrap', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-                    Joined {new Date(m.joinDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  </p>
+
+            {/* Applications with status */}
+            {myApplications.length > 0 && (
+              <div className="space-y-2 mb-3">
+                {myApplications.map((app) => {
+                  const club = getDbClub(app.clubId)
+                  const statusColors: Record<Application['status'], string> = {
+                    pending: 'text-[#FDA014] bg-[#FDA014]/10',
+                    interview_scheduled: 'text-blue-600 bg-blue-50',
+                    accepted: 'text-green-600 bg-green-100',
+                    rejected: 'text-red-500 bg-red-100',
+                  }
+                  const statusLabels: Record<Application['status'], string> = {
+                    pending: 'Pending',
+                    interview_scheduled: 'Interview Set',
+                    accepted: '✓ Accepted',
+                    rejected: 'Rejected',
+                  }
+                  return (
+                    <div key={app.id} className={cn('flex items-center gap-3 p-2.5 rounded-xl', isDark ? 'bg-[#35363F]' : 'bg-[#F5F5F6]')}>
+                      <img
+                        src={club?.logo || `https://placehold.co/36x36/FDA014/FFF?text=${app.clubId.slice(0,2).toUpperCase()}`}
+                        alt={app.clubId}
+                        className="w-9 h-9 rounded-xl object-cover"
+                      />
+                      <div className="flex-1 min-w-0">
+                        <p className={cn('text-xs font-semibold truncate', isDark ? 'text-white' : 'text-[#272831]')}>
+                          {club?.name || app.clubId}
+                        </p>
+                        <p className={cn('text-[10px]', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
+                          {app.committeeName}
+                        </p>
+                      </div>
+                      <span className={cn('text-[10px] font-bold px-2 py-0.5 rounded-full', statusColors[app.status])}>
+                        {statusLabels[app.status]}
+                      </span>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* Legacy memberships */}
+            {myMemberships.map((m) => (
+              <div key={m.clubId} className="flex items-center gap-3 p-2.5 rounded-xl bg-[#FDA014]/5 mb-2">
+                <img src={m.club.logo} alt={m.club.name} className="w-9 h-9 rounded-xl object-cover" />
+                <div className="flex-1 min-w-0">
+                  <p className={cn('text-xs font-semibold truncate', isDark ? 'text-white' : 'text-[#272831]')}>{m.club.name}</p>
+                  <p className={cn('text-[10px]', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{m.committee}</p>
                 </div>
-              ))}
-            </div>
+                <span className="text-[10px] font-bold text-green-600 bg-green-100 px-2 py-0.5 rounded-full">✓ Member</span>
+              </div>
+            ))}
+
+            {myApplications.length === 0 && myMemberships.length === 0 && (
+              <p className={cn('text-xs font-body text-center py-2', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
+                You haven't applied to any clubs yet.
+              </p>
+            )}
           </div>
         )}
 

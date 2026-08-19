@@ -5,11 +5,11 @@ import type { ClubEvent } from '../../data/types'
 import { clubs } from '../../data/clubs'
 
 const typeColors: Record<string, string> = {
-  Workshop:    'bg-blue-100 text-blue-700',
-  Social:      'bg-pink-100 text-pink-700',
-  Competition: 'bg-[#FDA014]/10 text-[#FDA014]',
+  Workshop:    'bg-[#5FC756]/10 text-[#5FC756]',
+  Social:      'bg-[#FAE8E9] text-[#6F2F33]',
+  Competition: 'bg-[#FDA014]/10 text-[#E08E0F]',
   Meeting:     'bg-[#F0F0F2] text-[#6B6C72]',
-  Talk:        'bg-purple-100 text-purple-700',
+  Talk:        'bg-[#E14535]/10 text-[#E14535]',
 }
 
 interface EventCardProps {
