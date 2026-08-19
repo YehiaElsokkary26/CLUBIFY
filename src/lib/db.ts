@@ -44,7 +44,7 @@ const K = {
   slots:        'clubify_db_slots',
   applications: 'clubify_db_applications',
   admins:       'clubify_db_admins',
-  seeded:       'clubify_db_seeded_v6',
+  seeded:       'clubify_db_seeded_v7',
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -478,6 +478,10 @@ const SEED_EVENTS: ClubEvent[] = [
 
 export function initDB(): void {
   if (localStorage.getItem(K.seeded)) return
+
+  // Wipe ALL clubify_ keys so stale data from older seed versions never bleeds through.
+  const staleKeys = Object.keys(localStorage).filter((k) => k.startsWith('clubify_'))
+  staleKeys.forEach((k) => localStorage.removeItem(k))
 
   write(K.clubs, SEED_CLUBS)
   write(K.events, SEED_EVENTS)

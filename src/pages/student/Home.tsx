@@ -10,7 +10,7 @@ import { EventCard } from '../../components/cards/EventCard'
 import { cn, getTimeOfDay, formatDateShort } from '../../lib/utils'
 import { getUpcomingEvents } from '../../data/events'
 import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
-import { announcements } from '../../data/announcements'
+import { generateWeeklyFeed, getClubFeed } from '../../lib/feedGenerator'
 
 export function Home() {
   const navigate = useNavigate()
@@ -33,9 +33,13 @@ export function Home() {
     setRefreshing(false)
   }
 
+  // Weekly feed: seeded by ISO week number — rotates every Monday automatically.
+  // My Clubs: shows ALL pool posts from joined clubs (not just the weekly 8).
+  // Announcements: same as All (full weekly selection).
+  const weeklyFeed = generateWeeklyFeed(8)
   const feedItems = feedFilter === 'My Clubs'
-    ? announcements.filter((a) => user?.joinedClubs.includes(a.clubId))
-    : announcements
+    ? getClubFeed(user?.joinedClubs ?? [])
+    : weeklyFeed
 
   return (
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
