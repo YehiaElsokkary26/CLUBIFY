@@ -1,5 +1,29 @@
 import type { Announcement } from '../data/types'
 import { announcementPool } from '../data/announcements'
+import { clubs } from '../data/clubs'
+
+// ─── Club image lookup ───────────────────────────────────────────────────────
+
+/**
+ * Maps each clubId to its permanent coverImage from clubs.ts.
+ * The algorithm uses this to assign images to feed posts automatically,
+ * so individual announcements never need hardcoded imageUrl fields.
+ */
+const clubCoverMap: Record<string, string> = Object.fromEntries(
+  clubs.map((c) => [c.id, c.coverImage])
+)
+
+/**
+ * Enriches an announcement with its club's coverImage.
+ * The announcement's own imageUrl (if any) takes precedence,
+ * otherwise the club cover is used — so images are always present.
+ */
+function withImage(a: Announcement): Announcement {
+  return {
+    ...a,
+    imageUrl: a.imageUrl ?? clubCoverMap[a.clubId],
+  }
+}
 
 // ─── Seed helpers ────────────────────────────────────────────────────────────
 
@@ -66,7 +90,7 @@ export function generateWeeklyFeed(count = 8): Announcement[] {
   for (const item of shuffled) {
     const seen = clubCount[item.clubId] ?? 0
     if (seen < 2) {
-      result.push(item)
+      result.push(withImage(item))
       clubCount[item.clubId] = seen + 1
     }
     if (result.length >= count) break
@@ -83,5 +107,5 @@ export function generateWeeklyFeed(count = 8): Announcement[] {
 export function getClubFeed(clubIds: string[]): Announcement[] {
   if (!clubIds.length) return []
   const set = new Set(clubIds)
-  return announcementPool.filter((a) => set.has(a.clubId))
+  return announcementPool.filter((a) => set.has(a.clubId)).map(withImage)
 }
