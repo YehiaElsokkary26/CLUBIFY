@@ -1,9 +1,15 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, Navigate } from 'react-router-dom'
 import { BottomNav } from './BottomNav'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
 
 export function StudentShell() {
   const { isDark } = useTheme()
+  const { user, isLoading } = useAuth()
+
+  if (isLoading) return null
+
+  if (!user) return <Navigate to="/login" replace />
 
   return (
     <div

@@ -34,8 +34,8 @@ const DEMO_ADMIN: User = {
   avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=sara&backgroundColor=ffdfbf',
   bio: 'President of GUC Enactus. Passionate about entrepreneurship and student leadership.',
   role: 'admin',
-  managedClubId: 'guc-enactus',
-  joinedClubs: ['guc-enactus'],
+  managedClubId: 'guc-insider',
+  joinedClubs: ['guc-insider'],
   attendedSessions: 28,
   totalSessions: 30,
   warnings: [],
@@ -129,7 +129,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     ])
     if (email.endsWith('@guc.edu.eg')) {
       // Look up which club this admin manages
-      const managedClubId = getAdminClubId(email) ?? 'guc-enactus'
+      const managedClubId = getAdminClubId(email) ?? 'guc-insider'
       const adminWithClub: User = { ...adminUser, managedClubId, email }
       saveSession(adminWithClub, 'admin', false, token)
       return true

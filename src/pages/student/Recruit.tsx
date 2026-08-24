@@ -7,9 +7,8 @@ import { RecruitmentCard } from '../../components/cards/RecruitmentCard'
 import { RecruitmentCardSkeleton } from '../../components/shared/LoadingSkeletons'
 import { EmptyState } from '../../components/shared/EmptyState'
 import { SearchBar } from '../../components/shared/SearchBar'
-import { recruitments } from '../../data/recruitments'
 import { cn } from '../../lib/utils'
-import type { ClubCategory } from '../../data/types'
+import type { ClubCategory, Recruitment } from '../../data/types'
 
 type SortOption = 'Deadline' | 'Spots' | 'Category'
 
@@ -19,12 +18,34 @@ const CATEGORIES: (ClubCategory | 'All')[] = [
 
 export function Recruit() {
   const { isDark } = useTheme()
-  const { isLoading } = useRecruitingClubs()
+  const { data: recruitingClubs, isLoading } = useRecruitingClubs()
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<SortOption>('Deadline')
   const [categoryFilter, setCategoryFilter] = useState<ClubCategory | 'All'>('All')
 
   const today = useMemo(() => new Date(), [])
+
+  // Build Recruitment objects from live DB clubs so admin toggles reflect immediately
+  const recruitments: Recruitment[] = useMemo(() =>
+    (recruitingClubs ?? []).map((c) => ({
+      id: `r-${c.id}`,
+      clubId: c.id,
+      clubName: c.name,
+      clubLogo: c.logo,
+      category: c.category,
+      deadline: c.recruitmentDeadline ?? '',
+      spotsLeft: c.spotsLeft ?? 0,
+      totalSpots: c.committees.reduce((acc, cm) => acc + (cm.spotsAvailable || 0), 0),
+      committees: c.committees,
+      urgencyLabel:
+        (c.spotsLeft ?? 0) <= 3
+          ? `Only ${c.spotsLeft} spots left!`
+          : (c.spotsLeft ?? 0) <= 8
+          ? `${c.spotsLeft} spots remaining`
+          : undefined,
+    })),
+    [recruitingClubs]
+  )
 
   const filtered = useMemo(() => {
     let list = recruitments.filter((r) =>
