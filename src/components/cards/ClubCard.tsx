@@ -14,10 +14,31 @@ interface ClubCardProps {
   index?: number
 }
 
+const CATEGORY_EMOJI: Record<string, string> = {
+  Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝',
+  Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼',
+  Science: '🔬', Health: '🏃', Environment: '🌱', Gaming: '🎮',
+}
+
+const CATEGORY_GRADIENT: Record<string, string> = {
+  Technology: 'from-[#1A3A5C] to-[#2A5E70]',
+  Sports: 'from-[#1A5E3A] to-[#2E7D52]',
+  Academic: 'from-[#4A3870] to-[#7B6EBC]',
+  Community: 'from-[#2A5E70] to-[#3A7CB8]',
+  Media: 'from-[#5C2A3A] to-[#D63B52]',
+  Arts: 'from-[#7B6EBC] to-[#4A3870]',
+  Music: 'from-[#E05030] to-[#C09A28]',
+  Engineering: 'from-[#263028] to-[#1A5E3A]',
+  Business: 'from-[#1A3A5C] to-[#263028]',
+}
+
 export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: ClubCardProps) {
   const navigate = useNavigate()
   const { isDark } = useTheme()
   const { toast } = useToast()
+
+  const emoji = CATEGORY_EMOJI[club.category] ?? '🎓'
+  const gradient = CATEGORY_GRADIENT[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'
 
   const handleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -41,15 +62,14 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         'shadow-[0_1px_3px_rgba(30,27,22,0.08)] hover:shadow-[0_4px_12px_rgba(30,27,22,0.10)] transition-shadow duration-200'
       )}
     >
-      {/* Cover image */}
-      <div className="relative h-28 overflow-hidden">
-        <img
-          src={club.coverImage}
-          alt={club.name}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+      {/* Cover — gradient + emoji */}
+      <div className={cn('relative h-28 overflow-hidden bg-gradient-to-br', gradient)}>
+        <div className="absolute inset-0 flex items-center justify-center text-5xl opacity-30">
+          {emoji}
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center text-5xl">
+          {emoji}
+        </div>
 
         {/* Favorite button */}
         <button
@@ -65,7 +85,7 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         {/* Recruiting badge */}
         {club.isRecruiting && (
           <div className="absolute bottom-2 left-2">
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#6E8B5A]/90 text-white text-[10px] font-bold font-body">
+            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-black/30 backdrop-blur-sm text-white text-[10px] font-bold font-body">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] pulse-dot" />
               Recruiting
             </span>
@@ -73,14 +93,12 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         )}
       </div>
 
-      {/* Logo + info */}
+      {/* Emoji icon + info */}
       <div className="p-3">
         <div className="flex items-start gap-2.5">
-          <img
-            src={club.logo}
-            alt={`${club.name} logo`}
-            className="w-9 h-9 rounded-xl object-cover flex-shrink-0"
-          />
+          <div className="w-9 h-9 rounded-xl bg-[#E6F4EC] flex items-center justify-center flex-shrink-0 text-lg">
+            {emoji}
+          </div>
           <div className="flex-1 min-w-0">
             <h3
               className={cn(

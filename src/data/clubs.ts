@@ -18,7 +18,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/gucinspire/', facebook: 'https://www.facebook.com/gucinspire/' },
     tags: ['Sports', 'Health', 'Wellness', 'Football', 'Athletics', 'Fitness'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-01',
+    recruitmentDeadline: '2026-12-01',
     spotsLeft: 23,
     committees: [
       { id: 'inspire-mpd', name: 'Media Production & Design (MPD)', description: 'Produces all visual content, photography, video, and graphic design for INSPIRE\'s events and social media.', spotsAvailable: 6 },
@@ -75,7 +75,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/gucmun/', facebook: 'https://www.facebook.com/GUCMUN' },
     tags: ['Debate', 'Diplomacy', 'Public Speaking', 'Research', 'Leadership', 'International Relations'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-20',
+    recruitmentDeadline: '2026-12-20',
     spotsLeft: 39,
     committees: [
       { id: 'mun-delegates',   name: 'Delegate Affairs', description: 'Trains delegates, prepares position papers, and coordinates conference participation.', spotsAvailable: 20 },
@@ -132,7 +132,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/revive.guc/' },
     tags: ['Environment', 'Sustainability', 'Eco', 'Community', 'Volunteering'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-10',
+    recruitmentDeadline: '2026-12-10',
     spotsLeft: 23,
     committees: [
       { id: 'revive-env',    name: 'Environment & Research',  description: 'Investigates environmental issues and designs science-backed sustainability campaigns.', spotsAvailable: 6 },
@@ -189,7 +189,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/ieeegucsb/', linkedin: 'https://linkedin.com/company/gucieee' },
     tags: ['Engineering', 'Technology', 'Electronics', 'Cybersecurity', 'PCB', 'STEM', 'Hardware'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-08',
+    recruitmentDeadline: '2026-12-08',
     spotsLeft: 33,
     committees: [
       { id: 'ieee-technical',  name: 'Technical Committee',    description: 'Plans and delivers high-level workshops in PCB design, cybersecurity, GitHub, embedded systems, and more.', spotsAvailable: 12 },
@@ -246,7 +246,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/vgsguc/', facebook: 'https://www.facebook.com/vgsguc/' },
     tags: ['Gaming', 'Game Development', 'Esports', 'Digital Art', 'Sound Design', 'Music', 'Technology'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-10',
+    recruitmentDeadline: '2026-12-10',
     spotsLeft: 36,
     committees: [
       { id: 'vgs-dev',     name: 'Game Development',       description: 'Builds games using Unity, Unreal Engine, and other tools — programmers, game designers, and producers collaborate here.', spotsAvailable: 10 },
@@ -304,7 +304,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/athar_guc/', linkedin: 'https://eg.linkedin.com/company/athar-guc' },
     tags: ['Community Service', 'Charity', 'Volunteering', 'Education', 'Health Outreach', 'Social Impact'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-01',
+    recruitmentDeadline: '2026-12-01',
     spotsLeft: 36,
     committees: [
       { id: 'athar-education',   name: 'Education Outreach',  description: 'Runs tutoring sessions, workshops, and educational activities in Mansheyet Nasser and other underserved communities.', spotsAvailable: 10 },
@@ -362,7 +362,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/curaxguc/' },
     tags: ['Assistive Technology', 'Bioengineering', 'Disability', 'Innovation', 'Engineering', 'Technology'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-15',
+    recruitmentDeadline: '2026-12-15',
     spotsLeft: 28,
     committees: [
       { id: 'cura-engineering', name: 'Engineering & Prototyping', description: 'Designs, builds, and tests prototypes for artificial limbs and assistive devices using engineering principles and rapid prototyping.', spotsAvailable: 10 },
@@ -409,7 +409,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/ayb_guc/', facebook: 'https://www.facebook.com/AYB.GUC' },
     tags: ['Community Development', 'Poverty Alleviation', 'Sustainable Development', 'Education', 'Volunteering', 'Social Impact'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-20',
+    recruitmentDeadline: '2026-12-20',
     spotsLeft: 33,
     committees: [
       { id: 'ayb-community', name: 'Community Development',   description: 'Designs and implements sustainable development projects in El-Matareya, working directly with community members on the ground.', spotsAvailable: 12 },
@@ -466,7 +466,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/tedxguc__/' },
     tags: ['Talks', 'Leadership', 'Ideas', 'Academic', 'Innovation', 'Inspiration'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-30',
+    recruitmentDeadline: '2026-12-30',
     spotsLeft: 28,
     committees: [
       { id: 'tedx-speakers',  name: 'Speakers & Content',          description: 'Identifies, coaches, and prepares speakers to deliver powerful TEDx-worthy talks on stage.', spotsAvailable: 8 },
@@ -523,7 +523,7 @@ export const clubs: Club[] = [
     socialLinks: { instagram: 'https://www.instagram.com/insiderguc/', website: 'https://insiderguc.wordpress.com' },
     tags: ['Journalism', 'Media', 'Writing', 'Photography', 'Design', 'Newspaper', 'Arabic', 'English'],
     isRecruiting: true,
-    recruitmentDeadline: '2026-09-15',
+    recruitmentDeadline: '2026-12-15',
     spotsLeft: 23,
     committees: [
       { id: 'insider-editorial', name: 'Writing & Editorial',    description: 'Pitches, writes, edits, and fact-checks articles across all sections — campus life, culture, science, opinion, and features — in both English and Arabic.', spotsAvailable: 10 },

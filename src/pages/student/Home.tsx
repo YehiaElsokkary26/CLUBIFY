@@ -13,6 +13,15 @@ import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAll
 import { announcementPool as announcements } from '../../data/announcements'
 import type { Announcement } from '../../data/types'
 
+function categoryEmoji(category: string): string {
+  const map: Record<string, string> = {
+    Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝',
+    Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼',
+    Science: '🔬', Health: '🏃', Environment: '🌱', Gaming: '🎮',
+  }
+  return map[category] ?? '🎓'
+}
+
 export function Home() {
   const navigate = useNavigate()
   const { user } = useAuth()
@@ -93,60 +102,68 @@ export function Home() {
           </motion.div>
         )}
 
-        {/* Recruitment Alert */}
+        {/* Recruitment Alert — coral */}
         {recruitingClubs.length > 0 && (
           <motion.button
             initial={{ opacity: 0, scale: 0.97 }}
             animate={{ opacity: 1, scale: 1 }}
             whileTap={{ scale: 0.98 }}
             onClick={() => navigate('/student/recruit')}
-            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl bg-[#1A5E3A] shadow-lg"
+            className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl shadow-lg"
+            style={{ background: '#FF5230' }}
           >
-            <span className="w-2.5 h-2.5 rounded-full bg-[#FFFFFF] pulse-dot flex-shrink-0" />
-            <span className="text-white text-sm font-bold font-body flex-1 text-left">
-              {recruitingClubs.length} clubs are recruiting now!
-            </span>
+            <span className="w-2.5 h-2.5 rounded-full bg-white/80 pulse-dot flex-shrink-0" />
+            <div className="flex-1 text-left">
+              <p className="text-white text-sm font-bold font-body leading-tight">
+                {recruitingClubs.length} clubs are recruiting
+              </p>
+              <p className="text-white/75 text-[11px] font-body">Deadlines closing soon</p>
+            </div>
             <ChevronRight size={16} className="text-white/70" />
           </motion.button>
         )}
 
-        {/* Club of the Week — fully automated */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="relative rounded-2xl overflow-hidden h-48 cursor-pointer"
-          onClick={() => navigate(`/student/clubs/${cotw.slug}`)}
-        >
-          <img src={cotw.coverImage} alt={cotw.name} className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-          <div className="absolute top-3 left-3 flex items-center gap-2">
-            <span className="flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#C99B2E] text-white text-xs font-bold font-body">
-              <Star size={10} fill="white" />
-              Club of the Week
-            </span>
-            <span className="px-2 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold font-body">
-              Auto-selected
-            </span>
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#122018]' : 'bg-[#FFFFFF]')} style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}>
+            <p className="text-3xl font-black font-display text-[#1A5E3A] leading-none">{user?.joinedClubs?.length ?? 0}</p>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mt-1 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Clubs Joined</p>
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-4 flex items-end gap-3">
-            <img
-              src={cotw.logo}
-              alt={cotw.name}
-              className="w-12 h-12 rounded-xl object-cover border-2 border-white/30 flex-shrink-0"
-              onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${cotw.slug}` }}
-            />
-            <div className="flex-1 min-w-0">
-              <h3 className="text-white text-base font-black font-display tracking-wide leading-tight">{cotw.name}</h3>
-              <p className="text-white/75 text-xs mt-0.5 line-clamp-2 font-body">{cotw.description.split(' — ')[1] || cotw.description}</p>
-              <div className="flex items-center gap-3 mt-1.5">
-                <span className="text-white/60 text-[10px] font-body">{cotw.memberCount} members</span>
-                <span className="text-white/60 text-[10px] font-body">{cotw.events.length} events</span>
-                {cotw.isRecruiting && <span className="text-green-400 text-[10px] font-bold font-body">● Recruiting</span>}
-              </div>
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#122018]' : 'bg-[#FFFFFF]')} style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}>
+            <p className="text-3xl font-black font-display leading-none" style={{ color: '#FF5230' }}>{user?.attendedSessions ?? 0}</p>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mt-1 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Events Attended</p>
+          </div>
+        </div>
+
+        {/* Club Spotlight — compact card */}
+        <div>
+          <p className={cn('text-[10px] font-semibold uppercase tracking-widest mb-2 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Club Spotlight</p>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => navigate(`/student/clubs/${cotw.slug}`)}
+            className={cn('rounded-2xl p-4 flex items-center gap-3 cursor-pointer border', isDark ? 'bg-[#122018] border-[#2A4035]' : 'bg-[#FFFFFF] border-[#C8E0D0]')}
+            style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}
+          >
+            <div className="w-12 h-12 rounded-xl bg-[#E6F4EC] flex items-center justify-center flex-shrink-0 text-2xl">
+              {categoryEmoji(cotw.category)}
             </div>
-          </div>
-        </motion.div>
+            <div className="flex-1 min-w-0">
+              <p className={cn('text-sm font-bold font-body leading-tight', isDark ? 'text-white' : 'text-[#0D1A12]')}>{cotw.name}</p>
+              <p className={cn('text-[11px] font-body mt-0.5', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>
+                {cotw.memberCount} members{cotw.committees.length > 0 ? ` · ${cotw.committees.length} committees` : ''}
+              </p>
+              {cotw.isRecruiting && (
+                <span className="inline-flex items-center gap-1 mt-1.5 px-2 py-0.5 rounded-full text-[10px] font-bold font-body" style={{ background: 'rgba(255,82,48,0.1)', color: '#FF5230' }}>
+                  Apply Now
+                </span>
+              )}
+            </div>
+            <ChevronRight size={16} className={isDark ? 'text-[#7A9080]' : 'text-[#9AB0A0]'} />
+          </motion.div>
+        </div>
 
         {/* Upcoming Events */}
         <div>
