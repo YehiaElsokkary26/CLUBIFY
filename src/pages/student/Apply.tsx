@@ -3,9 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Check, ChevronRight, Calendar, Users, CheckCircle } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/shared/Toast'
 import { getClubById } from '../../data/clubs'
+import { submitApplication } from '../../lib/db'
 import { cn, formatDate } from '../../lib/utils'
 import type { Committee } from '../../data/types'
 
@@ -15,34 +16,26 @@ interface TimeSlot {
 }
 
 const timeSlots: TimeSlot[] = [
-  { date: '2026-05-20', time: '10:00 AM' },
-  { date: '2026-05-20', time: '12:00 PM' },
-  { date: '2026-05-21', time: '9:00 AM' },
-  { date: '2026-05-21', time: '2:00 PM' },
-  { date: '2026-05-22', time: '11:00 AM' },
-  { date: '2026-05-22', time: '3:00 PM' },
+  { date: '2026-12-10', time: '10:00 AM' },
+  { date: '2026-12-10', time: '12:00 PM' },
+  { date: '2026-12-11', time: '9:00 AM' },
+  { date: '2026-12-11', time: '2:00 PM' },
+  { date: '2026-12-12', time: '11:00 AM' },
+  { date: '2026-12-12', time: '3:00 PM' },
 ]
-
-interface ApplicationRecord {
-  clubId: string
-  clubName: string
-  committee: string
-  slot: TimeSlot
-  submittedAt: string
-}
 
 export function Apply() {
   const { clubId } = useParams<{ clubId: string }>()
   const navigate = useNavigate()
   const { isDark } = useTheme()
   const { toast } = useToast()
+  const { user } = useAuth()
   const club = getClubById(clubId || '')
 
   const [step, setStep] = useState(0)
   const [selectedCommittee, setSelectedCommittee] = useState<Committee | null>(null)
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
   const [success, setSuccess] = useState(false)
-  const [applications, setApplications] = useLocalStorage<ApplicationRecord[]>('clubify_applications', [])
 
   if (!club) {
     return (
@@ -53,17 +46,25 @@ export function Apply() {
   }
 
   const handleSubmit = () => {
-    if (!selectedCommittee || !selectedSlot) return
-    const record: ApplicationRecord = {
-      clubId: club.id,
-      clubName: club.name,
-      committee: selectedCommittee.name,
-      slot: selectedSlot,
-      submittedAt: new Date().toISOString(),
+    if (!selectedCommittee || !selectedSlot || !user) return
+    try {
+      submitApplication({
+        studentId: user.id,
+        studentName: user.name,
+        studentEmail: user.email,
+        clubId: club.id,
+        committeeId: selectedCommittee.id,
+        committeeName: selectedCommittee.name,
+      })
+      setSuccess(true)
+      toast('Application submitted!', 'success')
+    } catch (e: unknown) {
+      if ((e as Error).message === 'ALREADY_APPLIED') {
+        toast('You already applied to this club!', 'error')
+      } else {
+        toast('Something went wrong. Please try again.', 'error')
+      }
     }
-    setApplications((prev) => [...prev, record])
-    setSuccess(true)
-    toast('Application submitted!', 'success')
   }
 
   const stepTitles = ['Choose Committee', 'Pick Interview Slot', 'Confirm']

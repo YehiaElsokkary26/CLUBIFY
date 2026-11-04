@@ -3,14 +3,13 @@ import { motion } from 'framer-motion'
 import { Eye, Edit3, Globe, Camera, Save, X, Plus } from 'lucide-react'
 import { InstagramIcon, FacebookIcon, LinkedinIcon, TikTokIcon } from '../../components/shared/SocialIcons'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { StatusBadge } from '../../components/shared/StatusBadge'
+import { getClub, updateClub } from '../../lib/db'
 import { cn } from '../../lib/utils'
-import { clubs } from '../../data/clubs'
 import type { SocialLinks, ClubCategory } from '../../data/types'
-
-const adminClub = clubs[0]
 
 interface ClubProfileEdit {
   name: string
@@ -29,23 +28,25 @@ const categories: ClubCategory[] = ['Media', 'Business', 'Academic', 'Arts', 'Sp
 export function AdminClub() {
   const { isDark } = useTheme()
   const { toast } = useToast()
+  const { user } = useAuth()
+  const adminClub = getClub(user?.managedClubId ?? '') ?? undefined
   const [mode, setMode] = useState<'preview' | 'edit'>('preview')
   const logoRef = useRef<HTMLInputElement>(null)
   const coverRef = useRef<HTMLInputElement>(null)
 
   const [profile, setProfile] = useLocalStorage<ClubProfileEdit>('admin_club_profile', {
-    name: adminClub.name,
-    category: adminClub.category,
-    description: adminClub.description,
-    mission: adminClub.mission,
-    contactEmail: adminClub.contactEmail,
-    logo: adminClub.logo,
-    coverImage: adminClub.coverImage,
-    isRecruiting: adminClub.isRecruiting,
-    tags: adminClub.tags,
+    name: adminClub?.name ?? '',
+    category: adminClub?.category ?? 'Technology',
+    description: adminClub?.description ?? '',
+    mission: adminClub?.mission ?? '',
+    contactEmail: adminClub?.contactEmail ?? '',
+    logo: adminClub?.logo ?? '',
+    coverImage: adminClub?.coverImage ?? '',
+    isRecruiting: adminClub?.isRecruiting ?? false,
+    tags: adminClub?.tags ?? [],
   })
 
-  const [socialLinks, setSocialLinks] = useLocalStorage<SocialLinks>('admin_socials', adminClub.socialLinks)
+  const [socialLinks, setSocialLinks] = useLocalStorage<SocialLinks>('admin_socials', adminClub?.socialLinks ?? {})
   const [newTag, setNewTag] = useState('')
 
   const handleImageFile = (file: File | null | undefined, target: 'logo' | 'coverImage') => {
@@ -72,6 +73,20 @@ export function AdminClub() {
   }
 
   const saveAll = () => {
+    if (adminClub) {
+      updateClub(adminClub.id, {
+        name: profile.name,
+        category: profile.category,
+        description: profile.description,
+        mission: profile.mission,
+        contactEmail: profile.contactEmail,
+        logo: profile.logo,
+        coverImage: profile.coverImage,
+        isRecruiting: profile.isRecruiting,
+        tags: profile.tags,
+        socialLinks,
+      })
+    }
     toast('Club profile saved!', 'success')
     setMode('preview')
   }
@@ -152,9 +167,9 @@ export function AdminClub() {
           {/* Stats */}
           <div className={cn('px-5 py-4 flex gap-4 border-b', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FFFFFF] border-[#DDEEE6]')}>
             {[
-              { label: 'Members', value: adminClub.memberCount },
-              { label: 'Events', value: adminClub.events.length },
-              { label: 'Founded', value: adminClub.founded },
+              { label: 'Members', value: adminClub?.memberCount ?? 0 },
+              { label: 'Events', value: adminClub?.events.length ?? 0 },
+              { label: 'Founded', value: adminClub?.founded ?? '—' },
             ].map(({ label, value }) => (
               <div key={label} className="text-center flex-1">
                 <p className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#0D1A12]')}>{value}</p>
@@ -214,7 +229,7 @@ export function AdminClub() {
             </div>
 
             <h3 className={cn('text-xs font-bold uppercase tracking-wider mt-5 mb-3 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Committees</h3>
-            {adminClub.committees.map((cm) => (
+            {(adminClub?.committees ?? []).map((cm) => (
               <div key={cm.id} className={cn('flex items-center justify-between py-3 border-b', isDark ? 'border-[#C8E0D0]' : 'border-[#DDEEE6]')}>
                 <div>
                   <p className={cn('text-sm font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{cm.name}</p>

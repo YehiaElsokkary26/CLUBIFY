@@ -54,6 +54,7 @@ interface AuthContextValue {
   loginAsDemo: (demoRole: 'student' | 'admin') => void
   logout: () => void
   updateUser: (updates: Partial<User>) => void
+  attendEvent: (eventId: string) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -164,8 +165,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const attendEvent = (eventId: string) => {
+    if (!user) return
+    const attended = user.attendedEventIds ?? []
+    if (attended.includes(eventId)) return
+    updateUser({
+      attendedEventIds: [...attended, eventId],
+      attendedSessions: (user.attendedSessions ?? 0) + 1,
+    })
+  }
+
   return (
-    <AuthContext.Provider value={{ user, role, isGuest, isLoading, accessToken, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, role, isGuest, isLoading, accessToken, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser, attendEvent }}>
       {children}
     </AuthContext.Provider>
   )

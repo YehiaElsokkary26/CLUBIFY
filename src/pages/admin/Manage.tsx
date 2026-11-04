@@ -3,13 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Globe, Plus, Save, ChevronDown, ChevronUp, X } from 'lucide-react'
 import { InstagramIcon, FacebookIcon, LinkedinIcon, TikTokIcon } from '../../components/shared/SocialIcons'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
-import { clubs } from '../../data/clubs'
+import { getClub, updateClub, addEvent, getEvents } from '../../lib/db'
 import { cn } from '../../lib/utils'
 import type { ClubEvent } from '../../data/types'
-
-const adminClub = clubs[0]
 
 interface SpotlightEdit {
   title: string
@@ -28,26 +27,28 @@ interface MemberEdit {
 export function AdminManage() {
   const { isDark } = useTheme()
   const { toast } = useToast()
+  const { user } = useAuth()
+  const adminClub = getClub(user?.managedClubId ?? '') ?? undefined
 
   const [spotlight, setSpotlight] = useLocalStorage<SpotlightEdit>('admin_spotlight', {
-    title: adminClub.spotlightContent.clubOfWeek?.title || 'Club of the Week',
-    subtitle: adminClub.spotlightContent.clubOfWeek?.subtitle || adminClub.name,
-    description: adminClub.spotlightContent.clubOfWeek?.description || adminClub.description,
-    image: adminClub.spotlightContent.clubOfWeek?.image || adminClub.coverImage,
+    title: adminClub?.spotlightContent.clubOfWeek?.title || 'Club of the Week',
+    subtitle: adminClub?.spotlightContent.clubOfWeek?.subtitle || adminClub?.name || '',
+    description: adminClub?.spotlightContent.clubOfWeek?.description || adminClub?.description || '',
+    image: adminClub?.spotlightContent.clubOfWeek?.image || adminClub?.coverImage || '',
   })
 
   const [memberEdit, setMemberEdit] = useLocalStorage<MemberEdit>('admin_member_month', {
-    name: adminClub.spotlightContent.memberOfMonth?.name || '',
-    role: adminClub.spotlightContent.memberOfMonth?.role || '',
-    quote: adminClub.spotlightContent.memberOfMonth?.quote || '',
-    avatar: adminClub.spotlightContent.memberOfMonth?.avatar || '',
+    name: adminClub?.spotlightContent.memberOfMonth?.name || '',
+    role: adminClub?.spotlightContent.memberOfMonth?.role || '',
+    quote: adminClub?.spotlightContent.memberOfMonth?.quote || '',
+    avatar: adminClub?.spotlightContent.memberOfMonth?.avatar || '',
   })
 
-  const [events, setEvents] = useLocalStorage<ClubEvent[]>('admin_events', adminClub.events)
-  const [socialLinks, setSocialLinks] = useLocalStorage('admin_socials', adminClub.socialLinks)
+  const [events, setEvents] = useState<ClubEvent[]>(() => getEvents(adminClub?.id))
+  const [socialLinks, setSocialLinks] = useLocalStorage('admin_socials', adminClub?.socialLinks ?? {})
   const [expandedSection, setExpandedSection] = useState<string | null>('spotlight')
 
-  const [newEvent, setNewEvent] = useState<Partial<ClubEvent>>({ type: 'Workshop', clubId: 'c1' })
+  const [newEvent, setNewEvent] = useState<Partial<ClubEvent>>({ type: 'Workshop', clubId: adminClub?.id ?? '' })
   const [showEventForm, setShowEventForm] = useState(false)
 
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => {
@@ -101,7 +102,7 @@ export function AdminManage() {
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#0D1A12]' : 'bg-[#F4FBF6]')}>
         <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>Manage Content</h1>
-        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Editing: {adminClub.name}</p>
+        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Editing: {adminClub?.name ?? '—'}</p>
       </div>
 
       <div className="px-5 space-y-3">
@@ -113,7 +114,17 @@ export function AdminManage() {
             <Field label="Description" value={spotlight.description} onChange={(v) => setSpotlight((s) => ({ ...s, description: v }))} textarea />
             <Field label="Image URL" value={spotlight.image} onChange={(v) => setSpotlight((s) => ({ ...s, image: v }))} />
             {spotlight.image && <img src={spotlight.image} alt="preview" className="w-full h-32 object-cover rounded-xl" loading="lazy" />}
-            <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Club spotlight saved!', 'success')}
+            <motion.button whileTap={{ scale: 0.97 }} onClick={() => {
+              if (adminClub) {
+                updateClub(adminClub.id, {
+                  spotlightContent: {
+                    ...adminClub.spotlightContent,
+                    clubOfWeek: { title: spotlight.title, subtitle: spotlight.subtitle, description: spotlight.description, image: spotlight.image },
+                  },
+                })
+              }
+              toast('Club spotlight saved!', 'success')
+            }}
               className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
@@ -128,7 +139,17 @@ export function AdminManage() {
             <Field label="Quote" value={memberEdit.quote} onChange={(v) => setMemberEdit((m) => ({ ...m, quote: v }))} textarea />
             <Field label="Photo URL" value={memberEdit.avatar} onChange={(v) => setMemberEdit((m) => ({ ...m, avatar: v }))} />
             {memberEdit.avatar && <img src={memberEdit.avatar} alt="preview" className="w-16 h-16 rounded-xl object-cover" />}
-            <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Member of the Month saved!', 'success')}
+            <motion.button whileTap={{ scale: 0.97 }} onClick={() => {
+              if (adminClub) {
+                updateClub(adminClub.id, {
+                  spotlightContent: {
+                    ...adminClub.spotlightContent,
+                    memberOfMonth: { name: memberEdit.name, role: memberEdit.role, quote: memberEdit.quote, avatar: memberEdit.avatar },
+                  },
+                })
+              }
+              toast('Member of the Month saved!', 'success')
+            }}
               className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
@@ -172,9 +193,10 @@ export function AdminManage() {
                 <button
                   onClick={() => {
                     if (!newEvent.title || !newEvent.date) { toast('Title and date required', 'error'); return }
-                    const ev: ClubEvent = { id: `e${Date.now()}`, clubId: 'c1', title: newEvent.title!, date: newEvent.date!, time: newEvent.time || '', location: newEvent.location || '', description: '', type: newEvent.type || 'Workshop' }
+                    const ev: ClubEvent = { id: `e${Date.now()}`, clubId: adminClub?.id ?? '', title: newEvent.title!, date: newEvent.date!, time: newEvent.time || '', location: newEvent.location || '', description: '', type: newEvent.type || 'Workshop' }
+                    addEvent(ev)
                     setEvents((prev) => [...prev, ev])
-                    setNewEvent({ type: 'Workshop', clubId: 'c1' })
+                    setNewEvent({ type: 'Workshop', clubId: adminClub?.id ?? '' })
                     setShowEventForm(false)
                     toast('Event added!', 'success')
                   }}
@@ -216,7 +238,10 @@ export function AdminManage() {
                 />
               </div>
             ))}
-            <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Social links saved!', 'success')}
+            <motion.button whileTap={{ scale: 0.97 }} onClick={() => {
+              if (adminClub) updateClub(adminClub.id, { socialLinks })
+              toast('Social links saved!', 'success')
+            }}
               className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Links
             </motion.button>

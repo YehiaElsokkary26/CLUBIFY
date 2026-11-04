@@ -1,11 +1,24 @@
-import { useState } from 'react'
+import { useLocalStorage } from './useLocalStorage'
 import { notifications as initialNotifications } from '../data/notifications'
 import type { Notification } from '../data/types'
 
 export function useNotifications() {
-  const [notifs, setNotifs] = useState<Notification[]>(initialNotifications)
+  const [readIds, setReadIds] = useLocalStorage<string[]>('clubify_notifs_read', [])
+  const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>('clubify_notifs_pinned', [])
+  const [flaggedIds, setFlaggedIds] = useLocalStorage<string[]>('clubify_notifs_flagged', [])
+  const [deletedIds, setDeletedIds] = useLocalStorage<string[]>('clubify_notifs_deleted', [])
 
   const notifsEnabled = localStorage.getItem('clubify_notifs_enabled') !== 'false'
+
+  const notifs: Notification[] = initialNotifications
+    .filter((n) => !deletedIds.includes(n.id))
+    .map((n) => ({
+      ...n,
+      isRead: readIds.includes(n.id),
+      isPinned: pinnedIds.includes(n.id),
+      isFlagged: flaggedIds.includes(n.id),
+    }))
+
   const unreadCount = notifsEnabled ? notifs.filter((n) => !n.isRead).length : 0
 
   const sorted = [...notifs].sort((a, b) => {
@@ -14,27 +27,27 @@ export function useNotifications() {
   })
 
   const markAsRead = (id: string) => {
-    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: true } : n)))
+    setReadIds((prev) => prev.includes(id) ? prev : [...prev, id])
   }
 
   const markAsUnread = (id: string) => {
-    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, isRead: false } : n)))
+    setReadIds((prev) => prev.filter((r) => r !== id))
   }
 
   const markAllRead = () => {
-    setNotifs((prev) => prev.map((n) => ({ ...n, isRead: true })))
+    setReadIds(initialNotifications.map((n) => n.id))
   }
 
   const deleteNotification = (id: string) => {
-    setNotifs((prev) => prev.filter((n) => n.id !== id))
+    setDeletedIds((prev) => [...prev, id])
   }
 
   const togglePin = (id: string) => {
-    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, isPinned: !n.isPinned } : n)))
+    setPinnedIds((prev) => prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id])
   }
 
   const toggleFlag = (id: string) => {
-    setNotifs((prev) => prev.map((n) => (n.id === id ? { ...n, isFlagged: !n.isFlagged } : n)))
+    setFlaggedIds((prev) => prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id])
   }
 
   return {

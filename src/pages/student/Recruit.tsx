@@ -7,9 +7,8 @@ import { RecruitmentCard } from '../../components/cards/RecruitmentCard'
 import { RecruitmentCardSkeleton } from '../../components/shared/LoadingSkeletons'
 import { EmptyState } from '../../components/shared/EmptyState'
 import { SearchBar } from '../../components/shared/SearchBar'
-import { recruitments } from '../../data/recruitments'
 import { cn } from '../../lib/utils'
-import type { ClubCategory } from '../../data/types'
+import type { ClubCategory, Recruitment } from '../../data/types'
 
 type SortOption = 'Deadline' | 'Spots' | 'Category'
 
@@ -19,12 +18,25 @@ const CATEGORIES: (ClubCategory | 'All')[] = [
 
 export function Recruit() {
   const { isDark } = useTheme()
-  const { isLoading } = useRecruitingClubs()
+  const { data: recruitingClubs, isLoading } = useRecruitingClubs()
   const [search, setSearch] = useState('')
   const [sort, setSort] = useState<SortOption>('Deadline')
   const [categoryFilter, setCategoryFilter] = useState<ClubCategory | 'All'>('All')
 
   const today = useMemo(() => new Date(), [])
+
+  const recruitments: Recruitment[] = useMemo(() => (recruitingClubs ?? []).map((c) => ({
+    id: c.id,
+    clubId: c.id,
+    clubName: c.name,
+    clubLogo: c.logo,
+    category: c.category,
+    deadline: c.recruitmentDeadline ?? '',
+    spotsLeft: c.spotsLeft ?? c.committees.reduce((s, cm) => s + cm.spotsAvailable, 0),
+    totalSpots: c.committees.reduce((s, cm) => s + cm.spotsAvailable, 0),
+    committees: c.committees,
+    urgencyLabel: (c.spotsLeft ?? 0) > 0 && (c.spotsLeft ?? 0) <= 5 ? 'Only a few spots left!' : undefined,
+  })), [recruitingClubs])
 
   const filtered = useMemo(() => {
     let list = recruitments.filter((r) =>
