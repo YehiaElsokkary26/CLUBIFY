@@ -9,6 +9,15 @@ import { cn } from '../../lib/utils'
 import { clubs } from '../../data/clubs'
 import { getUpcomingEvents } from '../../data/events'
 
+function clubEmoji(category: string): string {
+  const map: Record<string, string> = {
+    Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝',
+    Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼',
+    Science: '🔬', Health: '🏃', Environment: '🌱', Gaming: '🎮',
+  }
+  return map[category] ?? '🎓'
+}
+
 export function Profile() {
   const { user, updateUser } = useAuth()
   const { isDark } = useTheme()
@@ -201,9 +210,21 @@ export function Profile() {
           </div>
         </motion.div>
 
+        {/* Stats grid */}
+        <div className="grid grid-cols-2 gap-3">
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#122018]' : 'bg-[#FFFFFF]')} style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}>
+            <p className="text-3xl font-black font-display text-[#1A5E3A] leading-none">{user.joinedClubs.length}</p>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mt-1 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Clubs Joined</p>
+          </div>
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#122018]' : 'bg-[#FFFFFF]')} style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}>
+            <p className="text-3xl font-black font-display leading-none" style={{ color: '#FF5230' }}>{user.attendedSessions}</p>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mt-1 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Events Attended</p>
+          </div>
+        </div>
+
         {/* Attendance tracker */}
         <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
-          <h3 className={cn('text-sm font-bold mb-3', isDark ? 'text-white' : 'text-[#0D1A12]')}>Attendance</h3>
+          <p className={cn('text-[10px] font-semibold uppercase tracking-widest mb-3 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Attendance</p>
           <div className="flex items-center gap-4">
             <div className="relative w-16 h-16">
               <svg viewBox="0 0 36 36" className="w-16 h-16 -rotate-90">
@@ -231,13 +252,15 @@ export function Profile() {
 
         {/* My Clubs */}
         {myClubs.length > 0 && (
-          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
-            <h3 className={cn('text-sm font-bold mb-3', isDark ? 'text-white' : 'text-[#0D1A12]')}>My Clubs</h3>
+          <div className={cn('rounded-2xl p-4', isDark ? 'bg-[#122018]' : 'bg-[#FFFFFF]')} style={{ boxShadow: isDark ? 'none' : '0 1px 4px rgba(13,26,18,0.08)' }}>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mb-3 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>My Clubs</p>
             <div className="flex flex-wrap gap-2">
               {myClubs.map((club) => (
-                <div key={club.id} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1A5E3A]/10">
-                  <img src={club.logo} alt={club.name} className="w-4 h-4 rounded-full object-cover" />
-                  <span className="text-xs font-semibold text-[#1A5E3A]">{club.name.replace('GUC ', '')}</span>
+                <div key={club.id} className="flex items-center gap-1.5 pl-1 pr-3 py-1 rounded-full bg-[#1A5E3A]/10">
+                  <div className="w-6 h-6 rounded-full bg-[#C8E8D4] flex items-center justify-center text-xs flex-shrink-0">
+                    {clubEmoji(club.category)}
+                  </div>
+                  <span className="text-xs font-semibold text-[#1A5E3A] font-body">{club.name.replace('GUC ', '')}</span>
                 </div>
               ))}
             </div>
@@ -246,13 +269,13 @@ export function Profile() {
 
         {/* Warnings */}
         {user.warnings.length > 0 && (
-          <div className="rounded-2xl p-4 bg-amber-50 border border-amber-200">
+          <div className={cn('rounded-2xl p-4 border', isDark ? 'bg-[#1A0810] border-[#4A1020]' : 'bg-[#FFF5F6] border-[#F5C0C8]')}>
             <div className="flex items-center gap-2 mb-2">
-              <AlertTriangle size={16} className="text-amber-600" />
-              <h3 className="text-sm font-bold text-amber-800">Warnings ({user.warnings.length})</h3>
+              <AlertTriangle size={16} className="text-[#D63B52]" />
+              <p className={cn('text-sm font-bold font-body', isDark ? 'text-[#F08090]' : 'text-[#D63B52]')}>Warnings ({user.warnings.length})</p>
             </div>
             {user.warnings.map((w, i) => (
-              <p key={i} className="text-xs text-amber-700 leading-relaxed">{w}</p>
+              <p key={i} className={cn('text-xs leading-relaxed font-body', isDark ? 'text-[#F08090]' : 'text-[#A0202E]')}>{w}</p>
             ))}
           </div>
         )}
@@ -285,7 +308,7 @@ export function Profile() {
           </div>
           <span className={cn('flex-1 text-sm font-semibold text-left', isDark ? 'text-white' : 'text-[#0D1A12]')}>Terms & Conditions</span>
           {localStorage.getItem('clubify_terms_accepted') === 'true'
-            ? <CheckCircle size={16} className="text-green-500" />
+            ? <CheckCircle size={16} className="text-[#2E7D52]" />
             : <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-[#1A5E3A]/10 text-[#1A5E3A]">Review</span>
           }
         </motion.button>
@@ -293,7 +316,7 @@ export function Profile() {
         {/* Upcoming activities */}
         {upcomingForMe.length > 0 && (
           <div>
-            <h3 className={cn('text-sm font-bold mb-3', isDark ? 'text-white' : 'text-[#0D1A12]')}>Upcoming Activities</h3>
+            <p className={cn('text-[10px] font-semibold uppercase tracking-widest mb-3 font-body', isDark ? 'text-[#7A9080]' : 'text-[#6A7870]')}>Upcoming Activities</p>
             <div className="space-y-2">
               {upcomingForMe.map((event) => (
                 <div key={event.id} className={cn('flex items-center gap-3 p-3 rounded-xl', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
@@ -302,7 +325,7 @@ export function Profile() {
                   </div>
                   <div className="flex-1">
                     <p className={cn('text-xs font-semibold', isDark ? 'text-white' : 'text-[#0D1A12]')}>{event.title}</p>
-                    <p className={cn('text-[10px] font-mono', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{event.date} · {event.time}</p>
+                    <p className={cn('text-[10px] font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{event.date} · {event.time}</p>
                   </div>
                 </div>
               ))}

@@ -1,15 +1,13 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SlidersHorizontal, Search, ArrowUpDown, Heart } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { SlidersHorizontal, Search, ArrowUpDown } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { useClubs } from '../../hooks/useClubs'
 import { SearchBar } from '../../components/shared/SearchBar'
 import { ClubCardSkeleton } from '../../components/shared/LoadingSkeletons'
 import { EmptyState } from '../../components/shared/EmptyState'
-import { StatusBadge } from '../../components/shared/StatusBadge'
-import { useToast } from '../../components/shared/Toast'
+import { ClubCard } from '../../components/cards/ClubCard'
 import { cn } from '../../lib/utils'
 import type { ClubCategory } from '../../data/types'
 
@@ -19,35 +17,13 @@ const CATEGORIES: (ClubCategory | 'All')[] = [
   'All', 'Technology', 'Academic', 'Media', 'Arts', 'Sports', 'Community',
 ]
 
-const INTEREST_CATEGORY_MAP: Record<string, ClubCategory[]> = {
-  Technology: ['Technology'],
-  Business: [],
-  Media: ['Media'],
-  Arts: ['Arts'],
-  Sports: ['Sports'],
-  Community: ['Community'],
-  Academic: ['Academic'],
-  Volunteering: ['Community'],
-}
-
 export function Clubs() {
-  const navigate = useNavigate()
   const { isDark } = useTheme()
-  const { toast } = useToast()
   const { data: clubs, isLoading } = useClubs()
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState<ClubCategory | 'All'>('All')
   const [sort, setSort] = useState<SortOption>('A–Z')
   const [favs, setFavs] = useLocalStorage<string[]>('clubify_favorites', [])
-
-  const savedInterests: string[] = useMemo(() => {
-    try { return JSON.parse(localStorage.getItem('clubify_interests') || '[]') } catch { return [] }
-  }, [])
-
-  const interestedCategories = useMemo(() =>
-    Array.from(new Set(savedInterests.flatMap((i) => INTEREST_CATEGORY_MAP[i] || []))),
-    [savedInterests]
-  )
 
   const filtered = useMemo(() => {
     if (!clubs) return []
@@ -67,10 +43,8 @@ export function Clubs() {
       })
   }, [clubs, search, category, sort])
 
-  const toggleFav = (id: string, name: string, e: React.MouseEvent) => {
-    e.stopPropagation()
+  const toggleFav = (id: string) => {
     setFavs((prev) => prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id])
-    toast(favs.includes(id) ? 'Removed from favorites' : `${name} saved!`, 'success')
   }
 
   return (
@@ -137,74 +111,22 @@ export function Clubs() {
             }
           />
         ) : (
-          <motion.div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 gap-3">
             <AnimatePresence>
               {filtered.map((club, i) => {
-                const isInterest = interestedCategories.includes(club.category as ClubCategory)
                 const isFav = favs.includes(club.id)
                 return (
-                  <motion.div
+                  <ClubCard
                     key={club.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                    whileTap={{ scale: 0.97 }}
-                    onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                    className={cn('rounded-2xl overflow-hidden cursor-pointer shadow-md', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF]')}
-                  >
-                    {/* Cover */}
-                    <div className="relative h-28 overflow-hidden">
-                      <img src={club.coverImage} alt={club.name} className="w-full h-full object-cover" loading="lazy" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                      <button
-                        onClick={(e) => toggleFav(club.id, club.name, e)}
-                        className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center"
-                      >
-                        <Heart size={15} className={isFav ? 'fill-red-500 text-red-500' : 'text-white'} />
-                      </button>
-                      {club.isRecruiting && (
-                        <div className="absolute bottom-2 left-2">
-                          <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/90 text-white text-[10px] font-bold">
-                            <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] pulse-dot" /> Recruiting
-                          </span>
-                        </div>
-                      )}
-                      {isInterest && (
-                        <div className="absolute top-2 left-2">
-                          <span className="px-2 py-0.5 rounded-full bg-[#1A5E3A]/90 text-white text-[10px] font-bold">
-                            ★ For you
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Info */}
-                    <div className="p-3">
-                      <div className="flex items-start gap-2">
-                        <img
-                          src={club.logo}
-                          alt={club.name}
-                          className="w-9 h-9 rounded-xl object-cover flex-shrink-0"
-                          onError={(e) => {
-                            (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}`
-                          }}
-                        />
-                        <div className="flex-1 min-w-0">
-                          <h3 className={cn('text-sm font-bold leading-tight truncate', isDark ? 'text-white' : 'text-[#0D1A12]')}>
-                            {club.name}
-                          </h3>
-                          <StatusBadge label={club.category} variant="category" category={club.category} />
-                        </div>
-                      </div>
-                      <p className={cn('text-xs mt-2', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
-                        {club.memberCount.toLocaleString()} members
-                      </p>
-                    </div>
-                  </motion.div>
+                    club={club}
+                    isFavorited={isFav}
+                    onToggleFavorite={toggleFav}
+                    index={i}
+                  />
                 )
               })}
             </AnimatePresence>
-          </motion.div>
+          </div>
         )}
       </div>
     </div>
