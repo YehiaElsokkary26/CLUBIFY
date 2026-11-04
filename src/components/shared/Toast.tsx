@@ -43,7 +43,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
                 'flex items-center gap-3 px-4 py-3 rounded-2xl shadow-xl pointer-events-auto font-body',
                 t.type === 'success' && 'bg-[#23323F] text-white',
                 t.type === 'error'   && 'bg-[#C75A6B] text-white',
-                t.type === 'info'    && 'bg-[#6F2F33] text-white'
+                t.type === 'info'    && 'bg-[#1A5E3A] text-white'
               )}
             >
               {t.type === 'success' && <CheckCircle size={18} className="text-[#6E8B5A] flex-shrink-0" />}

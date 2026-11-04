@@ -9,13 +9,13 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
 
   return (
     <div className="min-h-screen w-full flex items-start justify-center py-8 px-4"
-      style={{ background: isDark ? '#0f0d0a' : '#C8BDA8' }}>
+      style={{ background: isDark ? '#0f0d0a' : '#CBE0D4' }}>
       <div
         className="relative w-full max-w-[430px] rounded-[48px] overflow-hidden shadow-2xl"
         style={{
-          background: isDark ? '#1E1B16' : '#F2EDDF',
+          background: isDark ? '#0D1A12' : '#F4FBF6',
           minHeight: '844px',
-          border: isDark ? '10px solid #23323F' : '10px solid #EAE5D8',
+          border: isDark ? '10px solid #23323F' : '10px solid #DDEEE6',
           boxShadow: isDark
             ? '0 40px 80px rgba(0,0,0,0.8), inset 0 0 0 1px rgba(255,255,255,0.05)'
             : '0 40px 80px rgba(0,0,0,0.3), inset 0 0 0 1px rgba(0,0,0,0.05)',
@@ -24,7 +24,7 @@ export function PhoneFrame({ children }: PhoneFrameProps) {
         {/* Status bar notch */}
         <div
           className="absolute top-0 left-1/2 -translate-x-1/2 z-50 w-28 h-7 rounded-b-2xl"
-          style={{ background: isDark ? '#23323F' : '#EAE5D8' }}
+          style={{ background: isDark ? '#23323F' : '#DDEEE6' }}
         />
         <div className="h-full">{children}</div>
       </div>

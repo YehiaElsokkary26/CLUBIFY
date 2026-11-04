@@ -32,10 +32,10 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
     <div
       className={cn(
         'flex items-start gap-3 px-5 py-4 transition-all border-b',
-        !notification.isRead && (isDark ? 'bg-[#6F2F33]/10 border-l-4 border-l-[#6F2F33]' : 'bg-[#fae8e9] border-l-4 border-l-[#6F2F33]'),
-        notification.isPinned && !notification.isRead && 'border-l-[#6F2F33]',
-        notification.isPinned && notification.isRead && (isDark ? 'border-l-4 border-l-[#6F2F33]/50' : 'border-l-4 border-l-[#e8c5c8]'),
-        isDark ? 'border-b-[#2d3d4a]' : 'border-b-[#EAE5D8]'
+        !notification.isRead && (isDark ? 'bg-[#1A5E3A]/10 border-l-4 border-l-[#1A5E3A]' : 'bg-[#E6F4EC] border-l-4 border-l-[#1A5E3A]'),
+        notification.isPinned && !notification.isRead && 'border-l-[#1A5E3A]',
+        notification.isPinned && notification.isRead && (isDark ? 'border-l-4 border-l-[#1A5E3A]/50' : 'border-l-4 border-l-[#C8E8D4]'),
+        isDark ? 'border-b-[#2d3d4a]' : 'border-b-[#DDEEE6]'
       )}
     >
       <button
@@ -45,27 +45,27 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
         <div
           className={cn(
             'w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0',
-            isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA] shadow-sm'
+            isDark ? 'bg-[#2d3d4a]' : 'bg-[#FFFFFF] shadow-sm'
           )}
         >
-          {typeIcon[notification.type] || <Bell size={16} className="text-[#A8A09A]" />}
+          {typeIcon[notification.type] || <Bell size={16} className="text-[#9AB0A0]" />}
         </div>
 
         <div className="flex-1 min-w-0">
           <div className="flex items-start gap-2">
-            {notification.isPinned && <Pin size={11} className="text-[#6F2F33] mt-1 flex-shrink-0" />}
+            {notification.isPinned && <Pin size={11} className="text-[#1A5E3A] mt-1 flex-shrink-0" />}
             {notification.isFlagged && <Flag size={11} className="text-[#C75A6B] mt-1 flex-shrink-0" fill="currentColor" />}
-            <h4 className={cn('text-sm font-semibold font-body flex-1', isDark ? 'text-white' : 'text-[#1E1B16]')}>
+            <h4 className={cn('text-sm font-semibold font-body flex-1', isDark ? 'text-white' : 'text-[#0D1A12]')}>
               {notification.title}
             </h4>
             {!notification.isRead && (
-              <span className="w-2 h-2 rounded-full bg-[#6F2F33] flex-shrink-0 mt-1.5" />
+              <span className="w-2 h-2 rounded-full bg-[#1A5E3A] flex-shrink-0 mt-1.5" />
             )}
           </div>
-          <p className={cn('text-xs mt-0.5 leading-relaxed line-clamp-2 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+          <p className={cn('text-xs mt-0.5 leading-relaxed line-clamp-2 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
             {notification.body}
           </p>
-          <p className={cn('text-[10px] mt-1 type-mono', isDark ? 'text-[#5C5650]' : 'text-[#A8A09A]')}>
+          <p className={cn('text-[10px] mt-1 type-mono', isDark ? 'text-[#5C5650]' : 'text-[#9AB0A0]')}>
             {timeAgo(notification.timestamp)}
           </p>
         </div>
@@ -74,7 +74,7 @@ export function NotificationCard({ notification, onClick, onMenu }: Notification
       {onMenu && (
         <button
           onClick={(e) => { e.stopPropagation(); onMenu(notification.id) }}
-          className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isDark ? 'hover:bg-[#2d3d4a] text-[#A8A09A]' : 'hover:bg-[#EDE8D8] text-[#76706A]')}
+          className={cn('w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0', isDark ? 'hover:bg-[#2d3d4a] text-[#9AB0A0]' : 'hover:bg-[#EEF7F2] text-[#6A7870]')}
           aria-label="Notification options"
         >
           <MoreVertical size={14} />

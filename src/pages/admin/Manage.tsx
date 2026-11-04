@@ -53,13 +53,13 @@ export function AdminManage() {
   const Section = ({ id, title, children }: { id: string; title: string; children: React.ReactNode }) => {
     const open = expandedSection === id
     return (
-      <div className={cn('rounded-2xl overflow-hidden shadow-sm', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA]')}>
+      <div className={cn('rounded-2xl overflow-hidden shadow-sm', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF]')}>
         <button
           onClick={() => setExpandedSection(open ? null : id)}
-          className={cn('w-full flex items-center justify-between px-5 py-4', isDark ? 'border-b border-[#2d3d4a]' : open ? 'border-b border-[#EAE5D8]' : '')}
+          className={cn('w-full flex items-center justify-between px-5 py-4', isDark ? 'border-b border-[#2d3d4a]' : open ? 'border-b border-[#DDEEE6]' : '')}
         >
-          <span className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{title}</span>
-          {open ? <ChevronUp size={16} className={isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'} /> : <ChevronDown size={16} className={isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'} />}
+          <span className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{title}</span>
+          {open ? <ChevronUp size={16} className={isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]'} /> : <ChevronDown size={16} className={isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]'} />}
         </button>
         <AnimatePresence>
           {open && (
@@ -79,29 +79,29 @@ export function AdminManage() {
 
   const Field = ({ label, value, onChange, textarea }: { label: string; value: string; onChange: (v: string) => void; textarea?: boolean }) => (
     <div>
-      <label className={cn('text-xs font-semibold font-body mb-1 block', isDark ? 'text-[#A8A09A]' : 'text-[#5C5650]')}>{label}</label>
+      <label className={cn('text-xs font-semibold font-body mb-1 block', isDark ? 'text-[#9AB0A0]' : 'text-[#5C5650]')}>{label}</label>
       {textarea ? (
         <textarea
           value={value}
           onChange={(e) => onChange(e.target.value)}
           rows={3}
-          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border resize-none', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border resize-none', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FFFFFF] border-[#C8E0D0] text-[#0D1A12]')}
         />
       ) : (
         <input
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+          className={cn('w-full px-3 py-2.5 rounded-xl text-sm font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FFFFFF] border-[#C8E0D0] text-[#0D1A12]')}
         />
       )}
     </div>
   )
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
-        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>Manage Content</h1>
-        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Editing: {adminClub.name}</p>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#0D1A12]' : 'bg-[#F4FBF6]')}>
+        <h1 className={cn('text-2xl font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>Manage Content</h1>
+        <p className={cn('text-xs mt-1 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Editing: {adminClub.name}</p>
       </div>
 
       <div className="px-5 space-y-3">
@@ -114,7 +114,7 @@ export function AdminManage() {
             <Field label="Image URL" value={spotlight.image} onChange={(v) => setSpotlight((s) => ({ ...s, image: v }))} />
             {spotlight.image && <img src={spotlight.image} alt="preview" className="w-full h-32 object-cover rounded-xl" loading="lazy" />}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Club spotlight saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
           </div>
@@ -129,7 +129,7 @@ export function AdminManage() {
             <Field label="Photo URL" value={memberEdit.avatar} onChange={(v) => setMemberEdit((m) => ({ ...m, avatar: v }))} />
             {memberEdit.avatar && <img src={memberEdit.avatar} alt="preview" className="w-16 h-16 rounded-xl object-cover" />}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Member of the Month saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Changes
             </motion.button>
           </div>
@@ -139,17 +139,17 @@ export function AdminManage() {
         <Section id="events" title="📅 Events">
           <div className="space-y-3">
             {events.map((ev) => (
-              <div key={ev.id} className={cn('flex items-center gap-3 p-3 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FAF6EA]')}>
+              <div key={ev.id} className={cn('flex items-center gap-3 p-3 rounded-xl', isDark ? 'bg-[#2d3d4a]' : 'bg-[#FFFFFF]')}>
                 <div className="flex-1">
-                  <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#1E1B16]')}>{ev.title}</p>
-                  <p className={cn('text-[10px] font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>{ev.date} · {ev.location}</p>
+                  <p className={cn('text-xs font-bold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{ev.title}</p>
+                  <p className={cn('text-[10px] font-mono', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{ev.date} · {ev.location}</p>
                 </div>
-                <span className="px-2 py-0.5 rounded-full bg-[#6F2F33]/10 text-[#6F2F33] text-[10px] font-bold font-body">{ev.type}</span>
+                <span className="px-2 py-0.5 rounded-full bg-[#1A5E3A]/10 text-[#1A5E3A] text-[10px] font-bold font-body">{ev.type}</span>
               </div>
             ))}
 
             {showEventForm && (
-              <div className={cn('p-4 rounded-xl space-y-3 border-2 border-[#6F2F33]/20', isDark ? 'bg-[#2d3d4a]' : 'bg-[#fae8e9]/30')}>
+              <div className={cn('p-4 rounded-xl space-y-3 border-2 border-[#1A5E3A]/20', isDark ? 'bg-[#2d3d4a]' : 'bg-[#E6F4EC]/30')}>
                 {['title', 'date', 'time', 'location'].map((f) => (
                   <Field
                     key={f}
@@ -163,7 +163,7 @@ export function AdminManage() {
                     <button
                       key={t}
                       onClick={() => setNewEvent((e) => ({ ...e, type: t }))}
-                      className={cn('px-2 py-1 rounded-lg text-xs font-semibold font-body', newEvent.type === t ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A]')}
+                      className={cn('px-2 py-1 rounded-lg text-xs font-semibold font-body', newEvent.type === t ? 'bg-[#1A5E3A] text-white' : isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870]')}
                     >
                       {t}
                     </button>
@@ -178,7 +178,7 @@ export function AdminManage() {
                     setShowEventForm(false)
                     toast('Event added!', 'success')
                   }}
-                  className="w-full py-2.5 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body"
+                  className="w-full py-2.5 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body"
                 >
                   Add Event
                 </button>
@@ -187,7 +187,7 @@ export function AdminManage() {
 
             <button
               onClick={() => setShowEventForm(!showEventForm)}
-              className={cn('w-full py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body flex items-center justify-center gap-2', isDark ? 'border-[#2d3d4a] text-[#A8A09A]' : 'border-[#C8BFAF] text-[#76706A]')}
+              className={cn('w-full py-3 rounded-xl border-2 border-dashed text-sm font-semibold font-body flex items-center justify-center gap-2', isDark ? 'border-[#2d3d4a] text-[#9AB0A0]' : 'border-[#C0D4C8] text-[#6A7870]')}
             >
               {showEventForm ? <><X size={16} /> Cancel</> : <><Plus size={16} /> Add Event</>}
             </button>
@@ -205,19 +205,19 @@ export function AdminManage() {
               { key: 'website', icon: <Globe size={16} />, label: 'Website URL' },
             ] as const).map(({ key, icon, label }) => (
               <div key={key} className="flex items-center gap-2">
-                <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C8BFAF]' : 'bg-[#EDE8D8] text-[#76706A]')}>
+                <div className={cn('w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0', isDark ? 'bg-[#2d3d4a] text-[#C0D4C8]' : 'bg-[#EEF7F2] text-[#6A7870]')}>
                   {icon}
                 </div>
                 <input
                   value={(socialLinks as Record<string, string>)[key] || ''}
                   onChange={(e) => setSocialLinks((s) => ({ ...s, [key]: e.target.value }))}
                   placeholder={label}
-                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FAF6EA] border-[#D8D0BE] text-[#1E1B16]')}
+                  className={cn('flex-1 px-3 py-2.5 rounded-xl text-xs font-body outline-none border', isDark ? 'bg-[#2d3d4a] border-[#3a4d5a] text-white' : 'bg-[#FFFFFF] border-[#C8E0D0] text-[#0D1A12]')}
                 />
               </div>
             ))}
             <motion.button whileTap={{ scale: 0.97 }} onClick={() => toast('Social links saved!', 'success')}
-              className="w-full py-3 rounded-xl bg-[#6F2F33] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
+              className="w-full py-3 rounded-xl bg-[#1A5E3A] text-white text-sm font-bold font-body flex items-center justify-center gap-2">
               <Save size={14} /> Save Links
             </motion.button>
           </div>

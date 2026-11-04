@@ -49,10 +49,10 @@ export function Login() {
   return (
     <div
       className="min-h-[844px] flex flex-col"
-      style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}
+      style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}
     >
       {/* Teal accent line */}
-      <div className="h-1 w-full bg-gradient-to-r from-[#6F2F33] to-[#5c2427]" />
+      <div className="h-1 w-full bg-gradient-to-r from-[#1A5E3A] to-[#154B2E]" />
 
       {/* Hero */}
       <div className="flex-shrink-0 pt-14 pb-8 px-6">
@@ -61,13 +61,13 @@ export function Login() {
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-col items-center text-center"
         >
-          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#6F2F33] to-[#5c2427] flex items-center justify-center shadow-[0_4px_20px_rgba(111,47,51,0.4)] mb-5">
+          <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#1A5E3A] to-[#154B2E] flex items-center justify-center shadow-[0_4px_20px_rgba(111,47,51,0.4)] mb-5">
             <span className="text-white text-3xl font-black font-display tracking-widest">C</span>
           </div>
-          <h1 className={cn('text-3xl font-black font-display tracking-widest', isDark ? 'text-white' : 'text-[#1E1B16]')}>
+          <h1 className={cn('text-3xl font-black font-display tracking-widest', isDark ? 'text-white' : 'text-[#0D1A12]')}>
             CLUBIFY
           </h1>
-          <p className={cn('text-sm mt-1 font-body', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+          <p className={cn('text-sm mt-1 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
             Your GUC Student Hub
           </p>
         </motion.div>
@@ -75,14 +75,14 @@ export function Login() {
 
       {/* Mode toggle */}
       <div className="px-6 mb-6">
-        <div className={cn('flex p-1 rounded-2xl', isDark ? 'bg-[#23323F]' : 'bg-[#FAF6EA] shadow-sm')}>
+        <div className={cn('flex p-1 rounded-2xl', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
           {(['student', 'admin'] as const).map((m) => (
             <button
               key={m}
               onClick={() => setMode(m)}
               className={cn(
                 'flex-1 py-2.5 rounded-xl text-sm font-semibold font-body transition-all duration-200 capitalize',
-                mode === m ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'
+                mode === m ? 'bg-[#1A5E3A] text-white shadow-sm' : isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]'
               )}
             >
               {m === 'student' ? 'Student' : 'Admin'}
@@ -98,39 +98,39 @@ export function Login() {
         animate={{ opacity: 1, y: 0 }}
         className="px-6 mb-2"
       >
-        <div className={cn('rounded-2xl px-4 py-3 border border-dashed', isDark ? 'bg-[#23323F] border-[#6F2F33]/40' : 'bg-[#6F2F33]/5 border-[#6F2F33]/30')}>
+        <div className={cn('rounded-2xl px-4 py-3 border border-dashed', isDark ? 'bg-[#23323F] border-[#1A5E3A]/40' : 'bg-[#1A5E3A]/5 border-[#1A5E3A]/30')}>
           <div className="flex items-center justify-between mb-1.5">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#6F2F33] font-display">Demo Account</span>
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#1A5E3A] font-display">Demo Account</span>
             <button
               type="button"
               onClick={() => {
                 setEmail(mode === 'student' ? 'youssef.mahmoud@guc.edu.eg' : 'sara.ahmed@guc.edu.eg')
                 setPassword('demo1234')
               }}
-              className="text-[10px] font-bold text-[#6F2F33] px-2 py-0.5 rounded-full border border-[#6F2F33]/40 active:scale-95 transition-transform font-body"
+              className="text-[10px] font-bold text-[#1A5E3A] px-2 py-0.5 rounded-full border border-[#1A5E3A]/40 active:scale-95 transition-transform font-body"
             >
               Autofill
             </button>
           </div>
           {mode === 'student' ? (
             <div className="space-y-0.5">
-              <p className={cn('text-xs font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]')}>
-                <span className={cn('font-semibold', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Email: </span>
+              <p className={cn('text-xs font-body', isDark ? 'text-[#C0D4C8]' : 'text-[#42403C]')}>
+                <span className={cn('font-semibold', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Email: </span>
                 youssef.mahmoud@guc.edu.eg
               </p>
-              <p className={cn('text-xs font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]')}>
-                <span className={cn('font-semibold', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Password: </span>
+              <p className={cn('text-xs font-body', isDark ? 'text-[#C0D4C8]' : 'text-[#42403C]')}>
+                <span className={cn('font-semibold', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Password: </span>
                 demo1234
               </p>
             </div>
           ) : (
             <div className="space-y-0.5">
-              <p className={cn('text-xs font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]')}>
-                <span className={cn('font-semibold', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Email: </span>
+              <p className={cn('text-xs font-body', isDark ? 'text-[#C0D4C8]' : 'text-[#42403C]')}>
+                <span className={cn('font-semibold', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Email: </span>
                 sara.ahmed@guc.edu.eg
               </p>
-              <p className={cn('text-xs font-body', isDark ? 'text-[#C8BFAF]' : 'text-[#42403C]')}>
-                <span className={cn('font-semibold', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Password: </span>
+              <p className={cn('text-xs font-body', isDark ? 'text-[#C0D4C8]' : 'text-[#42403C]')}>
+                <span className={cn('font-semibold', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Password: </span>
                 demo1234
               </p>
             </div>
@@ -149,14 +149,14 @@ export function Login() {
           {/* Email */}
           <div>
             <label className="type-label mb-1.5 block">GUC Email</label>
-            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
-              <Mail size={18} className="text-[#A8A09A]" />
+            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#1A5E3A] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FFFFFF] border-[#C8E0D0]')}>
+              <Mail size={18} className="text-[#9AB0A0]" />
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="name@guc.edu.eg"
-                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#6A7870]' : 'text-[#0D1A12] placeholder:text-[#9AB0A0]')}
                 required
               />
             </div>
@@ -165,18 +165,18 @@ export function Login() {
           {/* Password */}
           <div>
             <label className="type-label mb-1.5 block">Password</label>
-            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#6F2F33] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FAF6EA] border-[#D8D0BE]')}>
-              <Lock size={18} className="text-[#A8A09A]" />
+            <div className={cn('flex items-center gap-3 px-4 py-3.5 rounded-2xl border-[1.5px] transition-colors focus-within:border-[#1A5E3A] focus-within:shadow-[0_0_0_3px_rgba(186,230,253,0.5)]', isDark ? 'bg-[#23323F] border-[#2d3d4a]' : 'bg-[#FFFFFF] border-[#C8E0D0]')}>
+              <Lock size={18} className="text-[#9AB0A0]" />
               <input
                 type={showPass ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#76706A]' : 'text-[#1E1B16] placeholder:text-[#A8A09A]')}
+                className={cn('flex-1 bg-transparent text-sm outline-none font-body', isDark ? 'text-white placeholder:text-[#6A7870]' : 'text-[#0D1A12] placeholder:text-[#9AB0A0]')}
                 required
               />
               <button type="button" onClick={() => setShowPass(!showPass)}>
-                {showPass ? <EyeOff size={16} className="text-[#A8A09A]" /> : <Eye size={16} className="text-[#A8A09A]" />}
+                {showPass ? <EyeOff size={16} className="text-[#9AB0A0]" /> : <Eye size={16} className="text-[#9AB0A0]" />}
               </button>
             </div>
           </div>
@@ -192,7 +192,7 @@ export function Login() {
             type="submit"
             disabled={loading}
             whileTap={{ scale: 0.97 }}
-            className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(111,47,51,0.30)] disabled:opacity-45 mt-2 tracking-wide hover:bg-[#5c2427] transition-colors active:scale-[0.98]"
+            className="w-full py-4 rounded-2xl bg-[#1A5E3A] text-white font-bold text-base font-body shadow-[0_4px_20px_rgba(111,47,51,0.30)] disabled:opacity-45 mt-2 tracking-wide hover:bg-[#154B2E] transition-colors active:scale-[0.98]"
           >
             {loading ? 'Signing in...' : 'Sign In'}
           </motion.button>
@@ -200,21 +200,21 @@ export function Login() {
 
         <div className="flex items-center gap-3">
           <div className={cn('flex-1 h-px', isDark ? 'bg-[#2d3d4a]' : 'bg-[#E4E4E7]')} />
-          <span className={cn('text-xs font-body', isDark ? 'text-[#76706A]' : 'text-[#A8A09A]')}>or</span>
+          <span className={cn('text-xs font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>or</span>
           <div className={cn('flex-1 h-px', isDark ? 'bg-[#2d3d4a]' : 'bg-[#E4E4E7]')} />
         </div>
 
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={() => { loginAsGuest(); navigate('/student/home') }}
-          className={cn('w-full py-4 rounded-2xl font-bold text-base font-body border-[1.5px] transition-all', isDark ? 'border-[#2d3d4a] text-[#C8BFAF] hover:border-[#6F2F33] hover:text-[#6F2F33]' : 'border-[#D8D0BE] text-[#5C5650] hover:border-[#6F2F33] hover:text-[#6F2F33] hover:bg-[#fae8e9]')}
+          className={cn('w-full py-4 rounded-2xl font-bold text-base font-body border-[1.5px] transition-all', isDark ? 'border-[#2d3d4a] text-[#C0D4C8] hover:border-[#1A5E3A] hover:text-[#1A5E3A]' : 'border-[#C8E0D0] text-[#5C5650] hover:border-[#1A5E3A] hover:text-[#1A5E3A] hover:bg-[#E6F4EC]')}
         >
           Continue as Guest
         </motion.button>
 
-        <p className={cn('text-center text-sm font-body', isDark ? 'text-[#76706A]' : 'text-[#76706A]')}>
+        <p className={cn('text-center text-sm font-body', isDark ? 'text-[#6A7870]' : 'text-[#6A7870]')}>
           Don't have an account?{' '}
-          <Link to="/signup" className="text-[#6F2F33] font-semibold">Sign Up</Link>
+          <Link to="/signup" className="text-[#1A5E3A] font-semibold">Sign Up</Link>
         </p>
       </motion.div>
     </div>

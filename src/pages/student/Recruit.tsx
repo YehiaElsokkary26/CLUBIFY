@@ -49,30 +49,30 @@ export function Recruit() {
   }, [search, sort, categoryFilter, today])
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#1E1B16' : '#F2EDDF' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       {/* Header */}
-      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#1E1B16]' : 'bg-[#F2EDDF]')}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-3 px-5', isDark ? 'bg-[#0D1A12]' : 'bg-[#F4FBF6]')}>
         <div className="flex items-center justify-between mb-1">
-          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#1E1B16]')}>Open Recruitments</h1>
-          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#23323F] text-[#C8BFAF]' : 'bg-[#6F2F33]/10 text-[#6F2F33]')}>
+          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#0D1A12]')}>Open Recruitments</h1>
+          <span className={cn('px-3 py-1 rounded-full text-xs font-bold', isDark ? 'bg-[#23323F] text-[#C0D4C8]' : 'bg-[#1A5E3A]/10 text-[#1A5E3A]')}>
             {filtered.length} open
           </span>
         </div>
-        <p className={cn('text-xs mb-4', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+        <p className={cn('text-xs mb-4', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
           Apply now before spots fill up!
         </p>
         <SearchBar value={search} onChange={setSearch} placeholder="Search clubs..." className="mb-3" />
 
         {/* Sort pills */}
         <div className="flex gap-2 mb-2">
-          <span className={cn('text-xs font-semibold self-center', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>Sort:</span>
+          <span className={cn('text-xs font-semibold self-center', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Sort:</span>
           {(['Deadline', 'Spots', 'Category'] as SortOption[]).map((s) => (
             <button
               key={s}
               onClick={() => setSort(s)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
-                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
+                sort === s ? 'bg-[#1A5E3A] text-white' : isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870] shadow-sm'
               )}
             >
               {s}
@@ -95,8 +95,8 @@ export function Recruit() {
                 className={cn(
                   'flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
                   categoryFilter === cat
-                    ? 'bg-[#6F2F33] text-white'
-                    : isDark ? 'bg-[#23323F] text-[#A8A09A]' : 'bg-[#FAF6EA] text-[#76706A] shadow-sm'
+                    ? 'bg-[#1A5E3A] text-white'
+                    : isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870] shadow-sm'
                 )}
               >
                 {cat}
@@ -111,7 +111,7 @@ export function Recruit() {
           Array.from({ length: 4 }).map((_, i) => <RecruitmentCardSkeleton key={i} />)
         ) : filtered.length === 0 ? (
           <EmptyState
-            icon={<Users size={28} className="text-[#A8A09A]" />}
+            icon={<Users size={28} className="text-[#9AB0A0]" />}
             title={sort === 'Deadline' ? 'No active recruitments' : 'No clubs found'}
             description={
               sort === 'Deadline'

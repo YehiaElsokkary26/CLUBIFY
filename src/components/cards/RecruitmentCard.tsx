@@ -30,7 +30,7 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
         'rounded-2xl p-4 cursor-pointer border',
         isDark
           ? 'bg-[#23323F] border-[#2d3d4a]'
-          : 'bg-[#FAF6EA] border-[#D8D0BE]',
+          : 'bg-[#FFFFFF] border-[#C8E0D0]',
         'shadow-[0_1px_3px_rgba(30,27,22,0.08)] hover:shadow-[0_4px_12px_rgba(30,27,22,0.10)] transition-shadow'
       )}
     >
@@ -39,10 +39,10 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#1E1B16]')}>{recruitment.clubName}</h3>
+              <h3 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>{recruitment.clubName}</h3>
               <StatusBadge label={recruitment.category} variant="category" category={recruitment.category} className="mt-1" />
             </div>
-            <ChevronRight size={16} className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'} />
+            <ChevronRight size={16} className={isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'} />
           </div>
 
           {/* Urgency label */}
@@ -56,23 +56,23 @@ export function RecruitmentCard({ recruitment, index = 0 }: RecruitmentCardProps
           {/* Progress bar */}
           <div className="mt-3">
             <div className="flex justify-between text-xs mb-1">
-              <span className={isDark ? 'text-[#A8A09A]' : 'text-[#76706A]'}>
-                <span className="font-semibold text-[#6F2F33]">{recruitment.spotsLeft}</span> spots left
+              <span className={isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]'}>
+                <span className="font-semibold text-[#1A5E3A]">{recruitment.spotsLeft}</span> spots left
               </span>
-              <span className={isDark ? 'text-[#76706A]' : 'text-[#A8A09A]'}>{fillPercent}% filled</span>
+              <span className={isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'}>{fillPercent}% filled</span>
             </div>
-            <div className={cn('h-1 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#D8D0BE]')}>
+            <div className={cn('h-1 rounded-full overflow-hidden', isDark ? 'bg-[#2d3d4a]' : 'bg-[#C8E0D0]')}>
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${fillPercent}%` }}
                 transition={{ delay: index * 0.08 + 0.3, duration: 0.6 }}
                 className="h-full rounded-full"
-                style={{ background: fillPercent > 80 ? '#C99B2E' : '#6F2F33' }}
+                style={{ background: fillPercent > 80 ? '#C99B2E' : '#1A5E3A' }}
               />
             </div>
           </div>
 
-          <div className={cn('flex items-center gap-3 mt-2 text-xs font-mono', isDark ? 'text-[#A8A09A]' : 'text-[#76706A]')}>
+          <div className={cn('flex items-center gap-3 mt-2 text-xs font-mono', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
             <span className="flex items-center gap-1">
               <Calendar size={11} />
               Deadline: {formatDateShort(recruitment.deadline)}

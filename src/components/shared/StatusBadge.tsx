@@ -7,8 +7,8 @@ const categoryColors: Record<ClubCategory, string> = {
   Academic:   'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
   Arts:       'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300',
   Sports:     'bg-[#6E8B5A]/10 text-[#6E8B5A] dark:bg-[#6E8B5A]/20 dark:text-[#6E8B5A]',
-  Community:  'bg-[#fae8e9] text-[#6F2F33] dark:bg-[#6F2F33]/20 dark:text-[#e8c5c8]',
-  Technology: 'bg-[#6F2F33]/10 text-[#6F2F33] dark:bg-[#6F2F33]/20 dark:text-[#6F2F33]',
+  Community:  'bg-[#E6F4EC] text-[#1A5E3A] dark:bg-[#1A5E3A]/20 dark:text-[#C8E8D4]',
+  Technology: 'bg-[#1A5E3A]/10 text-[#1A5E3A] dark:bg-[#1A5E3A]/20 dark:text-[#1A5E3A]',
 }
 
 interface StatusBadgeProps {
