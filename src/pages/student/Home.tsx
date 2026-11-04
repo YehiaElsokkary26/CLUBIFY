@@ -10,7 +10,7 @@ import { EventCard } from '../../components/cards/EventCard'
 import { cn, getTimeOfDay, formatDateShort } from '../../lib/utils'
 import { getUpcomingEvents } from '../../data/events'
 import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
-import { announcementPool as announcements } from '../../data/announcements'
+import { announcementPool } from '../../data/announcements'
 import type { Announcement } from '../../data/types'
 
 function categoryEmoji(category: string): string {
@@ -30,6 +30,7 @@ export function Home() {
   const [feedFilter, setFeedFilter] = useState<'All' | 'My Clubs' | 'Announcements'>('All')
   const [refreshing, setRefreshing] = useState(false)
   const [favs] = useLocalStorage<string[]>('clubify_favorites', [])
+  const [adminAnnouncements] = useLocalStorage<Announcement[]>('admin_announcements', announcementPool)
 
   const upcomingEvents = getUpcomingEvents(6)
   const recruitingClubs = getRecruitingClubs()
@@ -44,8 +45,8 @@ export function Home() {
   }
 
   const feedItems = feedFilter === 'My Clubs'
-    ? announcements.filter((a: Announcement) => user?.joinedClubs.includes(a.clubId))
-    : announcements
+    ? adminAnnouncements.filter((a: Announcement) => user?.joinedClubs.includes(a.clubId))
+    : adminAnnouncements
 
   return (
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
