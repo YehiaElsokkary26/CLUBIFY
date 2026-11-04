@@ -1,176 +1,117 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowLeft, Check, ChevronRight, Calendar, Users, CheckCircle, Lock, AlertCircle, Clock } from 'lucide-react'
+import { ArrowLeft, Check, ChevronRight, Calendar, Users, CheckCircle } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
-import { useAuth } from '../../context/AuthContext'
+import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { useToast } from '../../components/shared/Toast'
-import { cn } from '../../lib/utils'
-import {
-  getClubBySlug, getClub,
-  getSlots, getApplication,
-  submitApplication, assignSlotToApplication,
-} from '../../lib/db'
-import type { Club } from '../../data/types'
-import type { InterviewSlot, Application } from '../../lib/db'
+import { getClubById } from '../../data/clubs'
+import { cn, formatDate } from '../../lib/utils'
+import type { Committee } from '../../data/types'
 
-function formatSlot(datetime: string) {
-  const d = new Date(datetime)
-  return {
-    day: d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
-    time: d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }),
-  }
+interface TimeSlot {
+  date: string
+  time: string
 }
 
-function Confetti() {
-  const colors = ['#FDA014', '#6F2F33', '#F5F5F6', '#272831', '#FFD700']
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {Array.from({ length: 20 }).map((_, i) => (
-        <div
-          key={i}
-          className="absolute w-2 h-3 rounded-sm"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: '-10%',
-            background: colors[i % colors.length],
-            animation: `fall ${2 + (i % 3) * 0.5}s linear ${(i % 5) * 0.3}s infinite`,
-          }}
-        />
-      ))}
-    </div>
-  )
+const timeSlots: TimeSlot[] = [
+  { date: '2026-05-20', time: '10:00 AM' },
+  { date: '2026-05-20', time: '12:00 PM' },
+  { date: '2026-05-21', time: '9:00 AM' },
+  { date: '2026-05-21', time: '2:00 PM' },
+  { date: '2026-05-22', time: '11:00 AM' },
+  { date: '2026-05-22', time: '3:00 PM' },
+]
+
+interface ApplicationRecord {
+  clubId: string
+  clubName: string
+  committee: string
+  slot: TimeSlot
+  submittedAt: string
 }
 
 export function Apply() {
-  const { clubId: clubParam } = useParams<{ clubId: string }>()
+  const { clubId } = useParams<{ clubId: string }>()
   const navigate = useNavigate()
   const { isDark } = useTheme()
   const { toast } = useToast()
-  const { user } = useAuth()
+  const club = getClubById(clubId || '')
 
-  const [club, setClub] = useState<Club | null>(null)
-  const [clubLoading, setClubLoading] = useState(true)
-
-  const [selectedCommittee, setSelectedCommittee] = useState<{ id: string; name: string; description: string; spotsAvailable: number } | null>(null)
-  const [submitting, setSubmitting] = useState(false)
-  const [submitError, setSubmitError] = useState<string | null>(null)
-
-  const [application, setApplication] = useState<Application | null>(null)
-  const [slots, setSlots] = useState<InterviewSlot[]>([])
-  const [selectingSlotId, setSelectingSlotId] = useState<string | null>(null)
-  const [selectError, setSelectError] = useState<string | null>(null)
-  const [confirmedSlot, setConfirmedSlot] = useState<InterviewSlot | null>(null)
-
-  useEffect(() => {
-    if (!clubParam) return
-    // clubParam can be an id or a slug
-    const found = getClub(clubParam) ?? getClubBySlug(clubParam)
-    setClub(found ?? null)
-    setClubLoading(false)
-
-    if (found && user) {
-      const existing = getApplication(user.id, found.id)
-      if (existing) {
-        setApplication(existing)
-        if (existing.slotId) {
-          const bookedSlot = getSlots(found.id).find((s) => s.id === existing.slotId)
-          if (bookedSlot) setConfirmedSlot(bookedSlot)
-        } else {
-          // Has application but no slot — show available slots
-          setSlots(getSlots(found.id).filter((s) => !s.isBooked))
-        }
-      }
-    }
-  }, [clubParam, user])
-
-  const handleSubmit = () => {
-    if (!club || !selectedCommittee || !user) return
-    setSubmitting(true)
-    setSubmitError(null)
-    try {
-      const app = submitApplication({
-        studentId: user.id,
-        studentName: user.name,
-        studentEmail: user.email,
-        clubId: club.id,
-        committeeId: selectedCommittee.id,
-        committeeName: selectedCommittee.name,
-      })
-      setApplication(app)
-      toast('Application submitted!', 'success')
-      setSlots(getSlots(club.id).filter((s) => !s.isBooked))
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to submit'
-      setSubmitError(msg === 'ALREADY_APPLIED' ? "You've already applied to this club." : msg)
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
-  const handleSelectSlot = (slot: InterviewSlot) => {
-    if (!application || !user) return
-    setSelectingSlotId(slot.id)
-    setSelectError(null)
-    try {
-      assignSlotToApplication(application.id, slot.id, user.id)
-      setConfirmedSlot(slot)
-      toast('Interview slot booked! 🎉', 'success')
-    } catch (err: unknown) {
-      const msg = err instanceof Error ? err.message : 'Failed to book slot'
-      setSelectError(msg === 'SLOT_TAKEN' ? 'That slot was just taken — pick another.' : msg)
-      if (club) setSlots(getSlots(club.id).filter((s) => !s.isBooked))
-    } finally {
-      setSelectingSlotId(null)
-    }
-  }
-
-  if (clubLoading) {
-    return (
-      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
-        <div className="w-8 h-8 rounded-full border-2 border-[#FDA014] border-t-transparent animate-spin" />
-      </div>
-    )
-  }
+  const [step, setStep] = useState(0)
+  const [selectedCommittee, setSelectedCommittee] = useState<Committee | null>(null)
+  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
+  const [success, setSuccess] = useState(false)
+  const [applications, setApplications] = useLocalStorage<ApplicationRecord[]>('clubify_applications', [])
 
   if (!club) {
     return (
-      <div className="min-h-[844px] flex flex-col items-center justify-center gap-4 px-6" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
-        <p className={cn('font-body text-center', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Club not found.</p>
-        <button onClick={() => navigate(-1)} className="px-6 py-3 rounded-2xl bg-[#6F2F33] text-white font-bold font-body">
-          Go Back
-        </button>
+      <div className="min-h-[844px] flex items-center justify-center" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
+        <p className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Club not found</p>
       </div>
     )
   }
 
-  // Confirmed screen — slot picked
-  if (confirmedSlot) {
-    const { day, time } = formatSlot(confirmedSlot.datetime)
+  const handleSubmit = () => {
+    if (!selectedCommittee || !selectedSlot) return
+    const record: ApplicationRecord = {
+      clubId: club.id,
+      clubName: club.name,
+      committee: selectedCommittee.name,
+      slot: selectedSlot,
+      submittedAt: new Date().toISOString(),
+    }
+    setApplications((prev) => [...prev, record])
+    setSuccess(true)
+    toast('Application submitted!', 'success')
+  }
+
+  const stepTitles = ['Choose Committee', 'Pick Interview Slot', 'Confirm']
+  const canNext = (step === 0 && selectedCommittee) || (step === 1 && selectedSlot)
+
+  const Confetti = () => {
+    const colors = ['#1A5E3A', '#C99B2E', '#F4FBF6', '#0D1A12', '#FFD700']
     return (
-      <div className="min-h-[844px] flex flex-col items-center justify-center relative px-6" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="confetti-piece absolute w-2 h-3 rounded-sm"
+            style={{
+              left: `${Math.random() * 100}%`,
+              background: colors[Math.floor(Math.random() * colors.length)],
+              animationDelay: `${Math.random() * 1.5}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+    )
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-[844px] flex flex-col items-center justify-center relative px-6"
+        style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
         <Confetti />
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: 'spring', duration: 0.6 }}
-          className="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center mb-6"
+          className="w-24 h-24 rounded-full bg-[#E6F4EC] flex items-center justify-center mb-6"
         >
-          <CheckCircle size={48} className="text-green-500" />
+          <CheckCircle size={48} className="text-[#6E8B5A]" />
         </motion.div>
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="text-center">
-          <h2 className={cn('text-2xl font-black font-display mb-2', isDark ? 'text-white' : 'text-[#272831]')}>You're in the queue!</h2>
-          <p className={cn('text-sm mb-1 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-            Application submitted to <span className="font-semibold text-[#FDA014]">{club.name}</span>
+          <h2 className={cn('text-2xl font-black font-display tracking-wide mb-2', isDark ? 'text-white' : 'text-[#0D1A12]')}>You're in the queue!</h2>
+          <p className={cn('text-sm mb-1 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
+            Application submitted to <span className="font-semibold text-[#1A5E3A]">{club.name}</span>
           </p>
-          <p className={cn('text-sm font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-            Committee: <span className="font-semibold">{application?.committeeName}</span>
+          <p className={cn('text-sm font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
+            Committee: <span className="font-semibold">{selectedCommittee?.name}</span>
           </p>
-          <p className={cn('text-sm font-body mt-1', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-            Interview: <span className="font-semibold text-[#6F2F33]">{day} at {time}</span>
-          </p>
-          <p className={cn('text-xs mt-3 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-            Check your application status in your Profile → My Clubs
+          <p className={cn('text-sm font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
+            Interview: <span className="font-semibold">{selectedSlot?.date} at {selectedSlot?.time}</span>
           </p>
         </motion.div>
         <motion.button
@@ -179,7 +120,7 @@ export function Apply() {
           transition={{ delay: 0.5 }}
           whileTap={{ scale: 0.97 }}
           onClick={() => navigate('/student/home')}
-          className="mt-8 px-8 py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body"
+          className="mt-8 px-8 py-4 rounded-2xl bg-[#1A5E3A] text-white font-bold font-body"
         >
           Back to Home
         </motion.button>
@@ -188,185 +129,163 @@ export function Apply() {
   }
 
   return (
-    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
+    <div className="min-h-[844px] flex flex-col" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       {/* Header */}
-      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#272831]' : 'bg-[#F5F5F6]')}>
-        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center mb-4', isDark ? 'bg-[#35363F]' : 'bg-[#FFFFFF] shadow-sm')}>
-          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#272831]'} />
+      <div className={cn('pt-12 pb-4 px-5', isDark ? 'bg-[#0D1A12]' : 'bg-[#F4FBF6]')}>
+        <button onClick={() => navigate(-1)} className={cn('w-9 h-9 rounded-full flex items-center justify-center mb-4', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
+          <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#0D1A12]'} />
         </button>
         <div className="flex items-center gap-3 mb-4">
-          <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover bg-gray-100" />
+          <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
           <div>
-            <h1 className={cn('text-lg font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#272831]')}>
-              Apply to {club.name}
-            </h1>
-            <p className={cn('text-xs font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-              {!club.isRecruiting
-                ? 'Recruitment closed'
-                : application
-                ? 'Step 2 of 2 — Pick Interview Slot'
-                : 'Step 1 of 2 — Choose Committee'}
-            </p>
+            <h1 className={cn('text-lg font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>Apply to {club.name}</h1>
+            <p className={cn('text-xs font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Step {step + 1} of 3 — {stepTitles[step]}</p>
           </div>
         </div>
 
-        {club.isRecruiting && (
-          <div className="flex gap-1.5">
-            {[0, 1].map((s) => (
-              <div key={s} className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: isDark ? '#35363F' : '#ECECEF' }}>
-                <motion.div
-                  animate={{ width: (application ? 1 : 0) >= s ? '100%' : '0%' }}
-                  className="h-full rounded-full bg-[#FDA014]"
-                  transition={{ duration: 0.3 }}
-                />
-              </div>
-            ))}
-          </div>
-        )}
+        {/* Progress */}
+        <div className="flex gap-1.5">
+          {[0, 1, 2].map((s) => (
+            <div key={s} className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: isDark ? '#23323F' : '#DDEEE6' }}>
+              <motion.div
+                animate={{ width: step >= s ? '100%' : '0%' }}
+                className="h-full rounded-full bg-[#1A5E3A]"
+                transition={{ duration: 0.3 }}
+              />
+            </div>
+          ))}
+        </div>
       </div>
 
-      {/* Recruitment closed */}
-      {!club.isRecruiting ? (
-        <div className="flex-1 flex flex-col items-center justify-center gap-4 px-6 text-center">
-          <div className="w-16 h-16 rounded-3xl bg-[#FDA014]/10 flex items-center justify-center">
-            <Lock size={26} className="text-[#FDA014]" />
-          </div>
-          <h2 className={cn('text-lg font-black font-display', isDark ? 'text-white' : 'text-[#272831]')}>Recruitment is closed</h2>
-          <p className={cn('text-sm font-body max-w-xs', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-            {club.name} isn't accepting applications right now. Check back later or explore other recruiting clubs.
-          </p>
-          <button onClick={() => navigate(-1)} className="mt-2 px-6 py-3 rounded-2xl bg-[#6F2F33] text-white font-bold font-body">
-            Go Back
-          </button>
-        </div>
-      ) : (
-        <>
-          <div className="flex-1 px-5 overflow-y-auto">
-            <AnimatePresence mode="wait">
-              {!application ? (
-                <motion.div key="committee" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-                  <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#272831]')}>
-                    Which committee interests you?
-                  </h2>
-                  <div className="space-y-3">
-                    {club.committees.map((cm) => (
-                      <motion.button
-                        key={cm.id}
-                        whileTap={{ scale: 0.98 }}
-                        onClick={() => setSelectedCommittee(cm)}
-                        className={cn(
-                          'w-full p-4 rounded-2xl text-left border-2 transition-all',
-                          selectedCommittee?.id === cm.id
-                            ? 'border-[#6F2F33] bg-[#6F2F33]/5'
-                            : isDark ? 'border-[#35363F] bg-[#272831]' : 'border-[#E5E5E8] bg-[#FFFFFF]'
-                        )}
-                      >
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#272831]')}>{cm.name}</h3>
-                            {cm.description && (
-                              <p className={cn('text-xs mt-1 leading-relaxed font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{cm.description}</p>
-                            )}
-                            <p className={cn('text-[10px] mt-1.5 font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-                              {cm.spotsAvailable} spots available
-                            </p>
-                          </div>
-                          {selectedCommittee?.id === cm.id && (
-                            <div className="w-5 h-5 rounded-full bg-[#6F2F33] flex items-center justify-center flex-shrink-0 ml-3 mt-0.5">
-                              <Check size={12} className="text-white" />
-                            </div>
-                          )}
+      {/* Step content */}
+      <div className="flex-1 px-5 overflow-y-auto">
+        <AnimatePresence mode="wait">
+          {step === 0 && (
+            <motion.div key="step0" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#0D1A12]')}>Which committee interests you?</h2>
+              <div className="space-y-3">
+                {club.committees.map((cm) => (
+                  <motion.button
+                    key={cm.id}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => setSelectedCommittee(cm)}
+                    className={cn(
+                      'w-full p-4 rounded-2xl text-left border-2 transition-all',
+                      selectedCommittee?.id === cm.id
+                        ? 'border-[#1A5E3A] bg-[#1A5E3A]/5'
+                        : isDark ? 'border-[#2d3d4a] bg-[#23323F]' : 'border-[#C8E0D0] bg-[#FFFFFF]'
+                    )}
+                  >
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{cm.name}</h3>
+                        <p className={cn('text-xs mt-1 leading-relaxed font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{cm.description}</p>
+                        <div className="flex items-center gap-1 mt-2">
+                          <Users size={12} className="text-[#1A5E3A]" />
+                          <span className="text-xs font-semibold font-body text-[#1A5E3A]">{cm.spotsAvailable} spots available</span>
                         </div>
-                      </motion.button>
-                    ))}
-                  </div>
-
-                  {submitError && (
-                    <div className="flex items-center gap-2 mt-4 px-3 py-2.5 rounded-xl bg-red-50 border border-red-200">
-                      <AlertCircle size={14} className="text-red-500 flex-shrink-0" />
-                      <p className="text-xs text-red-600 font-body">{submitError}</p>
+                      </div>
+                      {selectedCommittee?.id === cm.id && (
+                        <div className="w-5 h-5 rounded-full bg-[#1A5E3A] flex items-center justify-center flex-shrink-0 ml-3 mt-0.5">
+                          <Check size={12} className="text-white" />
+                        </div>
+                      )}
                     </div>
-                  )}
-                </motion.div>
-              ) : (
-                <motion.div key="slots" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
-                  <h2 className={cn('text-base font-bold font-body mb-2', isDark ? 'text-white' : 'text-[#272831]')}>
-                    Choose an interview slot
-                  </h2>
-                  <p className={cn('text-xs font-body mb-4', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-                    Committee: <span className="font-semibold">{application.committeeName}</span>
-                  </p>
-
-                  {slots.length === 0 && (
-                    <div className={cn('rounded-2xl p-5 text-center border-2 border-dashed', isDark ? 'border-[#35363F]' : 'border-[#E5E5E8]')}>
-                      <Clock size={24} className="mx-auto text-[#929397] mb-2" />
-                      <p className={cn('text-sm font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
-                        No interview slots yet. The admin will add slots soon — check back later!
-                      </p>
-                    </div>
-                  )}
-
-                  {slots.length > 0 && (
-                    <div className="grid grid-cols-2 gap-3">
-                      {slots.map((slot) => {
-                        const { day, time } = formatSlot(slot.datetime)
-                        const isSelecting = selectingSlotId === slot.id
-                        return (
-                          <motion.button
-                            key={slot.id}
-                            whileTap={{ scale: 0.96 }}
-                            disabled={selectingSlotId !== null}
-                            onClick={() => handleSelectSlot(slot)}
-                            className={cn(
-                              'p-3 rounded-2xl border-2 transition-all text-left disabled:opacity-60',
-                              isDark ? 'border-[#35363F] bg-[#35363F] hover:border-[#FDA014]' : 'border-[#E5E5E8] bg-[#FFFFFF] hover:border-[#FDA014]'
-                            )}
-                          >
-                            <div className="flex items-center gap-1.5 mb-1">
-                              <Calendar size={12} className="text-[#929397]" />
-                              <span className={cn('text-[10px] font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>{day}</span>
-                            </div>
-                            <p className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#272831]')}>
-                              {isSelecting ? 'Booking…' : time}
-                            </p>
-                          </motion.button>
-                        )
-                      })}
-                    </div>
-                  )}
-
-                  {selectError && (
-                    <div className="flex items-center gap-2 mt-4 px-3 py-2.5 rounded-xl bg-red-50 border border-red-200">
-                      <AlertCircle size={14} className="text-red-500 flex-shrink-0" />
-                      <p className="text-xs text-red-600 font-body">{selectError}</p>
-                    </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-
-          {/* Submit button — committee step only */}
-          {!application && (
-            <div className="px-5 pb-10 pt-4">
-              <motion.button
-                whileTap={{ scale: 0.97 }}
-                onClick={handleSubmit}
-                disabled={!selectedCommittee || submitting}
-                className="w-full py-4 rounded-2xl bg-[#6F2F33] text-white font-bold font-body text-base disabled:opacity-40 flex items-center justify-center gap-2 shadow-[0_4px_20px_rgba(111,47,51,0.30)]"
-              >
-                {submitting ? 'Submitting…' : (
-                  <>
-                    <Users size={18} />
-                    Submit Application
-                    <ChevronRight size={18} />
-                  </>
-                )}
-              </motion.button>
-            </div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
           )}
-        </>
-      )}
+
+          {step === 1 && (
+            <motion.div key="step1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#0D1A12]')}>Choose an interview slot</h2>
+              <div className="grid grid-cols-2 gap-3">
+                {timeSlots.map((slot, i) => {
+                  const selected = selectedSlot?.date === slot.date && selectedSlot?.time === slot.time
+                  return (
+                    <motion.button
+                      key={i}
+                      whileTap={{ scale: 0.96 }}
+                      onClick={() => setSelectedSlot(slot)}
+                      className={cn(
+                        'p-3 rounded-2xl border-2 transition-all text-left',
+                        selected ? 'border-[#1A5E3A] bg-[#1A5E3A]/5' : isDark ? 'border-[#2d3d4a] bg-[#23323F]' : 'border-[#C8E0D0] bg-[#FFFFFF]'
+                      )}
+                    >
+                      <div className="flex items-center gap-1.5 mb-1">
+                        <Calendar size={12} className={selected ? 'text-[#1A5E3A]' : 'text-[#9AB0A0]'} />
+                        <span className={cn('text-[10px] font-mono', selected ? 'text-[#1A5E3A]' : isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
+                          {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </span>
+                      </div>
+                      <p className={cn('text-sm font-bold font-mono', isDark ? 'text-white' : 'text-[#0D1A12]')}>{slot.time}</p>
+                    </motion.button>
+                  )
+                })}
+              </div>
+            </motion.div>
+          )}
+
+          {step === 2 && (
+            <motion.div key="step2" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
+              <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#0D1A12]')}>Confirm your application</h2>
+              <div className={cn('rounded-2xl p-5 space-y-4', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
+                <div className="flex items-center gap-3">
+                  <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
+                  <div>
+                    <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{club.name}</h3>
+                    <p className={cn('text-xs font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{club.category}</p>
+                  </div>
+                </div>
+                <div className={cn('border-t pt-4 space-y-3', isDark ? 'border-[#2d3d4a]' : 'border-[#DDEEE6]')}>
+                  <div className="flex justify-between text-sm">
+                    <span className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Committee</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{selectedCommittee?.name}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Interview Date</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>
+                      {selectedSlot && new Date(selectedSlot.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Interview Time</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{selectedSlot?.time}</span>
+                  </div>
+                </div>
+              </div>
+              <p className={cn('text-xs text-center mt-4 font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>
+                By submitting, you confirm you'll attend the interview slot.
+              </p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Footer button */}
+      <div className="px-5 pb-10 pt-4">
+        {step < 2 ? (
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={() => setStep(step + 1)}
+            disabled={!canNext}
+            className="w-full py-4 rounded-2xl bg-[#1A5E3A] text-white font-bold font-body text-base disabled:opacity-40 flex items-center justify-center gap-2"
+          >
+            Next
+            <ChevronRight size={18} />
+          </motion.button>
+        ) : (
+          <motion.button
+            whileTap={{ scale: 0.97 }}
+            onClick={handleSubmit}
+            className="w-full py-4 rounded-2xl bg-[#1A5E3A] text-white font-bold font-body text-base flex items-center justify-center gap-2"
+          >
+            <CheckCircle size={18} />
+            Submit Application
+          </motion.button>
+        )}
+      </div>
     </div>
   )
 }

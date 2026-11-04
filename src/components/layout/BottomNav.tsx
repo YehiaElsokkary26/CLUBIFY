@@ -34,9 +34,9 @@ export function BottomNav({ role }: BottomNavProps) {
       <div
         className="flex items-center justify-around rounded-2xl px-2 py-3 mx-2"
         style={{
-          background: isDark ? 'rgba(39,40,49,0.95)' : 'rgba(255,255,255,0.95)',
+          background: isDark ? 'rgba(30,27,22,0.95)' : 'rgba(250,246,234,0.95)',
           backdropFilter: 'blur(20px)',
-          borderTop: `1px solid ${isDark ? '#35363F' : '#E5E5E8'}`,
+          borderTop: `1px solid ${isDark ? '#2d3d4a' : '#C8E0D0'}`,
           boxShadow: isDark
             ? '0 -1px 0 rgba(255,255,255,0.05), 0 8px 32px rgba(0,0,0,0.4)'
             : '0 -1px 0 rgba(0,0,0,0.06), 0 8px 32px rgba(0,0,0,0.12)',
@@ -51,19 +51,19 @@ export function BottomNav({ role }: BottomNavProps) {
               className={cn(
                 'flex flex-col items-center gap-1 px-3 py-1 rounded-xl transition-all duration-200',
                 active
-                  ? 'text-[#6F2F33] bg-[#FAE8E9]'
-                  : isDark ? 'text-[#929397]' : 'text-[#929397]'
+                  ? 'text-[#1A5E3A] bg-[#E6F4EC]'
+                  : isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'
               )}
             >
               <Icon
                 size={22}
                 strokeWidth={active ? 2.5 : 1.8}
-                className={active ? 'text-[#6F2F33]' : ''}
+                className={active ? 'text-[#1A5E3A]' : ''}
               />
               <span
                 className={cn(
                   'text-[10px] font-semibold tracking-wide font-body',
-                  active ? 'text-[#6F2F33]' : isDark ? 'text-[#929397]' : 'text-[#929397]'
+                  active ? 'text-[#1A5E3A]' : isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'
                 )}
               >
                 {label}

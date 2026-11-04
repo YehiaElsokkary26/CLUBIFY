@@ -36,9 +36,9 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
       className={cn(
         'rounded-2xl overflow-hidden cursor-pointer border',
         isDark
-          ? 'bg-[#272831] border-[#35363F]'
-          : 'bg-[#FFFFFF] border-[#E5E5E8]',
-        'shadow-[0_1px_3px_rgba(39,40,49,0.08)] hover:shadow-[0_4px_12px_rgba(39,40,49,0.10)] transition-shadow duration-200'
+          ? 'bg-[#23323F] border-[#2d3d4a]'
+          : 'bg-[#FFFFFF] border-[#C8E0D0]',
+        'shadow-[0_1px_3px_rgba(30,27,22,0.08)] hover:shadow-[0_4px_12px_rgba(30,27,22,0.10)] transition-shadow duration-200'
       )}
     >
       {/* Cover image */}
@@ -65,7 +65,7 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         {/* Recruiting badge */}
         {club.isRecruiting && (
           <div className="absolute bottom-2 left-2">
-            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#5FC756]/90 text-white text-[10px] font-bold font-body">
+            <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#6E8B5A]/90 text-white text-[10px] font-bold font-body">
               <span className="w-1.5 h-1.5 rounded-full bg-[#FFFFFF] pulse-dot" />
               Recruiting
             </span>
@@ -85,7 +85,7 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
             <h3
               className={cn(
                 'text-sm font-bold leading-tight truncate font-display tracking-wide',
-                isDark ? 'text-white' : 'text-[#272831]'
+                isDark ? 'text-white' : 'text-[#0D1A12]'
               )}
             >
               {club.name}
@@ -97,8 +97,8 @@ export function ClubCard({ club, isFavorited, onToggleFavorite, index = 0 }: Clu
         </div>
 
         <div className="flex items-center gap-1 mt-2.5">
-          <Users size={12} className="text-[#929397]" />
-          <span className={cn('text-xs font-body', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
+          <Users size={12} className="text-[#9AB0A0]" />
+          <span className={cn('text-xs font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
             {club.memberCount.toLocaleString()} members
           </span>
         </div>

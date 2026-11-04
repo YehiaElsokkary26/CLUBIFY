@@ -17,24 +17,24 @@ export function SearchBar({ value, onChange, placeholder = 'Search...', classNam
       className={cn(
         'flex items-center gap-3 px-4 py-3 rounded-2xl border',
         isDark
-          ? 'bg-[#272831] border-[#35363F]'
-          : 'bg-[#FFFFFF] border-[#E5E5E8] shadow-sm',
+          ? 'bg-[#23323F] border-[#2d3d4a]'
+          : 'bg-[#FFFFFF] border-[#C8E0D0] shadow-sm',
         className
       )}
     >
-      <Search size={18} className="text-[#FDA014]" />
+      <Search size={18} className="text-[#1A5E3A]" />
       <input
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         className={cn(
           'flex-1 bg-transparent text-sm outline-none font-body',
-          isDark ? 'text-white placeholder:text-[#929397]' : 'text-[#272831] placeholder:text-[#929397]'
+          isDark ? 'text-white placeholder:text-[#6A7870]' : 'text-[#0D1A12] placeholder:text-[#9AB0A0]'
         )}
       />
       {value && (
         <button onClick={() => onChange('')}>
-          <X size={16} className={isDark ? 'text-[#929397]' : 'text-[#929397]'} />
+          <X size={16} className={isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'} />
         </button>
       )}
     </div>

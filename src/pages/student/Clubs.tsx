@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { SlidersHorizontal, Search, ArrowUpDown, Heart, Star } from 'lucide-react'
+import { SlidersHorizontal, Search, ArrowUpDown, Heart } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../context/ThemeContext'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
@@ -74,12 +74,12 @@ export function Clubs() {
   }
 
   return (
-    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#272831' : '#F5F5F6' }}>
+    <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       {/* Header */}
-      <div className={cn('sticky top-0 z-20 pt-12 pb-2 px-5', isDark ? 'bg-[#272831]' : 'bg-[#F5F5F6]')}>
+      <div className={cn('sticky top-0 z-20 pt-12 pb-2 px-5', isDark ? 'bg-[#0D1A12]' : 'bg-[#F4FBF6]')}>
         <div className="flex items-center justify-between mb-3">
-          <h1 className={cn('text-xl font-semibold', isDark ? 'text-white' : 'text-[#272831]')}>Discover Clubs</h1>
-          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold', isDark ? 'bg-[#272831] text-[#929397]' : 'bg-[#FFFFFF] text-[#929397] shadow-sm')}>
+          <h1 className={cn('text-2xl font-black', isDark ? 'text-white' : 'text-[#0D1A12]')}>Discover Clubs</h1>
+          <div className={cn('flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold', isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870] shadow-sm')}>
             <SlidersHorizontal size={12} />
             {filtered.length} clubs
           </div>
@@ -94,7 +94,7 @@ export function Clubs() {
               key={cat} whileTap={{ scale: 0.95 }} onClick={() => setCategory(cat)}
               className={cn(
                 'flex-shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all',
-                category === cat ? 'bg-[#6F2F33] text-white shadow-sm' : isDark ? 'bg-[#272831] text-[#929397]' : 'bg-[#FFFFFF] text-[#929397] shadow-sm'
+                category === cat ? 'bg-[#1A5E3A] text-white shadow-sm' : isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870] shadow-sm'
               )}
             >
               {cat}
@@ -104,14 +104,14 @@ export function Clubs() {
 
         {/* Sort pills */}
         <div className="flex items-center gap-2">
-          <ArrowUpDown size={12} className={isDark ? 'text-[#929397]' : 'text-[#929397]'} />
-          <span className={cn('text-xs font-semibold', isDark ? 'text-[#929397]' : 'text-[#929397]')}>Sort:</span>
+          <ArrowUpDown size={12} className={isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]'} />
+          <span className={cn('text-xs font-semibold', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>Sort:</span>
           {(['A–Z', 'Members', 'Recruiting'] as SortOption[]).map((s) => (
             <button
               key={s} onClick={() => setSort(s)}
               className={cn(
                 'px-3 py-1.5 rounded-full text-xs font-semibold transition-all',
-                sort === s ? 'bg-[#6F2F33] text-white' : isDark ? 'bg-[#272831] text-[#929397]' : 'bg-[#FFFFFF] text-[#929397] shadow-sm'
+                sort === s ? 'bg-[#1A5E3A] text-white' : isDark ? 'bg-[#23323F] text-[#9AB0A0]' : 'bg-[#FFFFFF] text-[#6A7870] shadow-sm'
               )}
             >
               {s}
@@ -127,11 +127,11 @@ export function Clubs() {
           </div>
         ) : filtered.length === 0 ? (
           <EmptyState
-            icon={<Search size={28} className="text-[#929397]" />}
+            icon={<Search size={28} className="text-[#9AB0A0]" />}
             title="No clubs found"
             description={`No clubs match "${search}". Try a different search or category.`}
             action={
-              <button onClick={() => { setSearch(''); setCategory('All') }} className="px-5 py-2.5 rounded-2xl bg-[#6F2F33] text-white text-sm font-semibold">
+              <button onClick={() => { setSearch(''); setCategory('All') }} className="px-5 py-2.5 rounded-2xl bg-[#1A5E3A] text-white text-sm font-semibold">
                 Clear filters
               </button>
             }
@@ -150,7 +150,7 @@ export function Clubs() {
                     transition={{ delay: i * 0.05 }}
                     whileTap={{ scale: 0.97 }}
                     onClick={() => navigate(`/student/clubs/${club.slug}`)}
-                    className={cn('rounded-2xl overflow-hidden cursor-pointer shadow-md', isDark ? 'bg-[#272831]' : 'bg-[#FFFFFF]')}
+                    className={cn('rounded-2xl overflow-hidden cursor-pointer shadow-md', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF]')}
                   >
                     {/* Cover */}
                     <div className="relative h-28 overflow-hidden">
@@ -171,9 +171,8 @@ export function Clubs() {
                       )}
                       {isInterest && (
                         <div className="absolute top-2 left-2">
-                          <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-[#FDA014]/90 text-white text-[10px] font-bold">
-                            <Star size={10} className="fill-white" />
-                            For you
+                          <span className="px-2 py-0.5 rounded-full bg-[#1A5E3A]/90 text-white text-[10px] font-bold">
+                            ★ For you
                           </span>
                         </div>
                       )}
@@ -191,13 +190,13 @@ export function Clubs() {
                           }}
                         />
                         <div className="flex-1 min-w-0">
-                          <h3 className={cn('text-sm font-bold leading-tight truncate', isDark ? 'text-white' : 'text-[#272831]')}>
+                          <h3 className={cn('text-sm font-bold leading-tight truncate', isDark ? 'text-white' : 'text-[#0D1A12]')}>
                             {club.name}
                           </h3>
                           <StatusBadge label={club.category} variant="category" category={club.category} />
                         </div>
                       </div>
-                      <p className={cn('text-xs mt-2', isDark ? 'text-[#929397]' : 'text-[#929397]')}>
+                      <p className={cn('text-xs mt-2', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
                         {club.memberCount.toLocaleString()} members
                       </p>
                     </div>

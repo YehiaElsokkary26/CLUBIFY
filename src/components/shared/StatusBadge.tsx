@@ -2,13 +2,13 @@ import { cn } from '../../lib/utils'
 import type { ClubCategory } from '../../data/types'
 
 const categoryColors: Record<ClubCategory, string> = {
-  Media:      'bg-[#E14535]/10 text-[#E14535] dark:bg-[#E14535]/20 dark:text-[#E14535]',
-  Business:   'bg-[#F0F0F2] text-[#4A4B52] dark:bg-[#35363F] dark:text-[#B8B9C1]',
-  Academic:   'bg-[#FFEDCF] text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FFE3B3]',
-  Arts:       'bg-[#FAE8E9] text-[#6F2F33] dark:bg-[#6F2F33]/20 dark:text-[#E8C5C8]',
-  Sports:     'bg-[#5FC756]/10 text-[#5FC756] dark:bg-[#5FC756]/20 dark:text-[#5FC756]',
-  Community:  'bg-[#FFEDCF] text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FFE3B3]',
-  Technology: 'bg-[#FDA014]/10 text-[#E08E0F] dark:bg-[#FDA014]/20 dark:text-[#FDA014]',
+  Media:      'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300',
+  Business:   'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300',
+  Academic:   'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300',
+  Arts:       'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-300',
+  Sports:     'bg-[#6E8B5A]/10 text-[#6E8B5A] dark:bg-[#6E8B5A]/20 dark:text-[#6E8B5A]',
+  Community:  'bg-[#E6F4EC] text-[#1A5E3A] dark:bg-[#1A5E3A]/20 dark:text-[#C8E8D4]',
+  Technology: 'bg-[#1A5E3A]/10 text-[#1A5E3A] dark:bg-[#1A5E3A]/20 dark:text-[#1A5E3A]',
 }
 
 interface StatusBadgeProps {
@@ -27,8 +27,8 @@ export function StatusBadge({ label, variant = 'category', category, className }
 
   if (variant === 'recruiting') {
     return (
-      <span className={cn(baseClass, 'bg-[#5FC756]/10 text-[#5FC756] dark:bg-[#5FC756]/20', className)}>
-        <span className="w-1.5 h-1.5 rounded-full bg-[#5FC756] pulse-dot" />
+      <span className={cn(baseClass, 'bg-[#6E8B5A]/10 text-[#6E8B5A] dark:bg-[#6E8B5A]/20', className)}>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#6E8B5A] pulse-dot" />
         {label}
       </span>
     )
@@ -36,19 +36,19 @@ export function StatusBadge({ label, variant = 'category', category, className }
 
   if (variant === 'closed') {
     return (
-      <span className={cn(baseClass, 'bg-[#E14535]/10 text-[#E14535] dark:bg-[#E14535]/20', className)}>
-        <span className="w-1.5 h-1.5 rounded-full bg-[#E14535]" />
+      <span className={cn(baseClass, 'bg-[#C75A6B]/10 text-[#C75A6B] dark:bg-[#C75A6B]/20', className)}>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#C75A6B]" />
         {label}
       </span>
     )
   }
 
   if (variant === 'success') {
-    return <span className={cn(baseClass, 'bg-[#5FC756]/10 text-[#5FC756]', className)}>{label}</span>
+    return <span className={cn(baseClass, 'bg-[#6E8B5A]/10 text-[#6E8B5A]', className)}>{label}</span>
   }
 
   if (variant === 'warning') {
-    return <span className={cn(baseClass, 'bg-[#FDA014]/10 text-[#FDA014]', className)}>{label}</span>
+    return <span className={cn(baseClass, 'bg-[#C99B2E]/10 text-[#C99B2E]', className)}>{label}</span>
   }
 
   return <span className={cn(baseClass, className)}>{label}</span>
