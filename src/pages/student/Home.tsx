@@ -10,7 +10,8 @@ import { EventCard } from '../../components/cards/EventCard'
 import { cn, getTimeOfDay, formatDateShort } from '../../lib/utils'
 import { getUpcomingEvents } from '../../data/events'
 import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
-import { announcements } from '../../data/announcements'
+import { announcementPool as announcements } from '../../data/announcements'
+import type { Announcement } from '../../data/types'
 
 export function Home() {
   const navigate = useNavigate()
@@ -34,7 +35,7 @@ export function Home() {
   }
 
   const feedItems = feedFilter === 'My Clubs'
-    ? announcements.filter((a) => user?.joinedClubs.includes(a.clubId))
+    ? announcements.filter((a: Announcement) => user?.joinedClubs.includes(a.clubId))
     : announcements
 
   return (
@@ -304,7 +305,7 @@ export function Home() {
 
           <div className="space-y-3">
             <AnimatePresence>
-              {feedItems.length > 0 ? feedItems.map((item, i) => {
+              {feedItems.length > 0 ? feedItems.map((item: Announcement, i: number) => {
                 const club = clubs.find((c) => c.id === item.clubId)
                 return (
                   <motion.div

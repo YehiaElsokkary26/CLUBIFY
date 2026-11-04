@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
-import { announcements as initialAnnouncements } from '../../data/announcements'
+import { announcementPool as initialAnnouncements } from '../../data/announcements'
 import { cn } from '../../lib/utils'
 import type { Announcement, PostAttachment } from '../../data/types'
 
