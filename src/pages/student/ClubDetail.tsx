@@ -9,9 +9,28 @@ import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { StatusBadge } from '../../components/shared/StatusBadge'
 import { EventCard } from '../../components/cards/EventCard'
+import { getEvents } from '../../lib/db'
 import { cn, formatDate } from '../../lib/utils'
 
 type Tab = 'About' | 'Events' | 'Members'
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝',
+  Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼',
+  Science: '🔬', Health: '🏃', Environment: '🌱', Gaming: '🎮',
+}
+
+const CATEGORY_GRADIENT: Record<string, string> = {
+  Technology: 'from-[#1A3A5C] to-[#2A5E70]',
+  Sports: 'from-[#1A5E3A] to-[#2E7D52]',
+  Academic: 'from-[#4A3870] to-[#7B6EBC]',
+  Community: 'from-[#2A5E70] to-[#3A7CB8]',
+  Media: 'from-[#5C2A3A] to-[#D63B52]',
+  Arts: 'from-[#7B6EBC] to-[#4A3870]',
+  Music: 'from-[#E05030] to-[#C09A28]',
+  Engineering: 'from-[#263028] to-[#1A5E3A]',
+  Business: 'from-[#1A3A5C] to-[#263028]',
+}
 
 export function ClubDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -51,7 +70,9 @@ export function ClubDetail() {
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       {/* Cover */}
       <div className="relative h-64 overflow-hidden">
-        <img src={club.coverImage} alt={club.name} className="w-full h-full object-cover" />
+        <div className={`w-full h-full bg-gradient-to-br ${CATEGORY_GRADIENT[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center`}>
+          <span className="text-7xl select-none">{CATEGORY_EMOJI[club.category] ?? '🎓'}</span>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         {/* Back button */}
@@ -72,7 +93,9 @@ export function ClubDetail() {
 
         {/* Logo + name */}
         <div className="absolute bottom-4 left-5 flex items-end gap-3">
-          <img src={club.logo} alt={club.name} className="w-16 h-16 rounded-2xl border-2 border-white object-cover shadow-lg" />
+          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${CATEGORY_GRADIENT[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center border-2 border-white shadow-lg`}>
+              <span className="text-2xl select-none">{CATEGORY_EMOJI[club.category] ?? '🎓'}</span>
+            </div>
           <div>
             <h1 className="text-white text-xl font-black font-display tracking-wide leading-tight">{club.name}</h1>
             <div className="flex items-center gap-2 mt-1">
@@ -188,11 +211,14 @@ export function ClubDetail() {
 
         {activeTab === 'Events' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-            {club.events.length > 0 ? club.events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            )) : (
-              <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>No events scheduled yet</p>
-            )}
+            {(() => {
+              const events = getEvents(club.id)
+              return events.length > 0 ? events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              )) : (
+                <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>No events scheduled yet</p>
+              )
+            })()}
           </motion.div>
         )}
 

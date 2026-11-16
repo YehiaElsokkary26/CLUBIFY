@@ -7,22 +7,26 @@ import { getClub, getApplications, updateApplicationStatus } from '../../lib/db'
 import { useState } from 'react'
 import type { Application } from '../../lib/db'
 
-const monthlyData = [
-  { month: 'Jan', value: 22 },
-  { month: 'Feb', value: 38 },
-  { month: 'Mar', value: 55 },
-  { month: 'Apr', value: 44 },
-  { month: 'May', value: 72 },
-  { month: 'Jun', value: 60 },
-]
-
-const maxMonth = Math.max(...monthlyData.map((d) => d.value))
+function buildMonthlyData(apps: { appliedAt: string }[]) {
+  const now = new Date()
+  return Array.from({ length: 6 }, (_, i) => {
+    const d = new Date(now.getFullYear(), now.getMonth() - (5 - i), 1)
+    const label = d.toLocaleString('en-US', { month: 'short' })
+    const value = apps.filter((a) => {
+      const ad = new Date(a.appliedAt)
+      return ad.getFullYear() === d.getFullYear() && ad.getMonth() === d.getMonth()
+    }).length
+    return { month: label, value }
+  })
+}
 
 export function AdminStats() {
   const { isDark } = useTheme()
   const { user } = useAuth()
   const adminClub = getClub(user?.managedClubId ?? '') ?? undefined
   const [apps, setApps] = useState<Application[]>(() => getApplications(adminClub?.id))
+  const monthlyData = buildMonthlyData(apps)
+  const maxMonth = Math.max(...monthlyData.map((d) => d.value), 1)
 
   const refreshApps = () => setApps(getApplications(adminClub?.id))
 

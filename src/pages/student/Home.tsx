@@ -9,7 +9,8 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { EventCard } from '../../components/cards/EventCard'
 import { cn, getTimeOfDay, formatDateShort } from '../../lib/utils'
 import { getUpcomingEvents } from '../../data/events'
-import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
+import { getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
+import { getClubs } from '../../lib/db'
 import { announcementPool } from '../../data/announcements'
 import type { Announcement } from '../../data/types'
 
@@ -32,11 +33,12 @@ export function Home() {
   const [favs] = useLocalStorage<string[]>('clubify_favorites', [])
   const [adminAnnouncements] = useLocalStorage<Announcement[]>('admin_announcements', announcementPool)
 
+  const dbClubs = getClubs()
   const upcomingEvents = getUpcomingEvents(6)
   const recruitingClubs = getRecruitingClubs()
-  const cotw = computeClubOfWeek()
-  const highlights = getClubHighlights(4)
-  const membersOfMonth = getAllMembersOfMonth().slice(0, 6)
+  const cotw = computeClubOfWeek(dbClubs)
+  const highlights = getClubHighlights(4, dbClubs)
+  const membersOfMonth = getAllMembersOfMonth(dbClubs).slice(0, 6)
 
   const handleRefresh = async () => {
     setRefreshing(true)

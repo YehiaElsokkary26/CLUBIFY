@@ -58,7 +58,7 @@ export function Recruit() {
     }
 
     return list
-  }, [search, sort, categoryFilter, today])
+  }, [search, sort, categoryFilter, today, recruitments])
 
   return (
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
