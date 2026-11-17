@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Heart, Globe, Users, Calendar, Mail, Star, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Heart, Globe, Users, Calendar, Mail, Star, ChevronRight, UserPlus, UserCheck } from 'lucide-react'
 import { InstagramIcon, FacebookIcon, LinkedinIcon } from '../../components/shared/SocialIcons'
 import { useClub } from '../../hooks/useClubs'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { StatusBadge } from '../../components/shared/StatusBadge'
@@ -36,16 +37,29 @@ export function ClubDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const { isDark } = useTheme()
+  const { user, joinClub, leaveClub } = useAuth()
   const { toast } = useToast()
   const { data: club, isLoading } = useClub(slug || '')
   const [activeTab, setActiveTab] = useState<Tab>('About')
   const [favs, setFavs] = useLocalStorage<string[]>('clubify_favorites', [])
   const isFav = club ? favs.includes(club.id) : false
+  const isFollowing = club ? (user?.joinedClubs ?? []).includes(club.id) : false
 
   const toggleFav = () => {
     if (!club) return
     setFavs((prev) => prev.includes(club.id) ? prev.filter((f) => f !== club.id) : [...prev, club.id])
     toast(isFav ? 'Removed from favorites' : `${club.name} saved!`)
+  }
+
+  const toggleFollow = () => {
+    if (!club) return
+    if (isFollowing) {
+      leaveClub(club.id)
+      toast(`Left ${club.name}`, 'info')
+    } else {
+      joinClub(club.id)
+      toast(`Joined ${club.name}! 🎉`, 'success')
+    }
   }
 
   if (isLoading) {
@@ -155,6 +169,19 @@ export function ClubDetail() {
           </a>
         )}
         <div className="flex-1" />
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={toggleFollow}
+          className={cn(
+            'px-3 py-2 rounded-xl text-xs font-bold font-body flex items-center gap-1.5 border',
+            isFollowing
+              ? isDark ? 'bg-[#1A5E3A]/20 border-[#1A5E3A] text-[#4CAF72]' : 'bg-[#E6F4EC] border-[#1A5E3A] text-[#1A5E3A]'
+              : isDark ? 'bg-[#23323F] border-[#2d3d4a] text-[#C0D4C8]' : 'bg-[#FFFFFF] border-[#C8E0D0] text-[#5C5650]'
+          )}
+        >
+          {isFollowing ? <UserCheck size={13} /> : <UserPlus size={13} />}
+          {isFollowing ? 'Following' : 'Follow'}
+        </motion.button>
         {club.isRecruiting && (
           <motion.button
             whileTap={{ scale: 0.95 }}

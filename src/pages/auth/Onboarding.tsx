@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronRight, Sparkles } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
+import { useAuth } from '../../context/AuthContext'
 import { clubs } from '../../data/clubs'
 import { cn } from '../../lib/utils'
 
@@ -26,6 +27,7 @@ const categoryMap: Record<string, string[]> = {
 export function Onboarding() {
   const navigate = useNavigate()
   const { isDark } = useTheme()
+  const { updateUser } = useAuth()
 
   const [step, setStep] = useState(0)
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
@@ -52,7 +54,10 @@ export function Onboarding() {
   }
 
   const handleFinish = () => {
+    const prefs = { interests: selectedInterests, activityLevel: selectedActivity, goals: selectedGoals }
+    localStorage.setItem('clubify_onboarding_prefs', JSON.stringify(prefs))
     localStorage.setItem('clubify_onboarded', 'true')
+    updateUser({ joinedClubs: [] })
     navigate('/student/home')
   }
 
@@ -213,7 +218,9 @@ export function Onboarding() {
                   isDark ? 'bg-[#23323F] border border-[#2d3d4a]' : 'bg-[#FFFFFF] border border-[#C8E0D0] shadow-sm'
                 )}
               >
-                <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl bg-gradient-to-br ${{ Technology: 'from-[#1A3A5C] to-[#2A5E70]', Sports: 'from-[#1A5E3A] to-[#2E7D52]', Academic: 'from-[#4A3870] to-[#7B6EBC]', Community: 'from-[#2A5E70] to-[#3A7CB8]', Media: 'from-[#5C2A3A] to-[#D63B52]', Arts: 'from-[#7B6EBC] to-[#4A3870]' }[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} select-none`}>
+                  {{ Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝', Media: '📸', Arts: '🎨' }[club.category] ?? '🎓'}
+                </div>
                 <div className="flex-1">
                   <h4 className={cn('text-sm font-bold font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>{club.name}</h4>
                   <p className={cn('text-xs mt-0.5 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{club.memberCount} members · {club.category}</p>

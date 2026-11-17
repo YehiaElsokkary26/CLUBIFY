@@ -55,6 +55,9 @@ interface AuthContextValue {
   logout: () => void
   updateUser: (updates: Partial<User>) => void
   attendEvent: (eventId: string) => void
+  registerUser: (name: string, email: string) => void
+  joinClub: (clubId: string) => void
+  leaveClub: (clubId: string) => void
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null)
@@ -111,28 +114,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }
 
+  const registerUser = (name: string, email: string) => {
+    const users = (() => { try { return JSON.parse(localStorage.getItem('clubify_users') || '{}') } catch { return {} } })()
+    if (!users[email]) {
+      const newUser: User = {
+        id: `user-${Date.now()}`,
+        name,
+        email,
+        gucId: '',
+        faculty: 'GUC',
+        year: 1,
+        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}&backgroundColor=b6e3f4`,
+        bio: '',
+        role: 'student',
+        joinedClubs: [],
+        attendedSessions: 0,
+        totalSessions: 0,
+        warnings: [],
+        profileCompletion: 30,
+      }
+      users[email] = newUser
+      localStorage.setItem('clubify_users', JSON.stringify(users))
+    }
+    saveSession(users[email], 'student')
+  }
+
   const login = async (email: string, password: string): Promise<boolean> => {
-    const [, token] = await Promise.all([
-      new Promise((r) => setTimeout(r, 800)),
-      tryGetRealAccessToken(email, password),
-    ])
+    await new Promise((r) => setTimeout(r, 800))
     if (email.endsWith('@guc.edu.eg') || email === studentUser.email) {
-      saveSession(studentUser, 'student', false, token)
+      const users = (() => { try { return JSON.parse(localStorage.getItem('clubify_users') || '{}') } catch { return {} } })()
+      const persisted = users[email]
+      saveSession(persisted ?? studentUser, 'student')
       return true
     }
     return false
   }
 
   const loginAsAdmin = async (email: string, password: string): Promise<boolean> => {
-    const [, token] = await Promise.all([
-      new Promise((r) => setTimeout(r, 800)),
-      tryGetRealAccessToken(email, password),
-    ])
+    await new Promise((r) => setTimeout(r, 800))
     if (email.endsWith('@guc.edu.eg')) {
       // Look up which club this admin manages
       const managedClubId = getAdminClubId(email) ?? 'guc-insider'
       const adminWithClub: User = { ...adminUser, managedClubId, email }
-      saveSession(adminWithClub, 'admin', false, token)
+      saveSession(adminWithClub, 'admin')
       return true
     }
     return false
@@ -175,8 +199,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
   }
 
+  const joinClub = (clubId: string) => {
+    if (!user) return
+    if (user.joinedClubs.includes(clubId)) return
+    const updated = [...user.joinedClubs, clubId]
+    updateUser({ joinedClubs: updated })
+    const users = (() => { try { return JSON.parse(localStorage.getItem('clubify_users') || '{}') } catch { return {} } })()
+    if (users[user.email]) { users[user.email].joinedClubs = updated; localStorage.setItem('clubify_users', JSON.stringify(users)) }
+  }
+
+  const leaveClub = (clubId: string) => {
+    if (!user) return
+    const updated = user.joinedClubs.filter((id) => id !== clubId)
+    updateUser({ joinedClubs: updated })
+    const users = (() => { try { return JSON.parse(localStorage.getItem('clubify_users') || '{}') } catch { return {} } })()
+    if (users[user.email]) { users[user.email].joinedClubs = updated; localStorage.setItem('clubify_users', JSON.stringify(users)) }
+  }
+
   return (
-    <AuthContext.Provider value={{ user, role, isGuest, isLoading, accessToken, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser, attendEvent }}>
+    <AuthContext.Provider value={{ user, role, isGuest, isLoading, accessToken, login, loginAsGuest, loginAsAdmin, loginAsDemo, logout, updateUser, attendEvent, registerUser, joinClub, leaveClub }}>
       {children}
     </AuthContext.Provider>
   )

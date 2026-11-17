@@ -4,6 +4,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { cn } from '../../lib/utils'
 import { getClub, getApplications, updateApplicationStatus } from '../../lib/db'
+import { pushNotification } from '../../hooks/useNotifications'
 import { useState } from 'react'
 import type { Application } from '../../lib/db'
 
@@ -43,6 +44,19 @@ export function AdminStats() {
 
   const handleDecision = (appId: string, decision: 'accepted' | 'rejected') => {
     updateApplicationStatus(appId, decision)
+    const app = apps.find((a) => a.id === appId)
+    if (app) {
+      pushNotification({
+        type: 'announcement',
+        title: decision === 'accepted' ? '🎉 Application Accepted!' : 'Application Update',
+        body: decision === 'accepted'
+          ? `Congrats! Your application to ${adminClub?.name ?? 'the club'} (${app.committeeName}) was accepted.`
+          : `Your application to ${adminClub?.name ?? 'the club'} (${app.committeeName}) was not selected this round.`,
+        timestamp: new Date().toISOString(),
+        clubId: adminClub?.id,
+        clubName: adminClub?.name,
+      })
+    }
     refreshApps()
   }
 

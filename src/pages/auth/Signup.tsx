@@ -8,7 +8,7 @@ import { cn } from '../../lib/utils'
 
 export function Signup() {
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const { registerUser } = useAuth()
   const { isDark } = useTheme()
 
   const [name, setName] = useState('')
@@ -31,7 +31,7 @@ export function Signup() {
     }
     setLoading(true)
     await new Promise((r) => setTimeout(r, 900))
-    await login(email, password)
+    registerUser(name, email)
     setLoading(false)
     navigate('/onboarding')
   }

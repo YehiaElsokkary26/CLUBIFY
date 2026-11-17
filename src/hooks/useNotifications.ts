@@ -2,15 +2,27 @@ import { useLocalStorage } from './useLocalStorage'
 import { notifications as initialNotifications } from '../data/notifications'
 import type { Notification } from '../data/types'
 
+const INBOX_KEY = 'clubify_notifs_inbox'
+
+export function pushNotification(n: Omit<Notification, 'id' | 'isRead'>): void {
+  try {
+    const inbox: Notification[] = JSON.parse(localStorage.getItem(INBOX_KEY) || '[]')
+    inbox.unshift({ ...n, id: `notif-${Date.now()}-${Math.random().toString(36).slice(2)}`, isRead: false })
+    localStorage.setItem(INBOX_KEY, JSON.stringify(inbox.slice(0, 100)))
+  } catch {}
+}
+
 export function useNotifications() {
   const [readIds, setReadIds] = useLocalStorage<string[]>('clubify_notifs_read', [])
   const [pinnedIds, setPinnedIds] = useLocalStorage<string[]>('clubify_notifs_pinned', [])
   const [flaggedIds, setFlaggedIds] = useLocalStorage<string[]>('clubify_notifs_flagged', [])
   const [deletedIds, setDeletedIds] = useLocalStorage<string[]>('clubify_notifs_deleted', [])
+  const [inbox] = useLocalStorage<Notification[]>(INBOX_KEY, [])
 
   const notifsEnabled = localStorage.getItem('clubify_notifs_enabled') !== 'false'
 
-  const notifs: Notification[] = initialNotifications
+  const allNotifs = [...inbox, ...initialNotifications]
+  const notifs: Notification[] = allNotifs
     .filter((n) => !deletedIds.includes(n.id))
     .map((n) => ({
       ...n,
@@ -35,7 +47,7 @@ export function useNotifications() {
   }
 
   const markAllRead = () => {
-    setReadIds(initialNotifications.map((n) => n.id))
+    setReadIds(allNotifs.map((n) => n.id))
   }
 
   const deleteNotification = (id: string) => {
