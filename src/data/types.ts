@@ -125,6 +125,7 @@ export interface User {
   joinedClubs: string[]
   attendedSessions: number
   totalSessions: number
+  attendedEventIds?: string[]
   warnings: string[]
   profileCompletion: number
 }

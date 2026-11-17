@@ -15,7 +15,7 @@ export function Settings() {
   const { toast } = useToast()
   const [notifs, setNotifs] = useLocalStorage('clubify_notifs_enabled', true)
   const [showLanguage, setShowLanguage] = useState(false)
-  const [language, setLanguage] = useState<'English' | 'Arabic'>('English')
+  const [language, setLanguage] = useLocalStorage<'English' | 'Arabic'>('clubify_language', 'English')
 
   const handleLogout = () => {
     logout()

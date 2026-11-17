@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { cn } from '../../lib/utils'
-import { clubs } from '../../data/clubs'
+import { getClubs } from '../../lib/db'
 import { getUpcomingEvents } from '../../data/events'
 
 function clubEmoji(category: string): string {
@@ -38,7 +38,7 @@ export function Profile() {
 
   if (!user) return null
 
-  const myClubs = clubs.filter((c) => user.joinedClubs.includes(c.id))
+  const myClubs = getClubs().filter((c) => user.joinedClubs.includes(c.id))
   const upcomingForMe = getUpcomingEvents(3).filter((e) => user.joinedClubs.includes(e.clubId))
 
   const saveBio = () => {

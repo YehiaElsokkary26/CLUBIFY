@@ -10,7 +10,7 @@ import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { cn } from '../../lib/utils'
-import { clubs } from '../../data/clubs'
+import { getClub } from '../../lib/db'
 
 interface AdminExtra {
   position: string
@@ -47,7 +47,7 @@ export function AdminProfile() {
 
   if (!user) return null
 
-  const adminClub = clubs.find((c) => user.joinedClubs.includes(c.id)) || clubs[0]
+  const adminClub = getClub(user.managedClubId ?? '') ?? undefined
 
   const saveProfile = () => {
     updateUser({ name: draft.name, faculty: draft.faculty, year: draft.year, bio: draft.bio })

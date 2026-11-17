@@ -6,6 +6,7 @@ import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { pushNotification } from '../../hooks/useNotifications'
 import { announcementPool as initialAnnouncements } from '../../data/announcements'
 import { cn } from '../../lib/utils'
 import type { Announcement, PostAttachment } from '../../data/types'
@@ -90,6 +91,7 @@ export function AdminFeed() {
         author: user?.name || 'Admin',
       }
       setPosts((prev) => [newPost, ...prev])
+      pushNotification({ type: 'announcement', title: newPost.title, body: newPost.body, timestamp: newPost.createdAt })
       toast('Post published!', 'success')
     }
     resetForm()

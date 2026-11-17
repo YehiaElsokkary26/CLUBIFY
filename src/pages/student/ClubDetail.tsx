@@ -1,32 +1,65 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import { ArrowLeft, Heart, Globe, Users, Calendar, Mail, Star, ChevronRight } from 'lucide-react'
+import { ArrowLeft, Heart, Globe, Users, Calendar, Mail, Star, ChevronRight, UserPlus, UserCheck } from 'lucide-react'
 import { InstagramIcon, FacebookIcon, LinkedinIcon } from '../../components/shared/SocialIcons'
 import { useClub } from '../../hooks/useClubs'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useAuth } from '../../context/AuthContext'
 import { useTheme } from '../../context/ThemeContext'
 import { useToast } from '../../components/shared/Toast'
 import { StatusBadge } from '../../components/shared/StatusBadge'
 import { EventCard } from '../../components/cards/EventCard'
+import { getEvents } from '../../lib/db'
 import { cn, formatDate } from '../../lib/utils'
 
 type Tab = 'About' | 'Events' | 'Members'
+
+const CATEGORY_EMOJI: Record<string, string> = {
+  Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝',
+  Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼',
+  Science: '🔬', Health: '🏃', Environment: '🌱', Gaming: '🎮',
+}
+
+const CATEGORY_GRADIENT: Record<string, string> = {
+  Technology: 'from-[#1A3A5C] to-[#2A5E70]',
+  Sports: 'from-[#1A5E3A] to-[#2E7D52]',
+  Academic: 'from-[#4A3870] to-[#7B6EBC]',
+  Community: 'from-[#2A5E70] to-[#3A7CB8]',
+  Media: 'from-[#5C2A3A] to-[#D63B52]',
+  Arts: 'from-[#7B6EBC] to-[#4A3870]',
+  Music: 'from-[#E05030] to-[#C09A28]',
+  Engineering: 'from-[#263028] to-[#1A5E3A]',
+  Business: 'from-[#1A3A5C] to-[#263028]',
+}
 
 export function ClubDetail() {
   const { slug } = useParams<{ slug: string }>()
   const navigate = useNavigate()
   const { isDark } = useTheme()
+  const { user, joinClub, leaveClub } = useAuth()
   const { toast } = useToast()
   const { data: club, isLoading } = useClub(slug || '')
   const [activeTab, setActiveTab] = useState<Tab>('About')
   const [favs, setFavs] = useLocalStorage<string[]>('clubify_favorites', [])
   const isFav = club ? favs.includes(club.id) : false
+  const isFollowing = club ? (user?.joinedClubs ?? []).includes(club.id) : false
 
   const toggleFav = () => {
     if (!club) return
     setFavs((prev) => prev.includes(club.id) ? prev.filter((f) => f !== club.id) : [...prev, club.id])
     toast(isFav ? 'Removed from favorites' : `${club.name} saved!`)
+  }
+
+  const toggleFollow = () => {
+    if (!club) return
+    if (isFollowing) {
+      leaveClub(club.id)
+      toast(`Left ${club.name}`, 'info')
+    } else {
+      joinClub(club.id)
+      toast(`Joined ${club.name}! 🎉`, 'success')
+    }
   }
 
   if (isLoading) {
@@ -51,7 +84,9 @@ export function ClubDetail() {
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
       {/* Cover */}
       <div className="relative h-64 overflow-hidden">
-        <img src={club.coverImage} alt={club.name} className="w-full h-full object-cover" />
+        <div className={`w-full h-full bg-gradient-to-br ${CATEGORY_GRADIENT[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center`}>
+          <span className="text-7xl select-none">{CATEGORY_EMOJI[club.category] ?? '🎓'}</span>
+        </div>
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
 
         {/* Back button */}
@@ -72,7 +107,9 @@ export function ClubDetail() {
 
         {/* Logo + name */}
         <div className="absolute bottom-4 left-5 flex items-end gap-3">
-          <img src={club.logo} alt={club.name} className="w-16 h-16 rounded-2xl border-2 border-white object-cover shadow-lg" />
+          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${CATEGORY_GRADIENT[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center border-2 border-white shadow-lg`}>
+              <span className="text-2xl select-none">{CATEGORY_EMOJI[club.category] ?? '🎓'}</span>
+            </div>
           <div>
             <h1 className="text-white text-xl font-black font-display tracking-wide leading-tight">{club.name}</h1>
             <div className="flex items-center gap-2 mt-1">
@@ -132,6 +169,19 @@ export function ClubDetail() {
           </a>
         )}
         <div className="flex-1" />
+        <motion.button
+          whileTap={{ scale: 0.95 }}
+          onClick={toggleFollow}
+          className={cn(
+            'px-3 py-2 rounded-xl text-xs font-bold font-body flex items-center gap-1.5 border',
+            isFollowing
+              ? isDark ? 'bg-[#1A5E3A]/20 border-[#1A5E3A] text-[#4CAF72]' : 'bg-[#E6F4EC] border-[#1A5E3A] text-[#1A5E3A]'
+              : isDark ? 'bg-[#23323F] border-[#2d3d4a] text-[#C0D4C8]' : 'bg-[#FFFFFF] border-[#C8E0D0] text-[#5C5650]'
+          )}
+        >
+          {isFollowing ? <UserCheck size={13} /> : <UserPlus size={13} />}
+          {isFollowing ? 'Following' : 'Follow'}
+        </motion.button>
         {club.isRecruiting && (
           <motion.button
             whileTap={{ scale: 0.95 }}
@@ -188,11 +238,14 @@ export function ClubDetail() {
 
         {activeTab === 'Events' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
-            {club.events.length > 0 ? club.events.map((event) => (
-              <EventCard key={event.id} event={event} />
-            )) : (
-              <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>No events scheduled yet</p>
-            )}
+            {(() => {
+              const events = getEvents(club.id)
+              return events.length > 0 ? events.map((event) => (
+                <EventCard key={event.id} event={event} />
+              )) : (
+                <p className={cn('text-center py-8 text-sm font-body', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>No events scheduled yet</p>
+              )
+            })()}
           </motion.div>
         )}
 

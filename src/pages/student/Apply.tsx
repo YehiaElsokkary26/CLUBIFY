@@ -3,32 +3,29 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowLeft, Check, ChevronRight, Calendar, Users, CheckCircle } from 'lucide-react'
 import { useTheme } from '../../context/ThemeContext'
-import { useLocalStorage } from '../../hooks/useLocalStorage'
+import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/shared/Toast'
 import { getClubById } from '../../data/clubs'
+import { submitApplication, getSlots, assignSlotToApplication } from '../../lib/db'
+import type { InterviewSlot } from '../../lib/db'
 import { cn, formatDate } from '../../lib/utils'
 import type { Committee } from '../../data/types'
 
-interface TimeSlot {
-  date: string
-  time: string
-}
-
-const timeSlots: TimeSlot[] = [
-  { date: '2026-05-20', time: '10:00 AM' },
-  { date: '2026-05-20', time: '12:00 PM' },
-  { date: '2026-05-21', time: '9:00 AM' },
-  { date: '2026-05-21', time: '2:00 PM' },
-  { date: '2026-05-22', time: '11:00 AM' },
-  { date: '2026-05-22', time: '3:00 PM' },
+const FALLBACK_SLOTS: InterviewSlot[] = [
+  { id: 'fb-1', clubId: '', committeeId: '', datetime: '2026-12-10T10:00:00', isBooked: false },
+  { id: 'fb-2', clubId: '', committeeId: '', datetime: '2026-12-10T12:00:00', isBooked: false },
+  { id: 'fb-3', clubId: '', committeeId: '', datetime: '2026-12-11T09:00:00', isBooked: false },
+  { id: 'fb-4', clubId: '', committeeId: '', datetime: '2026-12-11T14:00:00', isBooked: false },
+  { id: 'fb-5', clubId: '', committeeId: '', datetime: '2026-12-12T11:00:00', isBooked: false },
+  { id: 'fb-6', clubId: '', committeeId: '', datetime: '2026-12-12T15:00:00', isBooked: false },
 ]
 
-interface ApplicationRecord {
-  clubId: string
-  clubName: string
-  committee: string
-  slot: TimeSlot
-  submittedAt: string
+function slotDate(slot: InterviewSlot) {
+  return new Date(slot.datetime).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
+function slotTime(slot: InterviewSlot) {
+  return new Date(slot.datetime).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })
 }
 
 export function Apply() {
@@ -36,13 +33,18 @@ export function Apply() {
   const navigate = useNavigate()
   const { isDark } = useTheme()
   const { toast } = useToast()
+  const { user } = useAuth()
   const club = getClubById(clubId || '')
+
+  const slots = (() => {
+    const dbSlots = club ? getSlots(club.id).filter((s) => !s.isBooked) : []
+    return dbSlots.length > 0 ? dbSlots : FALLBACK_SLOTS
+  })()
 
   const [step, setStep] = useState(0)
   const [selectedCommittee, setSelectedCommittee] = useState<Committee | null>(null)
-  const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null)
+  const [selectedSlot, setSelectedSlot] = useState<InterviewSlot | null>(null)
   const [success, setSuccess] = useState(false)
-  const [applications, setApplications] = useLocalStorage<ApplicationRecord[]>('clubify_applications', [])
 
   if (!club) {
     return (
@@ -53,17 +55,28 @@ export function Apply() {
   }
 
   const handleSubmit = () => {
-    if (!selectedCommittee || !selectedSlot) return
-    const record: ApplicationRecord = {
-      clubId: club.id,
-      clubName: club.name,
-      committee: selectedCommittee.name,
-      slot: selectedSlot,
-      submittedAt: new Date().toISOString(),
+    if (!selectedCommittee || !selectedSlot || !user) return
+    try {
+      const app = submitApplication({
+        studentId: user.id,
+        studentName: user.name,
+        studentEmail: user.email,
+        clubId: club.id,
+        committeeId: selectedCommittee.id,
+        committeeName: selectedCommittee.name,
+      })
+      if (selectedSlot.id && !selectedSlot.id.startsWith('fb-')) {
+        try { assignSlotToApplication(app.id, selectedSlot.id, user.id) } catch {}
+      }
+      setSuccess(true)
+      toast('Application submitted!', 'success')
+    } catch (e: unknown) {
+      if ((e as Error).message === 'ALREADY_APPLIED') {
+        toast('You already applied to this club!', 'error')
+      } else {
+        toast('Something went wrong. Please try again.', 'error')
+      }
     }
-    setApplications((prev) => [...prev, record])
-    setSuccess(true)
-    toast('Application submitted!', 'success')
   }
 
   const stepTitles = ['Choose Committee', 'Pick Interview Slot', 'Confirm']
@@ -111,7 +124,7 @@ export function Apply() {
             Committee: <span className="font-semibold">{selectedCommittee?.name}</span>
           </p>
           <p className={cn('text-sm font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
-            Interview: <span className="font-semibold">{selectedSlot?.date} at {selectedSlot?.time}</span>
+            Interview: <span className="font-semibold">{selectedSlot ? slotDate(selectedSlot) : ''} at {selectedSlot ? slotTime(selectedSlot) : ''}</span>
           </p>
         </motion.div>
         <motion.button
@@ -136,7 +149,9 @@ export function Apply() {
           <ArrowLeft size={18} className={isDark ? 'text-white' : 'text-[#0D1A12]'} />
         </button>
         <div className="flex items-center gap-3 mb-4">
-          <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
+          <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${({ Technology: 'from-[#1A3A5C] to-[#2A5E70]', Sports: 'from-[#1A5E3A] to-[#2E7D52]', Academic: 'from-[#4A3870] to-[#7B6EBC]', Community: 'from-[#2A5E70] to-[#3A7CB8]', Media: 'from-[#5C2A3A] to-[#D63B52]', Arts: 'from-[#7B6EBC] to-[#4A3870]', Music: 'from-[#E05030] to-[#C09A28]', Engineering: 'from-[#263028] to-[#1A5E3A]', Business: 'from-[#1A3A5C] to-[#263028]' } as Record<string,string>)[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center`}>
+            <span className="text-xl select-none">{{ Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝', Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼' }[club.category] ?? '🎓'}</span>
+          </div>
           <div>
             <h1 className={cn('text-lg font-black font-display tracking-wide', isDark ? 'text-white' : 'text-[#0D1A12]')}>Apply to {club.name}</h1>
             <p className={cn('text-xs font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Step {step + 1} of 3 — {stepTitles[step]}</p>
@@ -201,11 +216,11 @@ export function Apply() {
             <motion.div key="step1" initial={{ opacity: 0, x: 30 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -30 }}>
               <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#0D1A12]')}>Choose an interview slot</h2>
               <div className="grid grid-cols-2 gap-3">
-                {timeSlots.map((slot, i) => {
-                  const selected = selectedSlot?.date === slot.date && selectedSlot?.time === slot.time
+                {slots.map((slot) => {
+                  const selected = selectedSlot?.id === slot.id
                   return (
                     <motion.button
-                      key={i}
+                      key={slot.id}
                       whileTap={{ scale: 0.96 }}
                       onClick={() => setSelectedSlot(slot)}
                       className={cn(
@@ -216,10 +231,10 @@ export function Apply() {
                       <div className="flex items-center gap-1.5 mb-1">
                         <Calendar size={12} className={selected ? 'text-[#1A5E3A]' : 'text-[#9AB0A0]'} />
                         <span className={cn('text-[10px] font-mono', selected ? 'text-[#1A5E3A]' : isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>
-                          {new Date(slot.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          {slotDate(slot)}
                         </span>
                       </div>
-                      <p className={cn('text-sm font-bold font-mono', isDark ? 'text-white' : 'text-[#0D1A12]')}>{slot.time}</p>
+                      <p className={cn('text-sm font-bold font-mono', isDark ? 'text-white' : 'text-[#0D1A12]')}>{slotTime(slot)}</p>
                     </motion.button>
                   )
                 })}
@@ -232,7 +247,9 @@ export function Apply() {
               <h2 className={cn('text-base font-bold font-body mb-4', isDark ? 'text-white' : 'text-[#0D1A12]')}>Confirm your application</h2>
               <div className={cn('rounded-2xl p-5 space-y-4', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}>
                 <div className="flex items-center gap-3">
-                  <img src={club.logo} alt={club.name} className="w-12 h-12 rounded-xl object-cover" />
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${({ Technology: 'from-[#1A3A5C] to-[#2A5E70]', Sports: 'from-[#1A5E3A] to-[#2E7D52]', Academic: 'from-[#4A3870] to-[#7B6EBC]', Community: 'from-[#2A5E70] to-[#3A7CB8]', Media: 'from-[#5C2A3A] to-[#D63B52]', Arts: 'from-[#7B6EBC] to-[#4A3870]', Music: 'from-[#E05030] to-[#C09A28]', Engineering: 'from-[#263028] to-[#1A5E3A]', Business: 'from-[#1A3A5C] to-[#263028]' } as Record<string,string>)[club.category] ?? 'from-[#1A5E3A] to-[#2E7D52]'} flex items-center justify-center`}>
+                    <span className="text-xl select-none">{{ Technology: '💻', Sports: '🏀', Academic: '📚', Community: '🤝', Media: '📸', Arts: '🎨', Music: '🎸', Engineering: '⚙️', Business: '💼' }[club.category] ?? '🎓'}</span>
+                  </div>
                   <div>
                     <h3 className={cn('text-sm font-bold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{club.name}</h3>
                     <p className={cn('text-xs font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{club.category}</p>
@@ -246,12 +263,12 @@ export function Apply() {
                   <div className="flex justify-between text-sm">
                     <span className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Interview Date</span>
                     <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>
-                      {selectedSlot && new Date(selectedSlot.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
+                      {selectedSlot && new Date(selectedSlot.datetime).toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}
                     </span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className={cn('font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>Interview Time</span>
-                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{selectedSlot?.time}</span>
+                    <span className={cn('font-semibold font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>{selectedSlot ? slotTime(selectedSlot) : ''}</span>
                   </div>
                 </div>
               </div>

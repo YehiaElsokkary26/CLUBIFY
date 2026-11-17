@@ -9,8 +9,9 @@ import { useLocalStorage } from '../../hooks/useLocalStorage'
 import { EventCard } from '../../components/cards/EventCard'
 import { cn, getTimeOfDay, formatDateShort } from '../../lib/utils'
 import { getUpcomingEvents } from '../../data/events'
-import { clubs, getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
-import { announcementPool as announcements } from '../../data/announcements'
+import { getRecruitingClubs, computeClubOfWeek, getClubHighlights, getAllMembersOfMonth } from '../../data/clubs'
+import { getClubs } from '../../lib/db'
+import { announcementPool } from '../../data/announcements'
 import type { Announcement } from '../../data/types'
 
 function categoryEmoji(category: string): string {
@@ -30,12 +31,14 @@ export function Home() {
   const [feedFilter, setFeedFilter] = useState<'All' | 'My Clubs' | 'Announcements'>('All')
   const [refreshing, setRefreshing] = useState(false)
   const [favs] = useLocalStorage<string[]>('clubify_favorites', [])
+  const [adminAnnouncements] = useLocalStorage<Announcement[]>('admin_announcements', announcementPool)
 
+  const dbClubs = getClubs()
   const upcomingEvents = getUpcomingEvents(6)
   const recruitingClubs = getRecruitingClubs()
-  const cotw = computeClubOfWeek()
-  const highlights = getClubHighlights(4)
-  const membersOfMonth = getAllMembersOfMonth().slice(0, 6)
+  const cotw = computeClubOfWeek(dbClubs)
+  const highlights = getClubHighlights(4, dbClubs)
+  const membersOfMonth = getAllMembersOfMonth(dbClubs).slice(0, 6)
 
   const handleRefresh = async () => {
     setRefreshing(true)
@@ -44,8 +47,8 @@ export function Home() {
   }
 
   const feedItems = feedFilter === 'My Clubs'
-    ? announcements.filter((a: Announcement) => user?.joinedClubs.includes(a.clubId))
-    : announcements
+    ? adminAnnouncements.filter((a: Announcement) => user?.joinedClubs.includes(a.clubId))
+    : adminAnnouncements
 
   return (
     <div className="phone-scroll h-[844px] pb-24" style={{ background: isDark ? '#0D1A12' : '#F4FBF6' }}>
@@ -241,12 +244,9 @@ export function Home() {
                 className={cn('rounded-2xl p-3 cursor-pointer', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF] shadow-sm')}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <img
-                    src={club.logo}
-                    alt={club.name}
-                    className="w-8 h-8 rounded-lg object-cover"
-                    onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
-                  />
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center text-base flex-shrink-0" style={{ background: 'linear-gradient(135deg,#1A5E3A,#154B2E)' }}>
+                    {categoryEmoji(club.category)}
+                  </div>
                   <p className={cn('text-xs font-bold leading-tight line-clamp-2 flex-1 font-body', isDark ? 'text-white' : 'text-[#0D1A12]')}>
                     {club.name.replace('GUC ', '')}
                   </p>
@@ -288,12 +288,9 @@ export function Home() {
                 </div>
                 <p className={cn('text-[10px] italic line-clamp-2 mb-1.5 font-body', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>"{member.quote}"</p>
                 <div className="flex items-center gap-1.5">
-                  <img
-                    src={club.logo}
-                    alt={club.name}
-                    className="w-4 h-4 rounded-md object-cover"
-                    onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club.slug}` }}
-                  />
+                  <div className="w-4 h-4 rounded-md flex items-center justify-center text-[10px] flex-shrink-0" style={{ background: 'linear-gradient(135deg,#1A5E3A,#154B2E)' }}>
+                    {categoryEmoji(club.category)}
+                  </div>
                   <p className="text-[10px] font-semibold text-[#1A5E3A] font-body line-clamp-1">{club.name.replace('GUC ', '')}</p>
                 </div>
               </motion.div>
@@ -323,7 +320,7 @@ export function Home() {
           <div className="space-y-3">
             <AnimatePresence>
               {feedItems.length > 0 ? feedItems.map((item: Announcement, i: number) => {
-                const club = clubs.find((c) => c.id === item.clubId)
+                const club = dbClubs.find((c) => c.id === item.clubId)
                 return (
                   <motion.div
                     key={item.id}
@@ -335,12 +332,9 @@ export function Home() {
                     className={cn('rounded-2xl p-4 shadow-sm cursor-pointer transition-shadow hover:shadow-md', isDark ? 'bg-[#23323F]' : 'bg-[#FFFFFF]')}
                   >
                     <div className="flex items-center gap-3 mb-3">
-                      <img
-                        src={club?.logo}
-                        alt={club?.name}
-                        className="w-9 h-9 rounded-xl object-cover"
-                        onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/shapes/svg?seed=${club?.slug}` }}
-                      />
+                      <div className="w-9 h-9 rounded-xl flex items-center justify-center text-lg flex-shrink-0" style={{ background: 'linear-gradient(135deg,#1A5E3A,#154B2E)' }}>
+                        {categoryEmoji(club?.category ?? '')}
+                      </div>
                       <div className="flex-1 min-w-0">
                         <p className={cn('text-xs font-bold font-body truncate', isDark ? 'text-white' : 'text-[#0D1A12]')}>{club?.name}</p>
                         <p className={cn('text-[10px] font-mono', isDark ? 'text-[#6A7870]' : 'text-[#9AB0A0]')}>

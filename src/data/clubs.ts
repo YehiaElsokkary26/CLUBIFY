@@ -576,12 +576,12 @@ export const getClubById = (id: string): Club | undefined =>
 export const getRecruitingClubs = (): Club[] =>
   clubs.filter((c) => c.isRecruiting)
 
-export function computeClubOfWeek(): Club {
+export function computeClubOfWeek(clubsData: Club[] = clubs): Club {
   const today = new Date()
   const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000)
-  const maxMembers = Math.max(...clubs.map((c) => c.memberCount))
+  const maxMembers = Math.max(...clubsData.map((c) => c.memberCount))
 
-  const scored = clubs.map((club) => {
+  const scored = clubsData.map((club) => {
     const memberScore = (club.memberCount / maxMembers) * 40
     const eventScore = Math.min(club.events.length * 10, 30)
     const recruitScore = club.isRecruiting ? (club.spotsLeft && club.spotsLeft > 10 ? 20 : 10) : 0
@@ -595,10 +595,10 @@ export function computeClubOfWeek(): Club {
   return scored.sort((a, b) => b.score - a.score)[0].club
 }
 
-export function getClubHighlights(count = 4): Array<{ club: Club; event: ClubEvent }> {
+export function getClubHighlights(count = 4, clubsData: Club[] = clubs): Array<{ club: Club; event: ClubEvent }> {
   const today = new Date()
   const results: Array<{ club: Club; event: ClubEvent }> = []
-  for (const club of clubs) {
+  for (const club of clubsData) {
     const upcoming = club.events
       .filter((e) => new Date(e.date) >= today)
       .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())
@@ -609,8 +609,8 @@ export function getClubHighlights(count = 4): Array<{ club: Club; event: ClubEve
     .slice(0, count)
 }
 
-export function getAllMembersOfMonth() {
-  return clubs
+export function getAllMembersOfMonth(clubsData: Club[] = clubs) {
+  return clubsData
     .filter((c) => c.spotlightContent.memberOfMonth)
     .map((c) => ({ club: c, member: c.spotlightContent.memberOfMonth! }))
 }
