@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Globe, Plus, Save, ChevronDown, ChevronUp, X } from 'lucide-react'
+import { Globe, Plus, Save, ChevronDown, ChevronUp, X, Trash2 } from 'lucide-react'
 import { InstagramIcon, FacebookIcon, LinkedinIcon, TikTokIcon } from '../../components/shared/SocialIcons'
 import { useTheme } from '../../context/ThemeContext'
 import { useAuth } from '../../context/AuthContext'
 import { useToast } from '../../components/shared/Toast'
 import { useLocalStorage } from '../../hooks/useLocalStorage'
-import { getClub, updateClub, addEvent, getEvents } from '../../lib/db'
+import { getClub, updateClub, addEvent, getEvents, removeEvent } from '../../lib/db'
 import { cn } from '../../lib/utils'
 import type { ClubEvent } from '../../data/types'
 
@@ -166,6 +166,16 @@ export function AdminManage() {
                   <p className={cn('text-[10px] font-mono', isDark ? 'text-[#9AB0A0]' : 'text-[#6A7870]')}>{ev.date} · {ev.location}</p>
                 </div>
                 <span className="px-2 py-0.5 rounded-full bg-[#1A5E3A]/10 text-[#1A5E3A] text-[10px] font-bold font-body">{ev.type}</span>
+                <button
+                  onClick={() => {
+                    removeEvent(ev.id)
+                    setEvents((prev) => prev.filter((e) => e.id !== ev.id))
+                    toast('Event removed', 'info')
+                  }}
+                  className="p-1.5 rounded-lg text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex-shrink-0"
+                >
+                  <Trash2 size={14} />
+                </button>
               </div>
             ))}
 
